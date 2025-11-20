@@ -31,5 +31,8 @@ public class Knight extends Actor
         if(Greenfoot.isKeyDown("left") || Greenfoot.isKeyDown("a")){
             move(3);
         }
+        if(Greenfoot.isKeyDown("right") || Greenfoot.isKeyDown("d")){
+            move(-3);
+        }
     }
 }
