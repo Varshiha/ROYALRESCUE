@@ -24,6 +24,12 @@ public class Knight extends Actor
      */
     public void act()
     {
-        // Add your action code here.
+        handleControls();
+    }
+    
+    public void handleControls(){
+        if(Greenfoot.isKeyDown("left") || Greenfoot.isKeyDown("a")){
+            move(3);
+        }
     }
 }
