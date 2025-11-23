@@ -16,6 +16,9 @@ public class TrainingGrounds extends World
     public TrainingGrounds()
     {    
         // Create a new world with 600x400 cells with a cell size of 1x1 pixels.
-        super(547, 554, 1); 
+        //super(547, 554, 1); 
+        super(600, 400, 1);
+        addObject(new Knight(), 100, 350);
+        addObject(new Trolls(), 450, 350)
     }
 }
