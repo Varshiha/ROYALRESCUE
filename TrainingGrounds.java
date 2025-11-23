@@ -16,9 +16,16 @@ public class TrainingGrounds extends World
     public TrainingGrounds()
     {    
         // Create a new world with 600x400 cells with a cell size of 1x1 pixels.
-        //super(547, 554, 1); 
-        super(600, 400, 1);
+        super(547, 554, 1); 
+        //super(600, 400, 1);
         addObject(new Knight(), 100, 350);
-        addObject(new Trolls(), 450, 350)
+        addObject(new Troll(), 450, 350);
+        
+        //Instructions
+        showText("Use A & D or ,<- -> to move left and right", 300, 50);
+        showText("Press SPACE  to jump", 300, 80);
+        showText("Press X to attack", 300, 110);
+        showText("Defeat the dummy to continue!", 300, 150);
+        
     }
 }

@@ -29,16 +29,16 @@ public class Knight extends Actor
     public Knight(){
         //images
         imageRight1 = new GreenfootImage("KnightFace1.png");
-        imageRight2 = new GreenfootImage("KnightFace2.png");
-        imageLeft3 = new GreenfootImage("KnightFace1left.png");
-        imageLeft4 = new GreenfootImage("KnightFace2left.png");
+        //imageRight2 = new GreenfootImage("KnightFace2.png");
+        //imageLeft3 = new GreenfootImage("KnightFace1left.png");
+        //imageLeft4 = new GreenfootImage("KnightFace2left.png");
         
         
         //Scale images
         scaleImage(imageRight1);
-        scaleImage(imageRight2);
-        scaleImage(imageLeft3);
-        scaleImage(imageLeft4);
+        //scaleImage(imageRight2);
+        //scaleImage(imageLeft3);
+        //scaleImage(imageLeft4);
         
         //Start with Knight facing right
         setImage(imageRight1);
