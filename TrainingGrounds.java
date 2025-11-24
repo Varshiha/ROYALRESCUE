@@ -25,7 +25,7 @@ public class TrainingGrounds extends World
         showText("Use A & D or ,<- -> to move left and right", 300, 50);
         showText("Press SPACE  to jump", 300, 80);
         showText("Press X to attack", 300, 110);
-        showText("Defeat the dummy to continue!", 300, 150);
+        showText("Defeat the dummy to continue!", 300, 160);
         
     }
 }
