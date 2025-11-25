@@ -13,6 +13,8 @@ public class Knight extends Actor
     private GreenfootImage imageRight2;
     private GreenfootImage imageLeft3;
     private GreenfootImage imageLeft4;
+    private GreenfootImage imageRight5;
+    private GreenfootImage imageLeft6;
     //Attack images
     private GreenfootImage attackRight;
     private GreenfootImage attackLeft;
@@ -29,16 +31,21 @@ public class Knight extends Actor
     public Knight(){
         //images
         imageRight1 = new GreenfootImage("KnightFace1.png");
-        //imageRight2 = new GreenfootImage("KnightFace2.png");
-        //imageLeft3 = new GreenfootImage("KnightFace1left.png");
-        //imageLeft4 = new GreenfootImage("KnightFace2left.png");
+        imageRight2 = new GreenfootImage("KnightFace2.png");
+        imageLeft3 = new GreenfootImage("KnightFace1l.png");
+        imageLeft4 = new GreenfootImage("KnightFace2l.png");
+        imageRight5 = new GreenfootImage("KnightFace3.png");
+        imageLeft6 = new GreenfootImage("KnightFace3l.png");
+        
         
         
         //Scale images
         scaleImage(imageRight1);
-        //scaleImage(imageRight2);
-        //scaleImage(imageLeft3);
-        //scaleImage(imageLeft4);
+        scaleImage(imageRight2);
+        scaleImage(imageLeft3);
+        scaleImage(imageLeft4);
+        scaleImage(imageRight5);
+        scaleImage(imageLeft6);
         
         //Start with Knight facing right
         setImage(imageRight1);
@@ -52,7 +59,7 @@ public class Knight extends Actor
     public void act()
     {
         handleControls();
-        applyGravity();
+        //applyGravity();
         handleJump();
         handleAttack();
         //Cooldown timer reduces every frame
@@ -64,23 +71,33 @@ public class Knight extends Actor
     public void handleControls(){
         if(Greenfoot.isKeyDown("left") || Greenfoot.isKeyDown("a")){
             setImage(imageLeft3);
-            move(-speed);
+            move(-3);
         }
         if(Greenfoot.isKeyDown("right") || Greenfoot.isKeyDown("d")){
             setImage(imageRight1);
-            move(speed);
+            move(3);
+        }
+        
+        //Supposed to make him move up and down, but not working...
+        //Lowkey, this makes him gallop a little bit. Maybe we should use it on the trolls/goblins.
+         if(Greenfoot.isKeyDown("up")){ 
+             setLocation(getX(), getY()-3);
+        }
+        if(Greenfoot.isKeyDown("down")){ 
+            setLocation(getX(), getY()+3);
+           
         }
     }
     
-    private void applyGravity(){
-        yVelocity += gravity; //Apply gravity every frame
-        setLocation(getX(), getY() + yVelocity);
+    //private void applyGravity(){
+        //yVelocity += gravity; //Apply gravity every frame
+        //setLocation(getX(), getY() + yVelocity);
         
-        if(getY() >= 380){
-            setLocation(getX(), 380);
-            yVelocity = 0;
-        }
-    }
+        //if(getY() >= 380){
+            //setLocation(getX(), 380);
+            //yVelocity = 0;
+        //}
+    //}
     
     private boolean isOnGround(){
         return getY() >= 380;
@@ -109,12 +126,13 @@ public class Knight extends Actor
             //reset to normal
             if(attackCooldown == 1){
                 if(getImage() == attackLeft){
-                    setImage(imageLeft3);
+                    setImage(imageLeft6);
                 }else{
-                    setImage(imageRight1);
+                    setImage(imageRight5);
                 }
             }
         }
+        
     }
     
     private void hitEnemies(){

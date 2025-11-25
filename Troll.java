@@ -10,8 +10,10 @@ public class Troll extends Actor
 {   private int health = 2;
     
     public Troll(){
-        //setImage("");
-        getImage().scale(getImage().getWidth()/4, getImage().getHeight()/4);
+        setImage("Trollside1.png");
+        getImage().scale(getImage().getWidth()/2, getImage().getHeight()/2);
+        setImage("Trollside2.png");
+        getImage().scale(getImage().getWidth()/2, getImage().getHeight()/2);
     }
     /**
      * Act - do whatever the Trolls wants to do. This method is called whenever
