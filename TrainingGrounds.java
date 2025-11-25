@@ -27,7 +27,7 @@ public class TrainingGrounds extends World
         //showText("Use A or <- to move left", 320, 100);
         troll = new Troll();
         addObject(new Troll(), 450, 350);
-        
+        addObject(new Troll(), 200, 200);
     }
     public void act(){
         addInsstructions();
