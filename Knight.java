@@ -13,18 +13,18 @@ public class Knight extends Actor
     private GreenfootImage imageRight2;
     private GreenfootImage imageLeft3;
     private GreenfootImage imageLeft4;
-    //Attack images
+    //Attack images of the Knight
     private GreenfootImage attackRight;
     private GreenfootImage attackLeft;
-    //Movement
+    //How fast the Knight moves
     private int speed = 3;
     //Jumping
-    private int yVelocity = 0;
-    private int gravity = 1;
-    private int jumpStrength = -12;
+    private int yVelocity = 0;//How fast Knight moving vertically
+    private int gravity = 1;//To pull the Knight down
+    private int jumpStrength = -12;//To push upward
     private boolean canDoubleJump = true;
     //Attack cooldown
-    private int attackCooldown = 0;
+    private int attackCooldown = 0;//time before attacking again
     private int attackDuration = 0;// how long attack image stays
     public Knight(){
         //images
@@ -56,6 +56,7 @@ public class Knight extends Actor
         handleJump();
         handleAttack();
         //Cooldown timer reduces every frame
+        //0 means attack again
         if(attackCooldown > 0){
            attackCooldown--; 
         }
@@ -74,27 +75,28 @@ public class Knight extends Actor
     
     private void applyGravity(){
         yVelocity += gravity; //Apply gravity every frame
+        //Get current y and Velocity, + = down, - = up
         setLocation(getX(), getY() + yVelocity);
         
-        if(getY() >= 380){
-            setLocation(getX(), 380);
+        if(getY() >= 380){//passed floor
+            setLocation(getX(), 380);//bring to ground
             yVelocity = 0;
         }
     }
     
     private boolean isOnGround(){
-        return getY() >= 380;
+        return getY() >= 380;//floor height = true
     }
     
     private void handleJump(){
         if(Greenfoot.isKeyDown("space")){
             //First Jump
             if(isOnGround()){
-               yVelocity = jumpStrength;
+               yVelocity = jumpStrength;//up
                canDoubleJump = true; //reset
             }
             //Second jump
-            else if(canDoubleJump){
+            else if(canDoubleJump){//not on ground
                 yVelocity = jumpStrength;
                 canDoubleJump = false;
             }
