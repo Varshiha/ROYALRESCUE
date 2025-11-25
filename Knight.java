@@ -13,6 +13,8 @@ public class Knight extends Actor
     private GreenfootImage imageRight2;
     private GreenfootImage imageLeft3;
     private GreenfootImage imageLeft4;
+    private GreenfootImage imageRight5;
+    private GreenfootImage imageLeft6;
     //Attack images of the Knight
     private GreenfootImage attackRight;
     private GreenfootImage attackLeft;
@@ -29,16 +31,18 @@ public class Knight extends Actor
     public Knight(){
         //images
         imageRight1 = new GreenfootImage("KnightFace1.png");
-        //imageRight2 = new GreenfootImage("KnightFace2.png");
-        //imageLeft3 = new GreenfootImage("KnightFace1left.png");
-        //imageLeft4 = new GreenfootImage("KnightFace2left.png");
+        imageRight2 = new GreenfootImage("KnightFace2.png");
+        imageLeft3 = new GreenfootImage("KnightFace1l.png");
+        imageLeft4 = new GreenfootImage("KnightFace2l.png");
+        imageRight5 = new GreenfootImage("KnightFace3.png");
+        imageLeft6 = new GreenfootImage("KnightFace3l.png");
         
         
         //Scale images
         scaleImage(imageRight1);
-        //scaleImage(imageRight2);
-        //scaleImage(imageLeft3);
-        //scaleImage(imageLeft4);
+        scaleImage(imageRight2);
+        scaleImage(imageLeft3);
+        scaleImage(imageLeft4);
         
         //Start with Knight facing right
         setImage(imageRight1);
@@ -52,7 +56,7 @@ public class Knight extends Actor
     public void act()
     {
         handleControls();
-        applyGravity();
+        //applyGravity();
         handleJump();
         handleAttack();
         //Cooldown timer reduces every frame
@@ -71,18 +75,25 @@ public class Knight extends Actor
             setImage(imageRight1);
             move(speed);
         }
-    }
-    
-    private void applyGravity(){
-        yVelocity += gravity; //Apply gravity every frame
-        //Get current y and Velocity, + = down, - = up
-        setLocation(getX(), getY() + yVelocity);
         
-        if(getY() >= 380){//passed floor
-            setLocation(getX(), 380);//bring to ground
-            yVelocity = 0;
+         if(Greenfoot.isKeyDown("up")){ 
+             setLocation(getX(), getY()-5);
+        }
+        if(Greenfoot.isKeyDown("down")){ 
+            setLocation(getX(), getY()+5);
         }
     }
+    
+    //private void applyGravity(){
+        //yVelocity += gravity; //Apply gravity every frame
+        //Get current y and Velocity, + = down, - = up
+       // setLocation(getX(), getY() + yVelocity);
+        
+       // if(getY() >= 380){//passed floor
+           // setLocation(getX(), 380);//bring to ground
+            //yVelocity = 0;
+        //}
+     // }
     
     private boolean isOnGround(){
         return getY() >= 380;//floor height = true
