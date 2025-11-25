@@ -13,8 +13,7 @@ public class Knight extends Actor
     private GreenfootImage imageRight2;
     private GreenfootImage imageLeft3;
     private GreenfootImage imageLeft4;
-    private GreenfootImage imageRight5;
-    private GreenfootImage imageLeft6;
+    
     //Attack images of the Knight
     private GreenfootImage attackRight;
     private GreenfootImage attackLeft;
@@ -28,21 +27,26 @@ public class Knight extends Actor
     //Attack cooldown
     private int attackCooldown = 0;//time before attacking again
     private int attackDuration = 0;// how long attack image stays
+    private int attackTimer = 0;
     public Knight(){
         //images
         imageRight1 = new GreenfootImage("KnightFace1.png");
-        imageRight2 = new GreenfootImage("KnightFace2.png");
+        //imageRight2 = new GreenfootImage("KnightFace2.png");
         imageLeft3 = new GreenfootImage("KnightFace1l.png");
-        imageLeft4 = new GreenfootImage("KnightFace2l.png");
-        imageRight5 = new GreenfootImage("KnightFace3.png");
-        imageLeft6 = new GreenfootImage("KnightFace3l.png");
+        //imageLeft4 = new GreenfootImage("KnightFace2l.png");
+        
+        attackRight = new GreenfootImage("KnightFace3.png");
+        attackLeft = new GreenfootImage("KnightFace3l.png");
         
         
         //Scale images
         scaleImage(imageRight1);
-        scaleImage(imageRight2);
+        //scaleImage(imageRight2);
         scaleImage(imageLeft3);
-        scaleImage(imageLeft4);
+        //scaleImage(imageLeft4);
+        scaleImage(attackRight);
+        scaleImage(attackLeft);
+
         
         //Start with Knight facing right
         setImage(imageRight1);
@@ -55,14 +59,19 @@ public class Knight extends Actor
      */
     public void act()
     {
+        
         handleControls();
-        //applyGravity();
         handleJump();
+        applyGravity();
         handleAttack();
         //Cooldown timer reduces every frame
         //0 means attack again
         if(attackCooldown > 0){
            attackCooldown--; 
+        }
+        
+        if(attackTimer > 0){
+           attackTimer--; 
         }
     }
     
@@ -76,24 +85,28 @@ public class Knight extends Actor
             move(speed);
         }
         
-         if(Greenfoot.isKeyDown("up")){ 
-             setLocation(getX(), getY()-5);
+         if(Greenfoot.isKeyDown("up")|| Greenfoot.isKeyDown("w")){ 
+             setLocation(getX(), getY()-speed);
+             yVelocity = 0;
+             return;
         }
-        if(Greenfoot.isKeyDown("down")){ 
-            setLocation(getX(), getY()+5);
+        if(Greenfoot.isKeyDown("down")|| Greenfoot.isKeyDown("s")){ 
+            setLocation(getX(), getY()+speed);
+            yVelocity = 0;
+            return;
         }
     }
     
-    //private void applyGravity(){
-        //yVelocity += gravity; //Apply gravity every frame
+    private void applyGravity(){
+        yVelocity += gravity; //Apply gravity every frame
         //Get current y and Velocity, + = down, - = up
-       // setLocation(getX(), getY() + yVelocity);
+       setLocation(getX(), getY() + yVelocity);
         
-       // if(getY() >= 380){//passed floor
-           // setLocation(getX(), 380);//bring to ground
-            //yVelocity = 0;
-        //}
-     // }
+       if(getY() >= 380){//passed floor
+         setLocation(getX(), 380);//bring to ground
+            yVelocity = 0;
+        }
+     }
     
     private boolean isOnGround(){
         return getY() >= 380;//floor height = true
@@ -116,23 +129,25 @@ public class Knight extends Actor
     
     private void handleAttack(){
         if(Greenfoot.isKeyDown("x") && attackCooldown == 0){
-            //add sword swing animation
-            hitEnemies();//Damage enemies
-            attackCooldown = attackDuration;//Reset cooldown
             //reset to normal
             if(attackCooldown == 1){
                 if(getImage() == attackLeft){
-                    setImage(imageLeft3);
+                    setImage(attackLeft);
                 }else{
-                    setImage(imageRight1);
+                    setImage(attackRight);;
                 }
             }
+            //add sword swing animation
+            hitEnemies();//Damage enemies
+            attackCooldown = attackDuration;
         }
     }
     
     private void hitEnemies(){
-       //sword class, if touching...etc
-       //Create enemy class(trolls and  goblins)
+       Actor enemy = getOneIntersectingObject(Troll.class);
+       if(enemy != null){
+           getWorld().removeObject(enemy);
+       }
     }
 
     private void scaleImage(GreenfootImage img){

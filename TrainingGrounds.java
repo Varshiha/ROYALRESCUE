@@ -24,7 +24,7 @@ public class TrainingGrounds extends World
         addObject(new Troll(), 450, 350);
         dialog = new DialogBox();
         addObject(dialog, getWidth()/2, 100);
-        //showText("Use A or <- to move left", 320, 100);
+        showText("Use A or <- to move left", 420, 100);
         troll = new Troll();
         addObject(new Troll(), 450, 350);
         addObject(new Troll(), 200, 200);
@@ -36,27 +36,35 @@ public class TrainingGrounds extends World
     public void addInsstructions(){
         //Instructions
         if(step == 0){
-            showText("Use A or <- to move left", 320, 100);
+            showText("Use A or <- to move left", 420, 100);
             if(Greenfoot.isKeyDown("a") || Greenfoot.isKeyDown("left")){
-                
-                showText("Use D or -> to move right", 320, 100);
+                showText("Use D or -> to move right", 420, 100);
                 step = 1;
             }
         }else if(step == 1){
             if(Greenfoot.isKeyDown("d") || Greenfoot.isKeyDown("right")){
-                showText("Press SPACE  to jump", 320, 100);
+                showText("Use W or  Up key to move up", 420, 100);
                 step = 2;
             }
         }else if(step == 2){
-            if(Greenfoot.isKeyDown("space") ){
+            if(Greenfoot.isKeyDown("w") || Greenfoot.isKeyDown("up")){
 
-                showText("Press X to attack", 320, 100);
+                showText("Use S or  Down key to move down", 420, 100);
                 step = 3;
+            }
+        }  else if(step == 3){
+            if(Greenfoot.isKeyDown("s") || Greenfoot.isKeyDown("down")){
+                showText("Press SPACE to jump", 420, 100);
+                step = 4;
+            }
+        }else if(step == 4){
+            if(Greenfoot.isKeyDown("space") ){
+                showText("Press X to attack", 420, 100);
+                step = 5;
             }
         }else{
             if(Greenfoot.isKeyDown("x")){
-                showText("Defeat the dummy to continue!", 320, 100);
-                
+                showText("Defeat the dummy to continue!", 420, 100);
             }
         }
     }
