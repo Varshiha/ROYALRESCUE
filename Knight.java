@@ -43,10 +43,16 @@ public class Knight extends Actor
         scaleImage(imageRight1);
         //scaleImage(imageRight2);
         scaleImage(imageLeft3);
+<<<<<<< Updated upstream
         //scaleImage(imageLeft4);
         scaleImage(attackRight);
         scaleImage(attackLeft);
 
+=======
+        scaleImage(imageLeft4);
+        scaleImage(imageRight5);
+        scaleImage(imageLeft6);
+>>>>>>> Stashed changes
         
         //Start with Knight facing right
         setImage(imageRight1);
@@ -132,9 +138,15 @@ public class Knight extends Actor
             //reset to normal
             if(attackCooldown == 1){
                 if(getImage() == attackLeft){
+<<<<<<< Updated upstream
                     setImage(attackLeft);
                 }else{
                     setImage(attackRight);;
+=======
+                    setImage(imageLeft6);
+                }else{
+                    setImage(imageRight5);
+>>>>>>> Stashed changes
                 }
             }
             //add sword swing animation

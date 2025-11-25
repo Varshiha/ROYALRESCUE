@@ -9,13 +9,14 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 public class DialogBox extends Actor
 {
     private GreenfootImage image1;
-    
+    private GreenfootImage image2;
     public DialogBox(){
         image1 = new GreenfootImage("DialogBox.png");
         setImage(image1);
         GreenfootImage DialogBox = getImage();
         image1.scale(DialogBox.getWidth()/2, DialogBox.getHeight()/2);
         setImage(DialogBox);
+        
         
     }
     
@@ -25,6 +26,8 @@ public class DialogBox extends Actor
      */
     public void act()
     {
-        // Add your action code here.
+       // Add your action code here.
     }
+    
+    
 }
