@@ -13,7 +13,8 @@ public class Knight extends Actor
     private GreenfootImage imageRight2;
     private GreenfootImage imageLeft3;
     private GreenfootImage imageLeft4;
-    
+    private GreenfootImage imageRight5;
+    private GreenfootImage imageLeft6;
     //Attack images of the Knight
     private GreenfootImage attackRight;
     private GreenfootImage attackLeft;
@@ -31,9 +32,11 @@ public class Knight extends Actor
     public Knight(){
         //images
         imageRight1 = new GreenfootImage("KnightFace1.png");
-        //imageRight2 = new GreenfootImage("KnightFace2.png");
+        imageRight2 = new GreenfootImage("KnightFace2.png");
         imageLeft3 = new GreenfootImage("KnightFace1l.png");
-        //imageLeft4 = new GreenfootImage("KnightFace2l.png");
+        imageLeft4 = new GreenfootImage("KnightFace2l.png");
+        imageRight5 = new GreenfootImage("KnightFace3.png");
+        imageLeft6 = new GreenfootImage("KnightFace3l.png");
         
         attackRight = new GreenfootImage("KnightFace3.png");
         attackLeft = new GreenfootImage("KnightFace3l.png");
@@ -43,16 +46,15 @@ public class Knight extends Actor
         scaleImage(imageRight1);
         //scaleImage(imageRight2);
         scaleImage(imageLeft3);
-<<<<<<< Updated upstream
+
         //scaleImage(imageLeft4);
         scaleImage(attackRight);
         scaleImage(attackLeft);
 
-=======
         scaleImage(imageLeft4);
         scaleImage(imageRight5);
         scaleImage(imageLeft6);
->>>>>>> Stashed changes
+
         
         //Start with Knight facing right
         setImage(imageRight1);
@@ -138,20 +140,17 @@ public class Knight extends Actor
             //reset to normal
             if(attackCooldown == 1){
                 if(getImage() == attackLeft){
-<<<<<<< Updated upstream
+
                     setImage(attackLeft);
-                }else{
+                    }else{
                     setImage(attackRight);;
-=======
+
                     setImage(imageLeft6);
-                }else{
-                    setImage(imageRight5);
->>>>>>> Stashed changes
                 }
+                //add sword swing animation
+                hitEnemies();//Damage enemies
+                attackCooldown = attackDuration;
             }
-            //add sword swing animation
-            hitEnemies();//Damage enemies
-            attackCooldown = attackDuration;
         }
     }
     
