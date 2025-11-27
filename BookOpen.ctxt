@@ -5,5 +5,5 @@ comment1.params=
 comment1.target=BookOpen()
 comment1.text=\r\n\ Constructor\ for\ objects\ of\ class\ BookOpen.\r\n\ \r\n
 comment2.params=
-comment2.target=void\ showText()
+comment2.target=void\ prepare()
 numComments=3
