@@ -29,13 +29,23 @@ public class SplashWorld extends World
         courseTitle.drawString("420-141-VA Game Programming 1", 20, 70);
         getBackground().drawImage(courseTitle, 320, 100);
         
-        GreenfootImage memberNames = new GreenfootImage(600, 100);
-        memberNames.setFont(font);
-        memberNames.setColor(Color.WHITE);
-        memberNames.drawString("             Team Members: \n" + "Rend Abi Ouli, Varshiha Puvanarajah, Alexandra Di Iorio & Rainier Tabing", 20, 70);
-        getBackground().drawImage(memberNames, 240, 400);
+        GreenfootImage line1 = new GreenfootImage(600, 100);
+        line1.setFont(font);
+        line1.setColor(Color.WHITE);
+        line1.drawString("Team Members:", 20, 70);
+        getBackground().drawImage(line1, 420, 400);
         
+        GreenfootImage line2 = new GreenfootImage(600, 100);
+        line2.setFont(font);
+        line2.setColor(Color.WHITE);
+        line2.drawString("Rend Abi Ouli - Varshiha Puvanarajah", 20, 70);
+        getBackground().drawImage(line2, 320, 420);
         
+        GreenfootImage line3 = new GreenfootImage(600, 100);
+        line3.setFont(font);
+        line3.setColor(Color.WHITE);
+        line3.drawString("Alexandra Di Iorio - Ranier Tabing", 20, 70);
+        getBackground().drawImage(line3, 320, 440);
     }
     
     public void act(){

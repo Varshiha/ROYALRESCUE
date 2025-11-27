@@ -8,15 +8,21 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  */
 public class StartScreen extends World
 {
-
+    private int timer = 1200;
     /**
      * Constructor for objects of class StartScreen.
      * 
      */
     public StartScreen()
     {    
-        // Create a new world with 600x400 cells with a cell size of 1x1 pixels.
-        super(800, 600, 1); 
-        showText("Press ENTER to Start", 400, 300);
+        super(1107, 820, 1);
+        
+    }
+    
+    public void act(){
+        timer--;
+        if(timer <= 0){
+            
+        }
     }
 }
