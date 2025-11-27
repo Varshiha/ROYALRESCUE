@@ -29,6 +29,9 @@ public class Knight extends Actor
     private int attackCooldown = 0;//time before attacking again
     private int attackDuration = 0;// how long attack image stays
     private int attackTimer = 0;
+    //Sword
+    private Sword sword;
+    private boolean facingRight = true;
     public Knight(){
         //images
         imageRight1 = new GreenfootImage("KnightFace1.png");
@@ -59,7 +62,7 @@ public class Knight extends Actor
         //Start with Knight facing right
         setImage(imageRight1);
         
-        
+        sword = new Sword();
     }
     /**
      * Act - do whatever the Knight wants to do. This method is called whenever
@@ -81,14 +84,19 @@ public class Knight extends Actor
         if(attackTimer > 0){
            attackTimer--; 
         }
+        
+        updateSwordPosition();
+        
     }
     
     public void handleControls(){
         if(Greenfoot.isKeyDown("left") || Greenfoot.isKeyDown("a")){
+            facingRight = false;
             setImage(imageLeft3);
             move(-speed);
         }
         if(Greenfoot.isKeyDown("right") || Greenfoot.isKeyDown("d")){
+            facingRight = true;
             setImage(imageRight1);
             move(speed);
         }
@@ -163,5 +171,16 @@ public class Knight extends Actor
 
     private void scaleImage(GreenfootImage img){
         img.scale(img.getWidth()/5, img.getHeight()/5);
+    }
+    
+    public void addedToWorld(World world){
+        world.addObject(sword, getX(), getY());
+    }
+    
+    public void updateSwordPosition(){
+        int offsetX = facingRight ? 30 : -1000;
+        int offsetY = 0;
+        sword.setLocation(getX() + offsetX, getY() + offsetY);
+        sword.getImage().mirrorHorizontally();
     }
 }

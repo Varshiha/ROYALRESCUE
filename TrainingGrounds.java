@@ -9,9 +9,7 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 public class TrainingGrounds extends World
 {
     private DialogBox dialog;
-    private int step = 0;
-    private Troll troll;
-    
+    private int step = 0;    
     /**
      * Constructor for objects of class TrainingGrounds.
      * 
@@ -22,12 +20,11 @@ public class TrainingGrounds extends World
         super(730, 738, 1);  
         addObject(new Knight(), 100, 350);
         addObject(new Troll(), 450, 350);
+        addObject(new Troll(), 200, 200);
         dialog = new DialogBox();
         addObject(dialog, getWidth()/2, 100);
         showText("Use A or <- to move left", 420, 100);
-        troll = new Troll();
-        addObject(new Troll(), 450, 350);
-        addObject(new Troll(), 200, 200);
+        
     }
     public void act(){
         addInsstructions();
@@ -67,8 +64,5 @@ public class TrainingGrounds extends World
                 showText("Defeat the dummy to continue!", 420, 100);
             }
         }
-    }
-    public void method(){
-        troll.act();
     }
 }
