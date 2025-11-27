@@ -16,15 +16,26 @@ public class SplashWorld extends World
     public SplashWorld()
     {    
         // Create a new world with 600x400 cells with a cell size of 1x1 pixels.
-        super(800, 600, 1); 
+        super(1000, 672, 1); 
         prepare();
     }
     
     public void prepare(){
-        showText("420-141-VA Game Programming 1", 400 , 200);
-        showText("Team Members: Rend Abi Ouli, Varshiha Puvanarajah, Alexandra Di Iorio & Rainier Tabing", 400, 260);
-        GreenfootImage logo = new GreenfootImage("Vanier_Logo.png");
-        getBackground().drawImage(logo, 300, 350);
+        Font font = new Font("Comic Sans MS", 20);
+        
+        GreenfootImage courseTitle = new GreenfootImage(600, 100);
+        courseTitle.setFont(font);
+        courseTitle.setColor(Color.WHITE);
+        courseTitle.drawString("420-141-VA Game Programming 1", 20, 70);
+        getBackground().drawImage(courseTitle, 320, 100);
+        
+        GreenfootImage memberNames = new GreenfootImage(600, 100);
+        memberNames.setFont(font);
+        memberNames.setColor(Color.WHITE);
+        memberNames.drawString("             Team Members: \n" + "Rend Abi Ouli, Varshiha Puvanarajah, Alexandra Di Iorio & Rainier Tabing", 20, 70);
+        getBackground().drawImage(memberNames, 240, 400);
+        
+        
     }
     
     public void act(){
