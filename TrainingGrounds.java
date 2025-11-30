@@ -10,7 +10,8 @@ public class TrainingGrounds extends World
 {
     //private DialogBox dialog;
     private int step = -1; 
-    private int timer = 240;
+    private int timer = 1200;
+    private boolean trollSpawned = false;
     /**
      * Constructor for objects of class TrainingGrounds.
      * 
@@ -18,63 +19,39 @@ public class TrainingGrounds extends World
     public TrainingGrounds()
     {    
         // Create a new world with 600x400 cells with a cell size of 1x1 pixels.
-        super(730, 738, 1);  
+        super(547, 554, 1); 
         addObject(new Knight(), 100, 350);
-        addObject(new Troll(), 450, 350);
         addObject(new DialogBox(), getWidth()/2, 100);
-        
-        addObject(new General(), 205, 100);
-        }
+        addObject(new General(), 112, 100);
+    }
+
     public void act(){
-        addInsstructions();
-        
+        addInsstructions();  
     }
 
     public void addInsstructions(){
         //Instructions
-        
-        
-        if(timer > 0){
-            showText(" Hello, I will be your instructor \n " +"throughout this game.\n" + "Tutorial Time!", 420, 100);
-            timer--;
-            return;
-        }
-        if(step == -1){
-            showText("", 420, 100);
-            step = 0;
-            return;
-        }
-        
-        if(step == 0 ){
-            showText("Use A/D or <--> to  \n" + "move left/right", 420, 100);
-            if(Greenfoot.isKeyDown("a") || Greenfoot.isKeyDown("left") ||Greenfoot.isKeyDown("d") || Greenfoot.isKeyDown("right")){
-                showText("Use W/S or Up/Down keys \n" + "to move up and down", 420, 100);
-                step = 1;
-            }
-            return;
-        }
-        
-        if(step == 1){
+        timer--;
+        if(timer > 1020 ){
+            showText(" Hello, I will be your instructor \n " +"throughout this game.\n" + "Tutorial Time!", 340, 100);
+        }else if(timer > 840 ){
+            showText("Use A/D or <--> to  \n" + "move left/right", 340, 100);
+        } else if(timer > 660){
+            showText("Use W/S or Up/Down keys \n" + "to move up and down", 340, 100);
+        } else if(timer > 480){
+            showText("Press X to kill the enemies", 340, 100);
+        } else if(timer > 300){
+            showText("Defeat this troll\n" + "to continue!", 340, 100);
+        }else{
+            if(!trollSpawned){
+                addObject(new Troll(), 100, 450);
+                trollSpawned = true;
+            } 
             
-            if(Greenfoot.isKeyDown("w") || Greenfoot.isKeyDown("up")||Greenfoot.isKeyDown("s") || Greenfoot.isKeyDown("down")){
-                showText("Press X to kill the enemies", 420, 100);
-                step = 2;
-            }
-            return;
+            if(trollSpawned && getObjects(Troll.class).isEmpty()){
+                    Greenfoot.setWorld(new Outside());
+                }
         }
-        
-        if(step == 2){
-            if(Greenfoot.isKeyDown("x")){
-                showText("Defeat all the enemies \n" + "to continue!", 420, 100);
-            }
-            return;
-        }
-        
-        if(getObjects(Troll.class).isEmpty()){
-            Greenfoot.setWorld(new Castle());
-        }
-    
-}
-    
+    }
     
 }

@@ -30,6 +30,8 @@ public class Knight extends Actor
     private Sword sword;
     private boolean facingRight = true;
     private boolean swordFacingRight = true;
+    
+    private int lives = 3;
     public Knight(){
         
         //Scale images
@@ -82,11 +84,9 @@ public class Knight extends Actor
         
          if(Greenfoot.isKeyDown("up")|| Greenfoot.isKeyDown("w")){ 
              setLocation(getX(), getY() -speed);
-            
         }
         if(Greenfoot.isKeyDown("down")|| Greenfoot.isKeyDown("s")){ 
             setLocation(getX(), getY()+speed);
-            
         }
     }
     
@@ -106,9 +106,6 @@ public class Knight extends Actor
         }
     }
     
-    private void hitEnemies(){
-       
-    }
 
     private void scaleImage(GreenfootImage img){
         img.scale(img.getWidth()/5, img.getHeight()/5);
@@ -116,6 +113,7 @@ public class Knight extends Actor
     
     public void addedToWorld(World world){
         world.addObject(sword, getX(), getY());
+        
     }
     
     public void updateSwordPosition(){
@@ -132,5 +130,10 @@ public class Knight extends Actor
            sword.getImage().mirrorHorizontally();
            swordFacingRight = facingRight;
        }
+    }
+    
+    public void loseLife(){
+        lives--;
+        getWorld().showText("Lives: " + lives , 100, 510);
     }
 }

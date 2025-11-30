@@ -16,36 +16,42 @@ public class SplashWorld extends World
     public SplashWorld()
     {    
         // Create a new world with 600x400 cells with a cell size of 1x1 pixels.
-        super(1000, 672, 1); 
+        super(547, 554, 1); 
+        GreenfootImage bg = new GreenfootImage(getWidth(), getHeight());
+        bg.setColor(Color.WHITE);
+        bg.fill();
+        setBackground(bg);
+        addObject(new VanierLogo(), getWidth()/2, getHeight()/2);
+        
         prepare();
     }
     
-    public void prepare(){
+    private void prepare(){
         Font font = new Font("Comic Sans MS", 20);
         
         GreenfootImage courseTitle = new GreenfootImage(600, 100);
         courseTitle.setFont(font);
-        courseTitle.setColor(Color.WHITE);
+        courseTitle.setColor(Color.BLACK);
         courseTitle.drawString("420-141-VA Game Programming 1", 20, 70);
-        getBackground().drawImage(courseTitle, 320, 100);
+        getBackground().drawImage(courseTitle, 100, 70);
         
         GreenfootImage line1 = new GreenfootImage(600, 100);
         line1.setFont(font);
-        line1.setColor(Color.WHITE);
+        line1.setColor(Color.BLACK);
         line1.drawString("Team Members:", 20, 70);
-        getBackground().drawImage(line1, 420, 400);
+        getBackground().drawImage(line1, 175, 370);
         
         GreenfootImage line2 = new GreenfootImage(600, 100);
         line2.setFont(font);
-        line2.setColor(Color.WHITE);
+        line2.setColor(Color.BLACK);
         line2.drawString("Rend Abi Ouli - Varshiha Puvanarajah", 20, 70);
-        getBackground().drawImage(line2, 320, 420);
+        getBackground().drawImage(line2, 100, 400);
         
         GreenfootImage line3 = new GreenfootImage(600, 100);
         line3.setFont(font);
-        line3.setColor(Color.WHITE);
+        line3.setColor(Color.BLACK);
         line3.drawString("Alexandra Di Iorio - Ranier Tabing", 20, 70);
-        getBackground().drawImage(line3, 320, 440);
+        getBackground().drawImage(line3, 110, 430);
     }
     
     public void act(){
