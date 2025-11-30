@@ -25,7 +25,8 @@ public class StartScreen extends World
         timer--;
         if(timer <= 0){
             setBackground(imageBackground);
-            showText("Press ENTER to Start", getWidth()/2, getHeight()/2);
+            showText("Welcome to Royal Rescue! \n"+ "The purpose of this game is to defeat all the trolls and save the king. \n" + 
+            "You will have to face challenges like solving riddles and killing mean guys. \n" + "Press ENTER to go to the tutorial", getWidth()/2, getHeight()/2);
             if(Greenfoot.isKeyDown("ENTER")){
                 Greenfoot.setWorld(new TrainingGrounds());
             }

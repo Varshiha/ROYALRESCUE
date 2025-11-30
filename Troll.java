@@ -7,7 +7,7 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  * @version (a version number or a date)
  */
 public class Troll extends Actor
-{   private int health = 2;
+{   
     
     public Troll(){
         setImage("Trollside1.png");
@@ -21,15 +21,6 @@ public class Troll extends Actor
      */
     public void act()
     {
-       if(isTouching(Sword.class)){
-           health--;
-           
-           if(health<= 0){
-               getWorld().removeObject(this);
-               Greenfoot.delay(80);
-               getWorld().showText("Traning Complete! Game Time!", 300, 200);
-               Greenfoot.setWorld(new Castle());
-           }
-       }
+       
     }
 }

@@ -9,58 +9,39 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 public class Knight extends Actor
 {
     //Different images of the Knight
-    private GreenfootImage imageRight1;
-    private GreenfootImage imageRight2;
-    private GreenfootImage imageLeft3;
-    private GreenfootImage imageLeft4;
-    private GreenfootImage imageRight5;
-    private GreenfootImage imageLeft6;
+    private GreenfootImage rightHandDown = new GreenfootImage("KnightFace1.png");
+    private GreenfootImage rightHandMiddle = new GreenfootImage("KnightFace2.png");
+    private GreenfootImage leftHandDown= new GreenfootImage("KnightFace1l.png");
+    private GreenfootImage leftHandMiddle = new GreenfootImage("KnightFace2l.png");
+    
     //Attack images of the Knight
-    private GreenfootImage attackRight;
-    private GreenfootImage attackLeft;
+    private GreenfootImage attackRight = new GreenfootImage("KnightFace3.png");
+    private GreenfootImage attackLeft = new GreenfootImage("KnightFace3l.png");
+    
     //How fast the Knight moves
     private int speed = 3;
-    //Jumping
-    private int yVelocity = 0;//How fast Knight moving vertically
-    private int gravity = 1;//To pull the Knight down
-    private int jumpStrength = -12;//To push upward
-    private boolean canDoubleJump = true;
+
     //Attack cooldown
     private int attackCooldown = 0;//time before attacking again
     private int attackDuration = 0;// how long attack image stays
     private int attackTimer = 0;
+    
     //Sword
     private Sword sword;
     private boolean facingRight = true;
+    private boolean swordFacingRight = true;
     public Knight(){
-        //images
-        imageRight1 = new GreenfootImage("KnightFace1.png");
-        imageRight2 = new GreenfootImage("KnightFace2.png");
-        imageLeft3 = new GreenfootImage("KnightFace1l.png");
-        imageLeft4 = new GreenfootImage("KnightFace2l.png");
-        imageRight5 = new GreenfootImage("KnightFace3.png");
-        imageLeft6 = new GreenfootImage("KnightFace3l.png");
-        
-        attackRight = new GreenfootImage("KnightFace3.png");
-        attackLeft = new GreenfootImage("KnightFace3l.png");
-        
         
         //Scale images
-        scaleImage(imageRight1);
-        //scaleImage(imageRight2);
-        scaleImage(imageLeft3);
-
-        //scaleImage(imageLeft4);
+        scaleImage(rightHandDown);
+        scaleImage(rightHandMiddle);
+        scaleImage(leftHandDown);
+        scaleImage(leftHandMiddle);
         scaleImage(attackRight);
         scaleImage(attackLeft);
-
-        scaleImage(imageLeft4);
-        scaleImage(imageRight5);
-        scaleImage(imageLeft6);
-
         
         //Start with Knight facing right
-        setImage(imageRight1);
+        setImage(rightHandDown);
         
         sword = new Sword();
     }
@@ -72,8 +53,6 @@ public class Knight extends Actor
     {
         
         handleControls();
-        handleJump();
-        applyGravity();
         handleAttack();
         //Cooldown timer reduces every frame
         //0 means attack again
@@ -92,81 +71,43 @@ public class Knight extends Actor
     public void handleControls(){
         if(Greenfoot.isKeyDown("left") || Greenfoot.isKeyDown("a")){
             facingRight = false;
-            setImage(imageLeft3);
+            setImage(leftHandDown);
             move(-speed);
         }
         if(Greenfoot.isKeyDown("right") || Greenfoot.isKeyDown("d")){
             facingRight = true;
-            setImage(imageRight1);
+            setImage(rightHandDown);
             move(speed);
         }
         
          if(Greenfoot.isKeyDown("up")|| Greenfoot.isKeyDown("w")){ 
-             setLocation(getX(), getY()-speed);
-             yVelocity = 0;
-             return;
+             setLocation(getX(), getY() -speed);
+            
         }
         if(Greenfoot.isKeyDown("down")|| Greenfoot.isKeyDown("s")){ 
             setLocation(getX(), getY()+speed);
-            yVelocity = 0;
-            return;
-        }
-    }
-    
-    private void applyGravity(){
-        yVelocity += gravity; //Apply gravity every frame
-        //Get current y and Velocity, + = down, - = up
-       setLocation(getX(), getY() + yVelocity);
-        
-       if(getY() >= 380){//passed floor
-         setLocation(getX(), 380);//bring to ground
-            yVelocity = 0;
-        }
-     }
-    
-    private boolean isOnGround(){
-        return getY() >= 380;//floor height = true
-    }
-    
-    private void handleJump(){
-        if(Greenfoot.isKeyDown("space")){
-            //First Jump
-            if(isOnGround()){
-               yVelocity = jumpStrength;//up
-               canDoubleJump = true; //reset
-            }
-            //Second jump
-            else if(canDoubleJump){//not on ground
-                yVelocity = jumpStrength;
-                canDoubleJump = false;
-            }
+            
         }
     }
     
     private void handleAttack(){
         if(Greenfoot.isKeyDown("x") && attackCooldown == 0){
-            //reset to normal
-            if(attackCooldown == 1){
-                if(getImage() == attackLeft){
-
-                    setImage(attackLeft);
-                    }else{
-                    setImage(attackRight);;
-
-                    setImage(imageLeft6);
-                }
-                //add sword swing animation
-                hitEnemies();//Damage enemies
-                attackCooldown = attackDuration;
+            if(facingRight){
+                setImage(attackRight);
+            }else{
+                setImage(attackLeft);
+            }
+        } else{
+            if(facingRight){
+                setImage(rightHandDown);
+            } else{
+                setImage(leftHandDown);
             }
         }
     }
     
     private void hitEnemies(){
-       Actor enemy = getOneIntersectingObject(Troll.class);
-       if(enemy != null){
-           getWorld().removeObject(enemy);
-       }
+       
     }
 
     private void scaleImage(GreenfootImage img){
@@ -178,9 +119,18 @@ public class Knight extends Actor
     }
     
     public void updateSwordPosition(){
-        int offsetX = facingRight ? 30 : -1000;
-        int offsetY = 0;
-        sword.setLocation(getX() + offsetX, getY() + offsetY);
-        sword.getImage().mirrorHorizontally();
+       if(Greenfoot.isKeyDown("x")){
+           int swordXAttackDistance = facingRight ? 40 : -40;
+           int yPosition = -40;
+           sword.setLocation(getX() + swordXAttackDistance, getY() + yPosition);
+       }else {
+           int swordXDistance = facingRight ? 10 : -10;
+           sword.setLocation(getX() + swordXDistance, getY());
+        }
+       
+       if(facingRight != swordFacingRight) {
+           sword.getImage().mirrorHorizontally();
+           swordFacingRight = facingRight;
+       }
     }
 }

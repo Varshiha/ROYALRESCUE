@@ -18,6 +18,14 @@ public class Sword extends Actor
      */
     public void act()
     {
+        attackCheck();
+    }
+    
+    public void attackCheck(){
+        if(!Greenfoot.isKeyDown("x")) return;
         
+        if(isTouching(Troll.class)){
+            removeTouching(Troll.class);
+        }
     }
 }
