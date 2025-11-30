@@ -1,4 +1,5 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
+import greenfoot.GreenfootImage;
 
 /**
  * Write a description of class Trolls here.
@@ -8,12 +9,13 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  */
 public class Troll extends Actor
 {   
-    
+    private int speed = 1;
+    private GreenfootImage rightSide = new GreenfootImage("Trollside2.png");
+    private GreenfootImage leftSide = new GreenfootImage("Trollside1.png");
     public Troll(){
-        setImage("Trollside1.png");
-        getImage().scale(getImage().getWidth()/2, getImage().getHeight()/2);
-        setImage("Trollside2.png");
-        getImage().scale(getImage().getWidth()/2, getImage().getHeight()/2);
+        rightSide.scale(rightSide.getWidth()/2, rightSide.getHeight()/2);
+        leftSide.scale(leftSide.getWidth()/2, leftSide.getHeight()/2);
+        setImage(leftSide);
     }
     /**
      * Act - do whatever the Trolls wants to do. This method is called whenever
@@ -21,6 +23,25 @@ public class Troll extends Actor
      */
     public void act()
     {
-       
+       moveTowardsPlayer();
     }
+    
+    public void moveTowardsPlayer(){
+        Knight k = (Knight)getWorld().getObjects(Knight.class).get(0);
+        if(k.getX() < getX()){
+           setImage(leftSide);
+           setLocation(getX() - speed, getY());
+        }else{
+           setImage(rightSide);
+           setLocation(getX() + speed, getY());
+        }
+        
+        if(k.getY() < getY()){
+           setLocation(getX(), getY() - speed);
+        }else{
+           setLocation(getX(), getY() + speed);
+        }
+    }
+    
+    
 }
