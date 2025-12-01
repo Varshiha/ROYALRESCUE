@@ -10,6 +10,8 @@ public class TrainingGrounds extends World
 {
     private int timer = 1200;
     private boolean trollSpawned = false;
+    private int count = 12;
+    private GreenfootImage imageBackground = new GreenfootImage("BackgroundLogo.png");
     /**
      * Constructor for objects of class TrainingGrounds.
      * 
@@ -47,7 +49,17 @@ public class TrainingGrounds extends World
             } 
 
             if(trollSpawned && getObjects(Troll.class).isEmpty()){
-                Greenfoot.setWorld(new Outside());
+                count--;
+                if(count <= 0){
+                    setBackground(imageBackground);
+                    showText("Good Job! You passed the tutorial level \n" + 
+                             "Hint: Be ready \n" + 
+                             "Press ENTER to go to the next level",
+                              getWidth()/2, getHeight()/2);
+                    if(Greenfoot.isKeyDown("enter")){
+                        Greenfoot.setWorld(new Outside());
+                    }
+                }
             }
         }
     }
