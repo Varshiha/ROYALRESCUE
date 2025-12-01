@@ -67,7 +67,7 @@ public class Knight extends Actor
         }
         
         updateSwordPosition();
-        
+        checkGameOver();
     }
     
     public void handleControls(){
@@ -135,5 +135,19 @@ public class Knight extends Actor
     public void loseLife(){
         lives--;
         getWorld().showText("Lives: " + lives , 100, 510);
+    }
+    
+    public void checkGameOver(){
+        if(lives <= 0){
+            World current = getWorld();
+            current.showText("Game Over : Restart Level", current.getWidth()/2, current.getHeight()/2);
+            Greenfoot.delay(80);
+            try{
+                World reset = current.getClass().newInstance();
+                Greenfoot.setWorld(reset);
+            }catch(Exception e){
+               Greenfoot.stop(); 
+            }
+        }
     }
 }

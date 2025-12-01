@@ -8,8 +8,6 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  */
 public class TrainingGrounds extends World
 {
-    //private DialogBox dialog;
-    private int step = -1; 
     private int timer = 1200;
     private boolean trollSpawned = false;
     /**
@@ -32,7 +30,7 @@ public class TrainingGrounds extends World
     public void addInsstructions(){
         //Instructions
         timer--;
-        if(timer > 1020 ){
+        if(timer > 1010 ){
             showText(" Hello, I will be your instructor \n " +"throughout this game.\n" + "Tutorial Time!", 340, 100);
         }else if(timer > 840 ){
             showText("Use A/D or <--> to  \n" + "move left/right", 340, 100);
@@ -47,11 +45,11 @@ public class TrainingGrounds extends World
                 addObject(new Troll(), 100, 450);
                 trollSpawned = true;
             } 
-            
+
             if(trollSpawned && getObjects(Troll.class).isEmpty()){
-                    Greenfoot.setWorld(new Outside());
-                }
+                Greenfoot.setWorld(new Outside());
+            }
         }
     }
-    
+
 }
