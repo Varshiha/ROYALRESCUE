@@ -6,12 +6,13 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  * @author (your name) 
  * @version (a version number or a date)
  */
-public class HeartFull extends Actor
+public class Heart extends Actor
 {
     private GreenfootImage HeartFull;
     private GreenfootImage HeartEmpty;
+    private Knight knight;
     
-    public HeartFull(){
+    public Heart(){
         HeartFull = new GreenfootImage("HeartFull.png");
         
         HeartEmpty = new GreenfootImage("HeartEmpty.png");
@@ -33,11 +34,12 @@ public class HeartFull extends Actor
     }
     
     private void scaleImage(GreenfootImage img){
-        img.scale(img.getWidth(), img.getHeight());
+        img.scale(img.getWidth()/2, img.getHeight()/2);
     }
     
     public void emptyHeart(){
-        setImage(HeartEmpty);
+        
+        
     }
 }
 

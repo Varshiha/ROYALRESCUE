@@ -32,6 +32,10 @@ public class Knight extends Actor
     private boolean swordFacingRight = true;
     
     private int lives = 3;
+    
+    public boolean loseHeart = false;
+    private Heart heart;
+    
     public Knight(){
         
         //Scale images
@@ -135,6 +139,14 @@ public class Knight extends Actor
     public void loseLife(){
         lives--;
         getWorld().showText("Lives: " + lives , 100, 510);
+        loseHeart = true;
+    }
+    
+    public boolean loseHeart(){
+        if(loseHeart == true){
+            heart.emptyHeart();
+        }
+        return false;
     }
     
     public void checkGameOver(){
