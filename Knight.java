@@ -60,15 +60,7 @@ public class Knight extends Actor
         
         handleControls();
         handleAttack();
-        //Cooldown timer reduces every frame
-        //0 means attack again
-        if(attackCooldown > 0){
-           attackCooldown--; 
-        }
         
-        if(attackTimer > 0){
-           attackTimer--; 
-        }
         
         updateSwordPosition();
         checkGameOver();
@@ -152,14 +144,22 @@ public class Knight extends Actor
     public void checkGameOver(){
         if(lives <= 0){
             World current = getWorld();
-            current.showText("Game Over : Restart Level", current.getWidth()/2, current.getHeight()/2);
+            current.showText("Game Over : Restart Level\n" + "Click R to restart", current.getWidth()/2, current.getHeight()/2);
             Greenfoot.delay(80);
+           // if(Greenfoot.isKeyDown("r")){
             try{
                 World reset = current.getClass().newInstance();
                 Greenfoot.setWorld(reset);
             }catch(Exception e){
                Greenfoot.stop(); 
             }
+        //}
+    }
+    }
+    
+    public void getPotion(){
+        if(isTouching(Potion.class)){
+            Greenfoot.setWorld(new KingRoom());
         }
     }
 }

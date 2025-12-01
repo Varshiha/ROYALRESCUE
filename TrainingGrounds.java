@@ -60,7 +60,7 @@ public class TrainingGrounds extends World
                              "Press ENTER to go to the next level",
                               getWidth()/2, getHeight()/2);
                     if(Greenfoot.isKeyDown("enter")){
-                        Greenfoot.setWorld(new Outside());
+                        Greenfoot.setWorld(new Grass1());
                     }
                 }
             }

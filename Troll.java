@@ -10,7 +10,7 @@ import greenfoot.GreenfootImage;
 public class Troll extends Actor
 {   
     private int speed = 1;
-    private int health = 1;
+    
     private Actor target;
     private GreenfootImage rightSide = new GreenfootImage("Trollside2.png");
     private GreenfootImage leftSide = new GreenfootImage("Trollside1.png");
@@ -60,13 +60,7 @@ public class Troll extends Actor
         }
     }
 
-    public void takeHit(){
-        health--;
-        if(health<=0){
-            getWorld().removeObject(this);
-
-        }
-    }
+    
     
     public void setTarget(Actor a){
         target = a;

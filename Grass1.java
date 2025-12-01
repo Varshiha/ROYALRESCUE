@@ -6,7 +6,7 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  * @author (your name) 
  * @version (a version number or a date)
  */
-public class Outside extends World
+public class Grass1 extends World
 {
     private int trollSpawnTimer = 150;
     private int trollsToSpawn = Greenfoot.getRandomNumber(5) + 3;
@@ -16,7 +16,7 @@ public class Outside extends World
      * Constructor for objects of class Outside.
      * 
      */
-    public Outside()
+    public Grass1()
     {    
         // Create a new world with 600x400 cells with a cell size of 1x1 pixels.
         super(547, 554, 1); 
@@ -24,7 +24,8 @@ public class Outside extends World
         addObject(new DialogBox(), getWidth()/2, 100);
         addObject(new MaidHead(), 112, 100); 
         addObject(new Maid(), 300, 350);
-        showText("Help me! I am scared!\nSave me!", 340, 100);
+        showText("Help me! I am scared!\n" +"Save me!", 340, 100);
+        
     }
 
     public void act(){
@@ -41,7 +42,10 @@ public class Outside extends World
             showText("Thank you for saving me!\n" 
                 + "You have to save the King.\n" 
                 + "HE'S ALL ALONE!", 340, 100);
+                checkKnightExit();
+                showText("E\n" + "X\n" + "I\n" + "T", 535, getHeight()/2);
         }
+        
     }
 
     public void spawnAttackingTroll(){
@@ -50,6 +54,15 @@ public class Outside extends World
 
         Troll t = new Troll();
         addObject(t, x, y);
-        t.setTarget(getObjects(Maid.class).get(0));
+    }
+    
+    private void checkKnightExit(){
+        Knight k = (Knight)getObjects(Knight.class).get(0);
+        if(k.getX() >=getWidth() - 5){
+            int newX = k.getX();
+            int newY = k.getY();
+            Greenfoot.setWorld(new Grass2(newX, newY));
+            
+        }
     }
 }
