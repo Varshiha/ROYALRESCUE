@@ -16,6 +16,7 @@ public class KingRoom extends World
     public KingRoom()
     {    
         // Create a new world with 600x400 cells with a cell size of 1x1 pixels.
-        super(600, 400, 1); 
+        super(547, 554, 1); 
+        addObject( new MiniLibrary(), 235, 250); 
     }
 }
