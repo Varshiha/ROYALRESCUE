@@ -31,8 +31,7 @@ public class Knight extends Actor
     private boolean facingRight = true;
     private boolean swordFacingRight = true;
     
-    private HeartFull heart;
-    
+    private int lives = 3;
     public Knight(){
         
         //Scale images
@@ -68,7 +67,7 @@ public class Knight extends Actor
         }
         
         updateSwordPosition();
-        
+        checkGameOver();
     }
     
     public void handleControls(){
@@ -85,11 +84,9 @@ public class Knight extends Actor
         
          if(Greenfoot.isKeyDown("up")|| Greenfoot.isKeyDown("w")){ 
              setLocation(getX(), getY() -speed);
-            
         }
         if(Greenfoot.isKeyDown("down")|| Greenfoot.isKeyDown("s")){ 
             setLocation(getX(), getY()+speed);
-            
         }
     }
     
@@ -109,9 +106,6 @@ public class Knight extends Actor
         }
     }
     
-    private void hitEnemies(){
-       
-    }
 
     private void scaleImage(GreenfootImage img){
         img.scale(img.getWidth()/5, img.getHeight()/5);
@@ -119,6 +113,7 @@ public class Knight extends Actor
     
     public void addedToWorld(World world){
         world.addObject(sword, getX(), getY());
+        
     }
     
     public void updateSwordPosition(){
@@ -137,4 +132,22 @@ public class Knight extends Actor
        }
     }
     
+    public void loseLife(){
+        lives--;
+        getWorld().showText("Lives: " + lives , 100, 510);
+    }
+    
+    public void checkGameOver(){
+        if(lives <= 0){
+            World current = getWorld();
+            current.showText("Game Over : Restart Level", current.getWidth()/2, current.getHeight()/2);
+            Greenfoot.delay(80);
+            try{
+                World reset = current.getClass().newInstance();
+                Greenfoot.setWorld(reset);
+            }catch(Exception e){
+               Greenfoot.stop(); 
+            }
+        }
+    }
 }

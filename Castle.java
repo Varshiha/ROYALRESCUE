@@ -16,9 +16,9 @@ public class Castle extends World
     public Castle()
     {    
         // Create a new world with 600x400 cells with a cell size of 1x1 pixels.
-        super(2500, 1474, 1); 
-        //GreenfootImage original = new GreenfootImage("castle.png");
-        //GreenfootImage cropped = new GreenfootImage(1021, 1018);
-        //cropped.drawImage(original, 1021, 1018);
+        super(547, 554, 1); 
+        GreenfootImage bg = new GreenfootImage("Castle.png");
+        bg.scale(getWidth(), getHeight());
+        setBackground(bg);
     }
 }

@@ -9,7 +9,6 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 public class Sword extends Actor
 {
     public Sword(){
-        //setImage("");
         getImage().scale(getImage().getWidth()/4, getImage().getHeight()/4);
     }
     /**
@@ -22,8 +21,9 @@ public class Sword extends Actor
     }
     
     public void attackCheck(){
-        if(!Greenfoot.isKeyDown("x")) return;
-        
+        if(!Greenfoot.isKeyDown("x")) {
+            return;
+        }
         if(isTouching(Troll.class)){
             removeTouching(Troll.class);
         }
