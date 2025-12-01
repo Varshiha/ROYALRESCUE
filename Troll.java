@@ -12,6 +12,7 @@ public class Troll extends Actor
     private int speed = 1;
     private GreenfootImage rightSide = new GreenfootImage("Trollside2.png");
     private GreenfootImage leftSide = new GreenfootImage("Trollside1.png");
+    private HeartFull heart;
     public Troll(){
         rightSide.scale(rightSide.getWidth()/2, rightSide.getHeight()/2);
         leftSide.scale(leftSide.getWidth()/2, leftSide.getHeight()/2);
@@ -43,5 +44,9 @@ public class Troll extends Actor
         }
     }
     
-    
+    public void hitKnight(){
+        if(isTouching(Knight.class)){
+            heart.emptyHeart();
+        }
+    }
 }

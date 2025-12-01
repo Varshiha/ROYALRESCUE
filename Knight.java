@@ -30,6 +30,9 @@ public class Knight extends Actor
     private Sword sword;
     private boolean facingRight = true;
     private boolean swordFacingRight = true;
+    
+    private HeartFull heart;
+    
     public Knight(){
         
         //Scale images
@@ -133,4 +136,5 @@ public class Knight extends Actor
            swordFacingRight = facingRight;
        }
     }
+    
 }
