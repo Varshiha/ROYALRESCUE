@@ -24,11 +24,13 @@ public class Sword extends Actor
     }
     
     public void attackCheck(){
+        Knight k = (Knight)getWorld().getObjects(Knight.class).get(0);
         if(!Greenfoot.isKeyDown("x")) {
             return;
         }
         if(isTouching(Troll.class)){
             removeTouching(Troll.class);
+            k.increaseScore();
         }
     }
     

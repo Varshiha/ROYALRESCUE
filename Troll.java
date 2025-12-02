@@ -26,11 +26,13 @@ public class Troll extends Actor
      */
     public void act()
     {
+        
         moveTowardsPlayer();
         if(target!= null){
             turnTowards(target.getX(), target.getY());
             move(1);
         }
+        
     }
 
     public void moveTowardsPlayer(){
@@ -50,7 +52,8 @@ public class Troll extends Actor
         }
 
         if(isTouching(Knight.class)){
-            k.loseLife();
+            k.decreaseScore(10);
+            k.increaseTrollTouchCount();
             int pushDistance = 50;
             if(getX() > k.getX()){
                 setLocation(getX() + pushDistance, getY()); 
