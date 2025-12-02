@@ -18,7 +18,7 @@ public class Cave extends World
         // Create a new world with 600x400 cells with a cell size of 1x1 pixels.
         super(547, 554, 1); 
         addObject(new FinalBoss(), 450, 400);
-        addObject(new EvilSword(),300,400);
+        
         addObject(new KingLocked(), 501, 59);
         addObject(new Heart(), 385, 24);
         addObject(new Heart(), 440, 24);
