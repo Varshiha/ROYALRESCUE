@@ -86,10 +86,10 @@ public class FinalBoss extends Actor
     public void moveTowardsPlayer(){
         Knight k = (Knight)getWorld().getObjects(Knight.class).get(0);
         if(k.getX() < getX()){
-            setImage(StandingLeft);
+            attack();
             setLocation(getX() - speed, getY());
         }else{
-            setImage(StandingRight);
+            attack();
             setLocation(getX() + speed, getY());
         }
 

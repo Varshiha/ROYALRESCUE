@@ -40,6 +40,8 @@ public class Knight extends Actor
     
     private int tollTouchCount = 0;
     
+    private KingLocked kg;
+    
     
     public Knight(){
         
@@ -71,6 +73,7 @@ public class Knight extends Actor
         
         updateSwordPosition();
         checkGameOver();
+        saveKing();
     }
     
     public void handleControls(){
@@ -173,6 +176,15 @@ public class Knight extends Actor
     
     public void increaseScore(){
         score += 5;
+    }
+    
+    public void saveKing(){
+        Actor kg = getOneIntersectingObject(KingLocked.class);
+        if (kg != null) {
+            World world = getWorld();
+            world.removeObject(kg);
+            world.addObject( new  King(), getX(), getY());
+        }
     }
     
 }
