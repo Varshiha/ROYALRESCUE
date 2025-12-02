@@ -26,7 +26,9 @@ public class Troll extends Actor
      */
     public void act()
     {
+        Knight k = (Knight)getWorld().getObjects(Knight.class).get(0);
         
+        if(k.waitingToRestart){return;}
         moveTowardsPlayer();
         if(target!= null){
             turnTowards(target.getX(), target.getY());
