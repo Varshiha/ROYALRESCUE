@@ -36,6 +36,10 @@ public class Knight extends Actor
     public boolean loseHeart = false;
     private Heart heart;
     
+    private int score = 100;
+    
+    private int tollTouchCount = 0;
+    
     public Knight(){
         
         //Scale images
@@ -57,7 +61,9 @@ public class Knight extends Actor
      */
     public void act()
     {
-        
+        getWorld().showText("Lives: " + lives , 80, 510);
+        getWorld().showText("Score: " + score , 200, 510);
+        getWorld().showText("Troll Touch Count: " + tollTouchCount , 150, 530);
         handleControls();
         handleAttack();
         
@@ -130,7 +136,6 @@ public class Knight extends Actor
     
     public void loseLife(){
         lives--;
-        getWorld().showText("Lives: " + lives , 100, 510);
         loseHeart = true;
     }
     
@@ -144,22 +149,28 @@ public class Knight extends Actor
     public void checkGameOver(){
         if(lives <= 0){
             World current = getWorld();
-            current.showText("Game Over : Restart Level\n" + "Click R to restart", current.getWidth()/2, current.getHeight()/2);
+            current.showText("Game Over : Restart Level", current.getWidth()/2, current.getHeight()/2);
             Greenfoot.delay(80);
-           // if(Greenfoot.isKeyDown("r")){
+           
             try{
                 World reset = current.getClass().newInstance();
                 Greenfoot.setWorld(reset);
             }catch(Exception e){
                Greenfoot.stop(); 
             }
-        //}
+        
     }
     }
     
-    public void getPotion(){
-        if(isTouching(Potion.class)){
-            Greenfoot.setWorld(new KingRoom());
-        }
+    public Potion touchPotion(){
+        return (Potion)getOneIntersectingObject(Potion.class);
+    }
+    
+    public MiniLibrary ifTouchBookCase(){
+        return (MiniLibrary)getOneIntersectingObject(MiniLibrary.class);
+    }
+    
+    public void increaseScore(){
+        score += 5;
     }
 }

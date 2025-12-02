@@ -15,8 +15,8 @@ public class Troll extends Actor
     private GreenfootImage rightSide = new GreenfootImage("Trollside2.png");
     private GreenfootImage leftSide = new GreenfootImage("Trollside1.png");
     public Troll(){
-        rightSide.scale(rightSide.getWidth()/2, rightSide.getHeight()/2);
-        leftSide.scale(leftSide.getWidth()/2, leftSide.getHeight()/2);
+        rightSide.scale(rightSide.getWidth()/3, rightSide.getHeight()/3);
+        leftSide.scale(leftSide.getWidth()/3, leftSide.getHeight()/3);
         setImage(leftSide);
     }
 

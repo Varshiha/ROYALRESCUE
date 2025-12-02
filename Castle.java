@@ -9,9 +9,11 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 public class Castle extends World
 {
     private int trollSpawnTimer = 150;
-    private int trollsToSpawn = Greenfoot.getRandomNumber(5) + 6;
+    private int trollsToSpawn = Greenfoot.getRandomNumber(5) + 3;
     //spawn between 6 and 10 trolls
     private boolean finishedSpawning = false;
+    private int maxDifficulty = 4; //amount of trolls that spawn
+    private int trollsStart = 2; //easier
     /**
      * Constructor for objects of class Castle.
      * 
@@ -26,35 +28,54 @@ public class Castle extends World
         prepare(knightX, knightY);
     }
     
+    public Castle(){
+        this(350, 350);
+    }
+
     private void prepare(int knightX, int knightY){
         addObject(new Knight(), knightX, knightY);
         addObject(new Troll(), Greenfoot.getRandomNumber(500), Greenfoot.getRandomNumber(500));
+        addObject(new Potion(), Greenfoot.getRandomNumber(500), Greenfoot.getRandomNumber(500));
     }
-    
+
     public void act(){
         trollSpawnTimer--;
         if(trollSpawnTimer<= 0 && trollsToSpawn > 0){
             spawnAttackingTroll();
             trollsToSpawn--;
             trollSpawnTimer = 150;
+
+            if(trollsStart < maxDifficulty){
+                trollsStart++;
+            }
             if(trollsToSpawn == 0 ){
                 finishedSpawning = true;
             }
         }
-        if(finishedSpawning && getObjects(Troll.class).isEmpty()){
-            
+
+        potionFound();
+    }
+
+    public void spawnAttackingTroll(){
+
+        for(int i=0; i<trollsStart; i++){
+            addObject(new Troll(), 
+                Greenfoot.getRandomNumber(getWidth()), 
+                Greenfoot.getRandomNumber(getHeight()));
         }
 
     }
-    
-    public void spawnAttackingTroll(){
-        
-        for(int i=0; i<4; i++){
-            addObject(new Troll(), 
-            Greenfoot.getRandomNumber(500), 
-            Greenfoot.getRandomNumber(500));
+
+    public void potionFound(){
+        Knight k = (Knight)getObjects(Knight.class).get(0);
+        Potion p = k.touchPotion();
+        if(p != null){
+            removeObject(p);
+            int newX = k.getX();
+            int newY = k.getY();
+            Greenfoot.setWorld(new KingRoom(newX, newY));
         }
-        
+
     }
     
     

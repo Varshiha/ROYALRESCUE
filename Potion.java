@@ -8,12 +8,13 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  */
 public class Potion extends Actor
 {
-    /**
-     * Act - do whatever the Potion wants to do. This method is called whenever
-     * the 'Act' or 'Run' button gets pressed in the environment.
-     */
-    public void act()
-    {
-        // Add your action code here.
+    private GreenfootImage potion = new GreenfootImage(".png");
+    public Potion(){
+        setImage(potion);
+        scaleImage(potion);
+    }
+    
+    public void scaleImage(GreenfootImage img){
+        img.scale(img.getWidth()/3, img.getHeight()/3);
     }
 }

@@ -9,9 +9,11 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 public class Grass2 extends World
 {
     private int trollSpawnTimer = 150;
-    private int trollsToSpawn = Greenfoot.getRandomNumber(5) + 6;
+    private int trollsToSpawn = Greenfoot.getRandomNumber(5) + 3;
     //spawn between 6 and 10 trolls
     private boolean finishedSpawning = false;
+    private int maxDifficulty = 4; //amount of trolls that spawn
+    private int trollsStart = 2; //easier
     /**
      * Constructor for objects of class Grass2.
      * 
@@ -20,11 +22,17 @@ public class Grass2 extends World
     {    
         // Create a new world with 600x400 cells with a cell size of 1x1 pixels.
         super(547, 554, 1);
+        this.
         prepare(knightX, knightY);
+    }
+    
+    public Grass2(){
+        this(350,350);
     }
 
     private void prepare(int knightX, int knightY){
         addObject(new Knight(), knightX, knightY);
+        addObject(new Troll(), Greenfoot.getRandomNumber(500), Greenfoot.getRandomNumber(500));
         addObject(new Troll(), Greenfoot.getRandomNumber(500), Greenfoot.getRandomNumber(500));
     }
 
@@ -34,6 +42,10 @@ public class Grass2 extends World
             spawnAttackingTroll();
             trollsToSpawn--;
             trollSpawnTimer = 150;
+            
+            if(trollsStart < maxDifficulty){
+                trollsStart++;
+            }
             if(trollsToSpawn == 0 ){
                 finishedSpawning = true;
             }
@@ -47,7 +59,7 @@ public class Grass2 extends World
     
     public void spawnAttackingTroll(){
         
-        for(int i=0; i<4; i++){
+        for(int i=0; i<trollsStart; i++){
             addObject(new Troll(), 
             Greenfoot.getRandomNumber(500), 
             Greenfoot.getRandomNumber(500));
