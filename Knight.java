@@ -40,6 +40,7 @@ public class Knight extends Actor
     
     private int tollTouchCount = 0;
     
+    
     public Knight(){
         
         //Scale images
@@ -173,4 +174,5 @@ public class Knight extends Actor
     public void increaseScore(){
         score += 5;
     }
+    
 }
