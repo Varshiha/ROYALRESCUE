@@ -34,7 +34,7 @@ public class EvilSword extends Actor
     }
     
     public void attackCheck(){
-        if(!Greenfoot.isKeyDown("x")) {
+        if(!Greenfoot.isKeyDown("g")) {
             return;
         }
         if(isTouching(Knight.class)){
