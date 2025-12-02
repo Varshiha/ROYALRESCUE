@@ -31,6 +31,7 @@ public class Sword extends Actor
         if(isTouching(Troll.class)){
             removeTouching(Troll.class);
             k.increaseScore();
+
         }
     }
     
@@ -40,6 +41,7 @@ public class Sword extends Actor
         }
         if(fB == null){
             
+
         }
     }
 }

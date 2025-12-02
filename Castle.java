@@ -35,7 +35,7 @@ public class Castle extends World
     private void prepare(int knightX, int knightY){
         addObject(new Knight(), knightX, knightY);
         addObject(new Troll(), Greenfoot.getRandomNumber(500), Greenfoot.getRandomNumber(500));
-        addObject(new Potion(), Greenfoot.getRandomNumber(500), Greenfoot.getRandomNumber(500));
+        addObject(new PowerUp(), Greenfoot.getRandomNumber(500), Greenfoot.getRandomNumber(500));
     }
 
     public void act(){
@@ -68,7 +68,7 @@ public class Castle extends World
 
     public void potionFound(){
         Knight k = (Knight)getObjects(Knight.class).get(0);
-        Potion p = k.touchPotion();
+        PowerUp p = k.touchPowerUp();
         if(p != null){
             removeObject(p);
             int newX = k.getX();

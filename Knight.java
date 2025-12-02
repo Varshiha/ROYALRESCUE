@@ -31,26 +31,26 @@ public class Knight extends Actor
     private boolean facingRight = true;
     private boolean swordFacingRight = true;
 
-    private int lives = 3;
+    public static int lives = 3;
 
     public boolean loseHeart = false;
     private Heart heart;
 
-    private int score = 100;
+    public static int score = 100;
 
-    
-    private int tollTouchCount = 0;
     
     
 
-    private int initialScore = 100;
-
-    private int trollTouchCount = 0;
-
-    private boolean waitingToRestart = false;
-
+    public static int initialScore = 100;
+    public static int trollTouchCount = 0;
+    public static boolean waitingToRestart = false;
     public Knight(){
-
+        if(lives == 0) lives = 3;
+        if(score ==0) score = 100;
+        
+        trollTouchCount = 0;
+        waitingToRestart = false;
+        initialScore = 100;
         //Scale images
         scaleImage(rightHandDown);
         scaleImage(rightHandMiddle);
@@ -156,8 +156,8 @@ public class Knight extends Actor
         return false;
     }
 
-    public Potion touchPotion(){
-        return (Potion)getOneIntersectingObject(Potion.class);
+    public PowerUp touchPowerUp(){
+        return (PowerUp)getOneIntersectingObject(PowerUp.class);
     }
 
     public MiniLibrary ifTouchBookCase(){
@@ -189,18 +189,22 @@ public class Knight extends Actor
     public void restartLevel(){
         if(getLostPoints() >= 50 || trollTouchCount == 5){
             waitingToRestart = true;
-            World current = getWorld();
-            current.showText("Level Restart! Press R to restart again", current.getWidth()/2, current.getHeight()/2);
-            Greenfoot.delay(80);
-            if(waitingToRestart && Greenfoot.isKeyDown("r")){
+            getWorld().showText("Level Restart!", getWorld().getWidth()/2, getWorld().getHeight()/2);
+
+            if(Greenfoot.isKeyDown("r")){
                 try{
-                World reset = current.getClass().newInstance();
-                Greenfoot.setWorld(reset);
-            }catch(Exception e){
-                Greenfoot.stop(); 
-            }
-            }
-        }
+                    World reset = getWorld().getClass().newInstance();
+                    Greenfoot.setWorld(reset);
+                    lives =3;
+                    score = 100;
+                    trollTouchCount = 0;
+                    waitingToRestart = false;
+                    
+                }catch(Exception e){
+                    Greenfoot.stop(); 
+                }
+
+            }}
     }
 
     public void increaseTrollTouchCount(){
