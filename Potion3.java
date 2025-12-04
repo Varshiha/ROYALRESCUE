@@ -9,7 +9,9 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 public class Potion3 extends Actor
 {
      private GreenfootImage potion = new GreenfootImage("KingHead.png");
+    
     public Potion3(){
+        scaleImage(potion);
         setImage(potion);
     }
     
@@ -25,10 +27,6 @@ public class Potion3 extends Actor
         if (answer.equals("Guacamole")) // Compare the entered string
         {
             Greenfoot.setWorld(new DarkForest());
-        }
-        else
-        {
-            Greenfoot.setWorld(new BookOpen2());
         }
     }// Add your action code here.
     }
