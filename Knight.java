@@ -22,35 +22,26 @@ public class Knight extends Actor
     private int speed = 3;
 
     //Attack cooldown
-    private int attackCooldown = 0;//time before attacking again
-    private int attackDuration = 0;// how long attack image stays
+    private int attackCooldown = 0;
     private int attackTimer = 0;
+    private final int ATTACK_COOLDOWN_MAX = 25;
+    private final int ATTACK_TIMER_MAX = 8;
 
     //Sword
     private Sword sword;
     private boolean facingRight = true;
     private boolean swordFacingRight = true;
 
-    public static int lives = 3;
-
     public boolean loseHeart = false;
     private Heart heart;
 
     public static int score = 100;
-
-    
-    
-
     public static int initialScore = 100;
-    public static int trollTouchCount = 0;
+
     public static boolean waitingToRestart = false;
+    public int consecutiveTrollHits = 0;
+
     public Knight(){
-        if(lives == 0) lives = 3;
-        if(score ==0) score = 100;
-        
-        trollTouchCount = 0;
-        waitingToRestart = false;
-        initialScore = 100;
         //Scale images
         scaleImage(rightHandDown);
         scaleImage(rightHandMiddle);
@@ -71,16 +62,18 @@ public class Knight extends Actor
      */
     public void act()
     {
-        getWorld().showText("Lives: " + lives , 80, 510);
-        getWorld().showText("Score: " + score , 200, 510);
-        getWorld().showText("Troll Touch Count: " + trollTouchCount , 150, 530);
+        getWorld().showText("Score: " + score , 80, 510);
+        getWorld().showText("Troll Consecutive Hits: " + consecutiveTrollHits , 150, 530);
         handleControls();
-        handleAttack();
+        handleAttackTiming();
 
         updateSwordPosition();
         //checkGameOver();
         gameOverWorld();
-        restartLevel();
+        
+        if(consecutiveTrollHits == 10){
+            restartLevel();
+        }
     }
 
     public void handleControls(){
@@ -103,14 +96,26 @@ public class Knight extends Actor
         }
     }
 
-    private void handleAttack(){
+    private void handleAttackTiming(){
+        if(attackCooldown > 0){
+            attackCooldown--;
+        }
+
+        if(attackTimer > 0){
+            attackTimer--;
+        }
+
         if(Greenfoot.isKeyDown("x") && attackCooldown == 0){
+            startAttack();
+        }
+
+        if(attackTimer > 0){
             if(facingRight){
                 setImage(attackRight);
             }else{
                 setImage(attackLeft);
             }
-        } else{
+        }else{
             if(facingRight){
                 setImage(rightHandDown);
             } else{
@@ -119,17 +124,26 @@ public class Knight extends Actor
         }
     }
 
+    private void startAttack(){
+        attackTimer = ATTACK_TIMER_MAX;
+        attackCooldown = ATTACK_COOLDOWN_MAX;
+    }
+
     private void scaleImage(GreenfootImage img){
         img.scale(img.getWidth()/5, img.getHeight()/5);
     }
 
     public void addedToWorld(World world){
-        world.addObject(sword, getX(), getY());
-
+        if(sword.getWorld() == null){
+            world.addObject(sword, getX(), getY());
+        }
     }
 
     public void updateSwordPosition(){
-        if(Greenfoot.isKeyDown("x")){
+        if(sword == null){
+            return;
+        }
+        if(attackTimer > 0){
             int swordXAttackDistance = facingRight ? 40 : -40;
             int yPosition = -40;
             sword.setLocation(getX() + swordXAttackDistance, getY() + yPosition);
@@ -142,26 +156,6 @@ public class Knight extends Actor
             sword.getImage().mirrorHorizontally();
             swordFacingRight = facingRight;
         }
-    }
-
-    public void loseLife(){
-        lives--;
-        loseHeart = true;
-    }
-
-    public boolean loseHeart(){
-        if(loseHeart == true){
-            heart.emptyHeart();
-        }
-        return false;
-    }
-
-    public PowerUp touchPowerUp(){
-        return (PowerUp)getOneIntersectingObject(PowerUp.class);
-    }
-
-    public MiniLibrary ifTouchBookCase(){
-        return (MiniLibrary)getOneIntersectingObject(MiniLibrary.class);
     }
 
     public void increaseScore(){
@@ -187,28 +181,30 @@ public class Knight extends Actor
     }
 
     public void restartLevel(){
-        if(getLostPoints() >= 50 || trollTouchCount == 5){
-            waitingToRestart = true;
-            getWorld().showText("Level Restart!", getWorld().getWidth()/2, getWorld().getHeight()/2);
-
-            if(Greenfoot.isKeyDown("r")){
-                try{
-                    World reset = getWorld().getClass().newInstance();
-                    Greenfoot.setWorld(reset);
-                    lives =3;
-                    score = 100;
-                    trollTouchCount = 0;
-                    waitingToRestart = false;
-                    
-                }catch(Exception e){
-                    Greenfoot.stop(); 
-                }
-
-            }}
+        World current = getWorld();
+        World newWorld = null;
+        
+        try{
+            newWorld = current.getClass().getDeclaredConstructor().newInstance();
+        }
+        catch(Exception e){
+            System.out.println("Could not restart world: " + e);
+            return;
+        }
+        
+        Greenfoot.setWorld(newWorld);
+    }
+    
+    public void consecutiveTrollHits(){
+        consecutiveTrollHits++;
     }
 
-    public void increaseTrollTouchCount(){
-        trollTouchCount ++;
+    public PowerUp touchPowerUp(){
+        return (PowerUp)getOneIntersectingObject(PowerUp.class);
+    }
+
+    public MiniLibrary ifTouchBookCase(){
+        return (MiniLibrary)getOneIntersectingObject(MiniLibrary.class);
     }
 
 }

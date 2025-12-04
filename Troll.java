@@ -1,5 +1,6 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 import greenfoot.GreenfootImage;
+import java.util.List;
 
 /**
  * Write a description of class Trolls here.
@@ -10,8 +11,6 @@ import greenfoot.GreenfootImage;
 public class Troll extends Actor
 {   
     private int speed = 1;
-    
-    private Actor target;
     private GreenfootImage rightSide = new GreenfootImage("Trollside2.png");
     private GreenfootImage leftSide = new GreenfootImage("Trollside1.png");
     public Troll(){
@@ -26,19 +25,20 @@ public class Troll extends Actor
      */
     public void act()
     {
-        Knight k = (Knight)getWorld().getObjects(Knight.class).get(0);
-        
-        if(k.waitingToRestart){return;}
-        moveTowardsPlayer();
-        if(target!= null){
-            turnTowards(target.getX(), target.getY());
-            move(1);
+        List<Knight> knights = getWorld().getObjects(Knight.class);
+        if(knights.isEmpty()){
+           return; 
         }
+        
+        Knight k = knights.get(0);
+        if(Knight.waitingToRestart){
+            return;
+        }
+        moveTowardsPlayer(k);
         
     }
 
-    public void moveTowardsPlayer(){
-        Knight k = (Knight)getWorld().getObjects(Knight.class).get(0);
+    public void moveTowardsPlayer(Knight k){
         if(k.getX() < getX()){
             setImage(leftSide);
             setLocation(getX() - speed, getY());
@@ -55,7 +55,7 @@ public class Troll extends Actor
 
         if(isTouching(Knight.class)){
             k.decreaseScore(10);
-            k.increaseTrollTouchCount();
+            k.consecutiveTrollHits();
             int pushDistance = 50;
             if(getX() > k.getX()){
                 setLocation(getX() + pushDistance, getY()); 
@@ -63,11 +63,5 @@ public class Troll extends Actor
                 setLocation(getX() - pushDistance, getY());
             }
         }
-    }
-
-    
-    
-    public void setTarget(Actor a){
-        target = a;
     }
 }

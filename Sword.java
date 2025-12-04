@@ -1,4 +1,5 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
+import java.util.List;
 
 /**
  * Write a description of class Sword here.
@@ -8,8 +9,6 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  */
 public class Sword extends Actor
 {
-    private FinalBoss fB;
-    
     public Sword(){
         getImage().scale(getImage().getWidth()/4, getImage().getHeight()/4);
     }
@@ -24,24 +23,20 @@ public class Sword extends Actor
     }
     
     public void attackCheck(){
-        Knight k = (Knight)getWorld().getObjects(Knight.class).get(0);
+        List<Knight> knights = getWorld().getObjects(Knight.class);
         if(!Greenfoot.isKeyDown("x")) {
             return;
         }
+        if(getWorld() == null){
+            return;
+        }
+        if(knights.isEmpty()){
+            return;
+        }
+        Knight k = getWorld().getObjects(Knight.class).get(0);
         if(isTouching(Troll.class)){
             removeTouching(Troll.class);
-            k.increaseScore();
-
         }
     }
     
-    public void killFinalBoss(){
-        if(isTouching(FinalBoss.class)){
-            fB.loseLife();
-        }
-        if(fB == null){
-            
-
-        }
-    }
 }

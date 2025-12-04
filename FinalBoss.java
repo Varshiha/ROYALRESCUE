@@ -13,10 +13,9 @@ public class FinalBoss extends Actor
     private GreenfootImage AttackRight = new GreenfootImage("FinalBossAttackr.png");
     private GreenfootImage AttackLeft = new GreenfootImage("FinalBossAttackl.png");
     
-    private Actor target;
+    
     
     //Sword
-    private EvilSword eSword;
     private boolean facingRight = true;
     private boolean swordFacingRight = true;
     
@@ -34,7 +33,6 @@ public class FinalBoss extends Actor
         
         setImage(StandingLeft);
         
-        eSword = new EvilSword();
     }
     
     /**
@@ -43,7 +41,6 @@ public class FinalBoss extends Actor
      */
     public void act()
     {
-       updateSwordPosition();
        attack();
     }
     
@@ -51,71 +48,24 @@ public class FinalBoss extends Actor
         img.scale(img.getWidth()/3, img.getHeight()/3);
     }
     
-    public void updateSwordPosition(){
-       if(Greenfoot.isKeyDown("g")){
-           int swordXAttackDistance = facingRight ? 40 : -40;
-           int yPosition = -40;
-           eSword.setLocation(getX() + swordXAttackDistance, getY() + yPosition);
-       }else {
-           int swordXDistance = facingRight ? 10 : -10;
-           eSword.setLocation(getX() + swordXDistance, getY());
-        }
-       
-       if(facingRight != swordFacingRight) {
-           eSword.getImage().mirrorHorizontally();
-           swordFacingRight = facingRight;
-       }
-    }
     
     private void attack(){
-        if(Greenfoot.isKeyDown("g")){
+        
             if(facingRight){
                 setImage(AttackLeft);
             }else{
                 setImage(AttackRight);
             }
-        } else{
+        
             if(facingRight){
                 setImage(StandingLeft);
             } else{
                 setImage(StandingRight);
             }
-        }
+        
     }
     
-    public void moveTowardsPlayer(){
-        Knight k = (Knight)getWorld().getObjects(Knight.class).get(0);
-        if(k.getX() < getX()){
-            attack();
-            setLocation(getX() - speed, getY());
-        }else{
-            attack();
-            setLocation(getX() + speed, getY());
-        }
-
-        if(k.getY() < getY()){
-            setLocation(getX(), getY() - speed);
-        }else{
-            setLocation(getX(), getY() + speed);
-        }
-
-        if(isTouching(Knight.class)){
-            k.loseLife();
-            int pushDistance = 50;
-            if(getX() > k.getX()){
-                setLocation(getX() + pushDistance, getY()); 
-            }else{
-                setLocation(getX() - pushDistance, getY());
-            }
-        }
-    }
     
-    public void loseLife(){
-        lives--;
-        speed--;
-    }
     
-    public void setTarget(Actor a){
-        target = a;
-    }
+    
 }
