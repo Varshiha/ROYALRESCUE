@@ -12,6 +12,7 @@ public class Sword extends Actor
 
     public Sword(){
         getImage().scale(getImage().getWidth()/4, getImage().getHeight()/4);
+        Greenfoot.playSound("sfx.wav");
     }
 
     /**
@@ -22,8 +23,6 @@ public class Sword extends Actor
     {
         attackCheck();
         
-        
-        Greenfoot.playSound("sfx.wav");
     }
 
     public void attackCheck(){
