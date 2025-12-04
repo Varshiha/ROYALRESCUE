@@ -19,6 +19,10 @@ public class KingRoom extends World
         super(547, 554, 1); 
         addObject( new MiniLibrary(), 60, 130); 
         prepare(knightX, knightY);
+        
+        addObject(new DialogBox(), getWidth()/2, 455);
+        addObject(new General(), 112, 455);
+        showText("Hint: Look at the books...", 340, 455);
     }
     
     public KingRoom(){
