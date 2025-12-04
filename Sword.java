@@ -21,6 +21,9 @@ public class Sword extends Actor
     public void act()
     {
         attackCheck();
+        
+        
+        Greenfoot.playSound("sfx.wav");
     }
 
     public void attackCheck(){
