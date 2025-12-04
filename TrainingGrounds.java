@@ -23,9 +23,6 @@ public class TrainingGrounds extends World
         addObject(new Knight(), 100, 350);
         addObject(new DialogBox(), getWidth()/2, 100);
         addObject(new General(), 112, 100);
-        addObject(new Heart(), 385, 24);
-        addObject(new Heart(), 440, 24);
-        addObject(new Heart(), 495, 24);
     }
 
     public void act(){
