@@ -81,6 +81,8 @@ public class Knight extends Actor
         //checkGameOver();
         gameOverWorld();
         restartLevel();
+        
+        Greenfoot.playSound("WF.wav");
     }
 
     public void handleControls(){
