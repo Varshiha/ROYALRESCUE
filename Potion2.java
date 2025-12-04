@@ -19,15 +19,13 @@ public class Potion2 extends Actor
         if(Greenfoot.mouseClicked(this)){
            String playerAnswer = Greenfoot.ask("What is your answer?");
             if (playerAnswer.equalsIgnoreCase("Guacamole")) {
-                // Do something if the answer is correct
+                // Transport Knight to the dark forest if is right
                 Greenfoot.setWorld(new DarkForest());
             } else {
-                // Do something if the answer is incorrect
+                // Try again if the answer is incorrect
                 Greenfoot.setWorld(new BookOpen2());
-                
             }
         }
-        
     }
     
     public void scaleImage(GreenfootImage img){

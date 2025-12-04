@@ -20,15 +20,8 @@ public class BookOpen2 extends World
         // Create a new world with 600x400 cells with a cell size of 1x1 pixels.
         super(560, 500, 1);
         riddle();
-        addObject(new Potion2(), 165, 375);
+        addObject(new Potion3(), 165, 375);
         
-    }
-    
-    public void showText(){
-        timer--;
-        if(timer> 0){
-            showText("Try again", 300 , 100);
-        }
     }
     
     
