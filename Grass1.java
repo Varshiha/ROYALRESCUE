@@ -25,7 +25,8 @@ public class Grass1 extends World
         addObject(new MaidHead(), 112, 100); 
         addObject(new Maid(), 300, 350);
         showText("Help me! I am scared!\n" +"Save me!", 340, 100);
-        
+
+        prepare();
     }
 
     public void act(){
@@ -42,10 +43,10 @@ public class Grass1 extends World
             showText("Thank you for saving me!\n" 
                 + "You have to save the King.\n" 
                 + "HE'S ALL ALONE!", 340, 100);
-                checkKnightExit();
-                showText("E\n" + "X\n" + "I\n" + "T", 535, getHeight()/2);
+            checkKnightExit();
+            showText("E\n" + "X\n" + "I\n" + "T", 535, getHeight()/2);
         }
-        
+
     }
 
     public void spawnAttackingTroll(){
@@ -55,14 +56,21 @@ public class Grass1 extends World
         Troll t = new Troll();
         addObject(t, x, y);
     }
-    
+
     private void checkKnightExit(){
         Knight k = (Knight)getObjects(Knight.class).get(0);
         if(k.getX() >=getWidth() - 5){
             int newX = k.getX();
             int newY = k.getY();
             Greenfoot.setWorld(new Grass2(newX, newY));
-            
+
         }
+    }
+    /**
+     * Prepare the world for the start of the program.
+     * That is: create the initial objects and add them to the world.
+     */
+    private void prepare()
+    {
     }
 }

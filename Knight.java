@@ -44,8 +44,6 @@ public class Knight extends Actor
     public static int initialScore = 100;
     public static int trollTouchCount = 0;
     public static boolean waitingToRestart = false;
-    
-    private KingLocked kg = new KingLocked();
     public Knight(){
         if(lives == 0) lives = 3;
         if(score ==0) score = 100;
@@ -83,7 +81,8 @@ public class Knight extends Actor
         //checkGameOver();
         gameOverWorld();
         restartLevel();
-        saveKing();
+        
+        Greenfoot.playSound("WF.wav");
     }
 
     public void handleControls(){
@@ -214,13 +213,4 @@ public class Knight extends Actor
         trollTouchCount ++;
     }
 
-    public void saveKing(){
-        Actor kg = getOneIntersectingObject(KingLocked.class);
-        if (kg != null) {
-            World world = getWorld();
-            world.removeObject(kg);
-            world.addObject( new  King(), 520, 59);
-        }
-    }
-    
 }
