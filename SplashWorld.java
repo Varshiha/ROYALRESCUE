@@ -50,7 +50,7 @@ public class SplashWorld extends World
         GreenfootImage line3 = new GreenfootImage(600, 100);
         line3.setFont(font);
         line3.setColor(Color.BLACK);
-        line3.drawString("Alexandra Di Iorio - Ranier Tabing", 20, 70);
+        line3.drawString("Alexandra Di Iorio", 20, 70);
         getBackground().drawImage(line3, 110, 430);
     }
     
