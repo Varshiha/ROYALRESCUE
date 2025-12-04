@@ -21,10 +21,11 @@ public class Knight extends Actor
     //How fast the Knight moves
     private int speed = 3;
 
-    //Attack cooldown
+    //Attack timing
     private int attackCooldown = 0;//time before attacking again
     private int attackDuration = 0;// how long attack image stays
-    private int attackTimer = 0;
+    private final int ATTACK_COOLDOWN_MAX = 25;
+    private final int ATTACK_DURATION_MAX =8;
 
     //Sword
     private Sword sword;
@@ -32,25 +33,16 @@ public class Knight extends Actor
     private boolean swordFacingRight = true;
 
     public static int lives = 3;
+    public static int score = 100;
+    public static int initialScore = 100;
 
     public boolean loseHeart = false;
     private Heart heart;
 
-    public static int score = 100;
-
-    
-    
-
-    public static int initialScore = 100;
-    public static int trollTouchCount = 0;
     public static boolean waitingToRestart = false;
+    public int consecutiveTrollHits = 0;
+
     public Knight(){
-        if(lives == 0) lives = 3;
-        if(score ==0) score = 100;
-        
-        trollTouchCount = 0;
-        waitingToRestart = false;
-        initialScore = 100;
         //Scale images
         scaleImage(rightHandDown);
         scaleImage(rightHandMiddle);
@@ -73,12 +65,12 @@ public class Knight extends Actor
     {
         getWorld().showText("Lives: " + lives , 80, 510);
         getWorld().showText("Score: " + score , 200, 510);
-        getWorld().showText("Troll Touch Count: " + trollTouchCount , 150, 530);
-        handleControls();
-        handleAttack();
+        getWorld().showText("Consec Hits: " + consecutiveTrollHits , 150, 530);
 
+        handleControls();
+        handleAttackTiming();
         updateSwordPosition();
-        //checkGameOver();
+
         gameOverWorld();
         restartLevel();
     }
@@ -88,8 +80,7 @@ public class Knight extends Actor
             facingRight = false;
             setImage(leftHandDown);
             move(-speed);
-        }
-        if(Greenfoot.isKeyDown("right") || Greenfoot.isKeyDown("d")){
+        }else if(Greenfoot.isKeyDown("right") || Greenfoot.isKeyDown("d")){
             facingRight = true;
             setImage(rightHandDown);
             move(speed);
@@ -97,43 +88,53 @@ public class Knight extends Actor
 
         if(Greenfoot.isKeyDown("up")|| Greenfoot.isKeyDown("w")){ 
             setLocation(getX(), getY() -speed);
-        }
-        if(Greenfoot.isKeyDown("down")|| Greenfoot.isKeyDown("s")){ 
+        }else if(Greenfoot.isKeyDown("down")|| Greenfoot.isKeyDown("s")){ 
             setLocation(getX(), getY()+speed);
         }
     }
 
-    private void handleAttack(){
+    private void handleAttackTiming(){
+        if(attackCooldown > 0) attackCooldown--;
+        if(attackDuration > 0) attackDuration--;
+
         if(Greenfoot.isKeyDown("x") && attackCooldown == 0){
-            if(facingRight){
-                setImage(attackRight);
-            }else{
-                setImage(attackLeft);
-            }
+            startAttack();
+        } 
+
+        if(attackDuration > 0){
+            if(facingRight)setImage(attackRight);
+            else setImage(attackLeft);
         } else{
-            if(facingRight){
-                setImage(rightHandDown);
-            } else{
-                setImage(leftHandDown);
-            }
+            if(facingRight)setImage(rightHandDown);
+            else setImage(leftHandDown);
         }
     }
 
+    private void startAttack(){
+        attackDuration = ATTACK_DURATION_MAX;
+        attackCooldown = ATTACK_COOLDOWN_MAX;
+        
+        consecutiveTrollHits = 0;
+    }
+    
     private void scaleImage(GreenfootImage img){
         img.scale(img.getWidth()/5, img.getHeight()/5);
     }
 
     public void addedToWorld(World world){
-        world.addObject(sword, getX(), getY());
-
+        if(sword.getWorld() == null){
+            world.addObject(sword, getX(), getY());
+        }
     }
 
     public void updateSwordPosition(){
-        if(Greenfoot.isKeyDown("x")){
+        if(sword == null) return;
+        if(attackDuration > 0) {
             int swordXAttackDistance = facingRight ? 40 : -40;
             int yPosition = -40;
             sword.setLocation(getX() + swordXAttackDistance, getY() + yPosition);
-        }else {
+        }
+        else {
             int swordXDistance = facingRight ? 10 : -10;
             sword.setLocation(getX() + swordXDistance, getY());
         }
@@ -146,7 +147,8 @@ public class Knight extends Actor
 
     public void loseLife(){
         lives--;
-        loseHeart = true;
+        consecutiveTrollHits = 0;
+        
     }
 
     public boolean loseHeart(){
@@ -160,16 +162,30 @@ public class Knight extends Actor
         return (PowerUp)getOneIntersectingObject(PowerUp.class);
     }
 
+    public Potion touchPotion(){
+        return (Potion)getOneIntersectingObject(Potion.class);
+
+    }
+
     public MiniLibrary ifTouchBookCase(){
         return (MiniLibrary)getOneIntersectingObject(MiniLibrary.class);
     }
 
     public void increaseScore(){
-        score += 5;
+        score += 7;
+        consecutiveTrollHits = 0;
+    }
+    
+    public void increaseScore(int amount){
+        score += amount;
+        if(score < 0) {
+            score = 0;
+        }
     }
 
     public void decreaseScore(int amount){
         score -=amount;
+        if(score < 0) score = 0;
     }
 
     public int getScore(){
@@ -180,6 +196,15 @@ public class Knight extends Actor
         return initialScore - score;
     }
 
+    public void onHitByTroll(int damage){
+        decreaseScore(damage);
+        consecutiveTrollHits++;
+        if(consecutiveTrollHits >= 5){
+            loseLife();
+            consecutiveTrollHits = 0;
+        }
+    }
+    
     public void gameOverWorld(){
         if(score <= 0){
             Greenfoot.setWorld(new GameOver());
@@ -187,28 +212,30 @@ public class Knight extends Actor
     }
 
     public void restartLevel(){
-        if(getLostPoints() >= 50 || trollTouchCount == 5){
+        if(!waitingToRestart && (getLostPoints() >= 50 ||consecutiveTrollHits >= 5)){
             waitingToRestart = true;
-            getWorld().showText("Level Restart!", getWorld().getWidth()/2, getWorld().getHeight()/2);
+            getWorld().showText("Level Restart! Press SPACE to try again", getWorld().getWidth()/2, getWorld().getHeight()/2);
+            return;
+        }
 
-            if(Greenfoot.isKeyDown("r")){
-                try{
-                    World reset = getWorld().getClass().newInstance();
-                    Greenfoot.setWorld(reset);
-                    lives =3;
-                    score = 100;
-                    trollTouchCount = 0;
-                    waitingToRestart = false;
-                    
-                }catch(Exception e){
-                    Greenfoot.stop(); 
-                }
+        if(waitingToRestart && Greenfoot.isKeyDown("SPACE")){
+            try{
+                World reset = getWorld().getClass().newInstance();
+                Greenfoot.setWorld(reset);
 
-            }}
+                lives = 3;
+                score = 100;
+                initialScore = 100;
+                consecutiveTrollHits = 0;
+                waitingToRestart = false;
+            } catch(Exception e){
+                Greenfoot.stop();
+            }
+        }
     }
 
     public void increaseTrollTouchCount(){
-        trollTouchCount ++;
+        
     }
 
 }

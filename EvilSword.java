@@ -1,4 +1,5 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
+import java.util.List;
 
 /**
  * Write a description of class EvilSword here.
@@ -30,7 +31,20 @@ public class EvilSword extends Actor
      */
     public void act()
     {
-        attackCheck();
+        List<Knight> knights = getWorld().getObjects(Knight.class);
+        if(knights.isEmpty()) return;
+        Knight k = knights.get(0);
+        if(isTouching(Knight.class)){
+            k.onHitByTroll(12);
+            int push = 30;
+            if(getX() > k.getX()){
+                setLocation(getX() + push, getY());
+            }else{
+                setLocation(getX() - push, getY());
+            }
+        }
+        
+        
     }
     
     public void attackCheck(){
@@ -38,7 +52,7 @@ public class EvilSword extends Actor
             return;
         }
         if(isTouching(Knight.class)){
-            removeTouching(Knight.class);
+            
         }
     }
 }

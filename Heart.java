@@ -10,7 +10,7 @@ public class Heart extends Actor
 {
     private GreenfootImage HeartFull;
     private GreenfootImage HeartEmpty;
-    private Knight knight;
+    
     
     public Heart(){
         HeartFull = new GreenfootImage("HeartFull.png");
@@ -39,7 +39,7 @@ public class Heart extends Actor
     
     public void emptyHeart(){
         
-        
+        setImage(HeartEmpty);
     }
 }
 
