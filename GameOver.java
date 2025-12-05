@@ -8,7 +8,8 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  */
 public class GameOver extends World
 {
-
+    private int timer =300;
+    private Knight knight = new Knight();
     /**
      * Constructor for objects of class GameOver.
      * 
@@ -16,6 +17,63 @@ public class GameOver extends World
     public GameOver()
     {    
         // Create a new world with 600x400 cells with a cell size of 1x1 pixels.
-        super(600, 400, 1); 
+        super(547, 554, 1); 
+        
+        Greenfoot.playSound("Game Over.wav");
+    }
+    
+     public void act(){
+        timer--;
+        Font font = new Font("Times New Roman", 30);
+        Font font2 = new Font("Times New Roman",50);
+        Font font3 = new Font("Times New Roman", 90);
+        if(timer >= 200){  
+
+            GreenfootImage line6 = new GreenfootImage(600, 100);
+            line6.setFont(font3);
+            line6.setColor(Color.WHITE);
+            line6.drawString("A", 20, 70);
+            getBackground().drawImage(line6, 10, 30);
+
+            GreenfootImage line0 = new GreenfootImage(600, 100);
+            line0.setFont(font);
+            line0.setColor(Color.WHITE);
+            line0.drawString("fter the Knight's loss, the King", 20, 70);
+            getBackground().drawImage(line0, 70, 30);
+
+            GreenfootImage line1 = new GreenfootImage(600, 100);
+            line1.setFont(font);
+            line1.setColor(Color.WHITE);
+            line1.drawString("disappeared and the Trolls rulled", 20, 70);
+            getBackground().drawImage(line1, 70, 80);
+
+            GreenfootImage line2 = new GreenfootImage(600, 100);
+            line2.setFont(font);
+            line2.setColor(Color.WHITE);
+            line2.drawString("over the kingdom mercilessly...", 20, 70);
+            getBackground().drawImage(line2, 70, 130);
+
+        }
+        if(timer<200){        
+
+            GreenfootImage line4 = new GreenfootImage(600, 100);
+            line4.setFont(font2);
+            line4.setColor(Color.WHITE);
+            line4.drawString("Game Over", 20, 70);
+            getBackground().drawImage(line4, 140, 210);
+
+        }
+        if(timer < 100){
+            GreenfootImage line5 = new GreenfootImage(600, 100);
+            line5.setFont(font);
+            line5.setColor(Color.WHITE);
+            line5.drawString("Press 'r' to restart.", 20, 70);
+            getBackground().drawImage(line5, 140, 250);
+        }
+    }
+    
+    public void restart(){
+        knight.checkRestartInput();
     }
 }
+

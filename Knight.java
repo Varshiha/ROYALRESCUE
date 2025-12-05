@@ -239,7 +239,7 @@ public void setHitThisAttack(boolean value) {
         waitingForRestart = true;
     }
 
-    private void checkRestartInput(){
+    public void checkRestartInput(){
         if(waitingForRestart && Greenfoot.isKeyDown("r")){
             restartCurrentWorld();
         }
