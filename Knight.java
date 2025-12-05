@@ -73,6 +73,8 @@ public class Knight extends Actor
 
         gameOverWorld();
         restartLevel();
+        
+        saveKing();
     }
 
     public void handleControls(){
@@ -234,6 +236,17 @@ public class Knight extends Actor
         }
     }
 
+   
+        public void saveKing(){
+        Actor kg = getOneIntersectingObject(KingLocked.class);
+        if (kg != null) {
+            World world = getWorld();
+            world.removeObject(kg);
+            world.addObject( new  King(), 520, 59);
+        }
+    
+    }
+    
     public void increaseTrollTouchCount(){
         
     }

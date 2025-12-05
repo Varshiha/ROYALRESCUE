@@ -30,6 +30,7 @@ public class DarkForest extends World
     
     public void finalTrolls(){
         if(getObjects(Troll.class).isEmpty()){
+            
             addObject(new FinalBoss(), 490, 242);
         }
         
