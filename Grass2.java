@@ -14,29 +14,31 @@ public class Grass2 extends World
     private boolean finishedSpawning = false;
     private int maxDifficulty = 4; //amount of trolls that spawn
     private int trollsStart = 2; //easier
-    /**
-     * Constructor for objects of class Grass2.
-     * 
-     */
-    public Grass2(int knightX, int knightY)
-    {    
+    private int knightStartX;
+    private int knightStartY;
+
+    public Grass2(int knightX, int knightY) {
         // Create a new world with 600x400 cells with a cell size of 1x1 pixels.
         super(547, 554, 1);
-        this.
-        prepare(knightX, knightY);
+        knightStartX = knightX;
+        knightStartY = knightY;
+
+        setBackground(new GreenfootImage("Grass2.png"));
+        prepare();
     }
     
     public Grass2(){
         this(350,350);
     }
 
-    private void prepare(int knightX, int knightY){
-        addObject(new Knight(), knightX, knightY);
+    private void prepare(){
+        addObject(new Knight(), knightStartX, knightStartY);
         addObject(new Troll(), Greenfoot.getRandomNumber(500), Greenfoot.getRandomNumber(500));
         addObject(new Troll(), Greenfoot.getRandomNumber(500), Greenfoot.getRandomNumber(500));
     }
 
     public void act(){
+        if (Knight.waitingToRestart) return;
         trollSpawnTimer--;
         if(trollSpawnTimer<= 0 && trollsToSpawn > 0){
             spawnAttackingTroll();

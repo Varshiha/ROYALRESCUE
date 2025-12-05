@@ -9,50 +9,66 @@ import java.util.List;
  */
 public class EvilSword extends Actor
 {
-    private GreenfootImage evilSword = new GreenfootImage("EvilSword.png");
-    private GreenfootImage evilSwordl = new GreenfootImage("EvilSwordl.png");
-    
-    
-    
+    private GreenfootImage swordRight = new GreenfootImage("EvilSword.png");
+    private GreenfootImage swordLeft = new GreenfootImage("EvilSwordl.png");
+    private boolean facingRight = true;
+    private boolean attacking = false;
     public EvilSword(){
-        scaleImage(evilSword);
-        scaleImage(evilSwordl);
-        
-        setImage(evilSword);
+        scaleImage(swordRight);
+        scaleImage(swordLeft);
+
+        setImage(swordRight);
     }
-    
+
     private void scaleImage(GreenfootImage img){
         img.scale(img.getWidth()/3, img.getHeight()/3);
     }
-    
+
     /**
      * Act - do whatever the EvilSword wants to do. This method is called whenever
      * the 'Act' or 'Run' button gets pressed in the environment.
      */
     public void act()
     {
-        List<Knight> knights = getWorld().getObjects(Knight.class);
-        if(knights.isEmpty()) return;
-        Knight k = knights.get(0);
-        if(isTouching(Knight.class)){
-            k.onHitByTroll(12);
-            int push = 30;
-            if(getX() > k.getX()){
-                setLocation(getX() + push, getY());
-            }else{
-                setLocation(getX() - push, getY());
-            }
-        }
-        
-        
+    
+        updateDirection();
+        damageKnight();
+
     }
     
-    public void attackCheck(){
-        if(!Greenfoot.isKeyDown("g")) {
+    public void setFacingRight(boolean value){
+        facingRight = value;
+        updateDirection();
+    }
+    
+    public void setAttacking(boolean value){
+        attacking = value;
+    }
+
+    public void updateDirection(){
+        if(facingRight){
+            setImage(swordRight);
+        }else{
+            setImage(swordLeft);
+        }
+    }
+
+    public void damageKnight(){
+        if(!attacking){
             return;
         }
-        if(isTouching(Knight.class)){
-            
+
+        Knight k = (Knight) getOneIntersectingObject(Knight.class);
+        if(k != null){
+            k.onHitByTroll();
+
+            int push = facingRight ? 20 : -20;
+            k.setLocation(k.getX() + push, k.getY());
         }
+    }
+    
+    public void flip(){
+        getImage().mirrorHorizontally();
+        facingRight = !facingRight;
     }
 }

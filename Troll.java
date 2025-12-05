@@ -25,6 +25,7 @@ public class Troll extends Actor
      */
     public void act()
     {
+if(Knight.waitingToRestart) return;
 
         List<Knight> knights = getWorld().getObjects(Knight.class);
         if(knights.isEmpty()){
@@ -56,13 +57,20 @@ public class Troll extends Actor
         }
 
         if(isTouching(Knight.class)){
-            k.onHitByTroll(10);
-            int pushDistance = 20;
+            k.onHitByTroll();
+            int pushDistance = 100;
             if(getX() > k.getX()){
                 setLocation(getX() + pushDistance, getY()); 
             }else{
                 setLocation(getX() - pushDistance, getY());
             }
+        }
+    }
+    
+    public void die(){
+        if(getWorld() != null){
+            getWorld().removeObject(this);
+            Knight.score += 5;
         }
     }
 
