@@ -11,18 +11,19 @@ public class TrainingGrounds extends World
     private int timer = 1200;
     private boolean trollSpawned = false;
     private int count = 12;
+    private int knightStartX;
+    private int knightStartY; 
     private GreenfootImage imageBackground = new GreenfootImage("BackgroundLogo.png");
-    /**
-     * Constructor for objects of class TrainingGrounds.
-     * 
-     */
-    public TrainingGrounds()
-    {    
+
+    public TrainingGrounds(int knightX, int knightY) {  
         // Create a new world with 600x400 cells with a cell size of 1x1 pixels.
         super(547, 554, 1); 
-        addObject(new Knight(), 100, 350);
-        addObject(new DialogBox(), getWidth()/2, 100);
-        addObject(new General(), 112, 100);
+        knightStartX = knightX;
+        knightStartY = knightY;
+        setBackground(new GreenfootImage("TrainingGround.png"));
+
+        prepare();
+        
     }
 
     public void act(){
@@ -57,11 +58,20 @@ public class TrainingGrounds extends World
                              "Press ENTER to go to the next level",
                               getWidth()/2, getHeight()/2);
                     if(Greenfoot.isKeyDown("enter")){
-                        Greenfoot.setWorld(new Grass1());
-                    }
+            int newX = 50;
+            int newY = 50;
+            Greenfoot.setWorld(new Grass1(newX, newY));
+            
+        }
+                    
                 }
             }
         }
     }
 
+    public void prepare(){
+        addObject(new Knight(), 100, 350);
+        addObject(new DialogBox(), getWidth()/2, 100);
+        addObject(new General(), 112, 100);
+    }
 }

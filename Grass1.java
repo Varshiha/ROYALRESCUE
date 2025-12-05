@@ -11,20 +11,19 @@ public class Grass1 extends World
     private int trollSpawnTimer = 150;
     private int trollsToSpawn = Greenfoot.getRandomNumber(5) + 3;
     //spawn between 3 and 7 trolls
-    private boolean finishedSpawning = false;
-    /**
-     * Constructor for objects of class Outside.
-     * 
-     */
-    public Grass1()
+    private boolean finishedSpawning = false;private int knightStartX;
+    private int knightStartY;
+
+    public Grass1(int knightX, int knightY) 
     {    
         // Create a new world with 600x400 cells with a cell size of 1x1 pixels.
         super(547, 554, 1); 
-        addObject(new Knight(), 100, 350);
-        addObject(new DialogBox(), getWidth()/2, 100);
-        addObject(new MaidHead(), 112, 100); 
-        addObject(new Maid(), 300, 350);
+        
         showText("Help me! I am scared!\n" +"Save me!", 340, 100);
+        knightStartX = knightX;
+        knightStartY = knightY;
+
+        setBackground(new GreenfootImage("Grass1.png"));
 
         prepare();
     }
@@ -66,11 +65,15 @@ public class Grass1 extends World
 
         }
     }
+
     /**
      * Prepare the world for the start of the program.
      * That is: create the initial objects and add them to the world.
      */
     private void prepare()
-    {
+    {addObject(new Knight(), 100, 350);
+        addObject(new DialogBox(), getWidth()/2, 100);
+        addObject(new MaidHead(), 112, 100); 
+        addObject(new Maid(), 300, 350);
     }
 }

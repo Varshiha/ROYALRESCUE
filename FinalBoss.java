@@ -9,10 +9,10 @@ import java.util.List;
  */
 public class FinalBoss extends Actor
 {
-    private GreenfootImage StandingRight = new GreenfootImage("FinalBoss1r.png");
-    private GreenfootImage StandingLeft = new GreenfootImage("FinalBoss1l.png");
-    private GreenfootImage AttackRight = new GreenfootImage("FinalBossAttackr.png");
-    private GreenfootImage AttackLeft = new GreenfootImage("FinalBossAttackl.png");
+    private GreenfootImage standingRight = new GreenfootImage("FinalBoss1r.png");
+    private GreenfootImage standingLeft = new GreenfootImage("FinalBoss1l.png");
+    private GreenfootImage attackRight = new GreenfootImage("FinalBossAttackr.png");
+    private GreenfootImage attackLeft = new GreenfootImage("FinalBossAttackl.png");
 
     //Sword
     private EvilSword eSword;
@@ -31,12 +31,12 @@ public class FinalBoss extends Actor
     private boolean dead = false;
 
     public FinalBoss(){
-        scaleImage(StandingLeft);
-        scaleImage(StandingRight);
-        scaleImage(AttackLeft);
-        scaleImage(AttackRight);
+        scaleImage(standingLeft);
+        scaleImage(standingRight);
+        scaleImage(attackLeft);
+        scaleImage(attackRight);
 
-        setImage(StandingLeft);
+        setImage(standingLeft);
 
         eSword = new EvilSword();
     }
@@ -54,16 +54,14 @@ public class FinalBoss extends Actor
     {
         List<Knight> knights = getWorld().getObjects(Knight.class);
         if(knights.isEmpty()) return;
+
         Knight k = knights.get(0);
         if(dead) return;
+
         update(k);
         updateSwordPosition();
 
-        if(isTouching(Knight.class) && attackTime > 0){
-            k.onHitByTroll(12);
-            attackTime = 0;
-            attackCooldown = 40;
-        }
+        if(eSword != null) eSword.setAttacking(false);
     }
 
     private void update(Knight k){
@@ -73,7 +71,7 @@ public class FinalBoss extends Actor
         if(attackTime > 0){
             attackTime--;
         }
-
+        //Start attack
         if(isNear(k, 120) && attackCooldown == 0){
             startAttack();
             return;
@@ -91,20 +89,21 @@ public class FinalBoss extends Actor
     }
 
     private void moveToward(Knight k){
+        //Horizontal
         if(k.getX() < getX()){
             facingRight = false;
-            setImage(StandingLeft);
+            setImage(standingLeft);
             setLocation(getX() - speed, getY());
         }else{
             facingRight = true;
-            setImage(StandingRight);
+            setImage(standingRight);
             setLocation(getX() + speed, getY());
         }
-
+        //Vertical
         if(k.getY() < getY()){
-            setLocation(getX() - speed, getY());
+            setLocation(getX(), getY() - speed);
         }else{
-            setLocation(getX() + speed, getY());
+            setLocation(getX(), getY() + speed);
         }
     }
 
@@ -112,10 +111,11 @@ public class FinalBoss extends Actor
         attackTime = ATTACK_TIME_MAX;
         attackCooldown = ATTACK_COOLDOWN_MAX;
         if(facingRight){
-            setImage(AttackRight);
+            setImage(attackRight);
         }else{
-            setImage(AttackLeft);
+            setImage(attackLeft);
         }
+        if(eSword != null) eSword.setAttacking(false);
     }
 
     private void scaleImage(GreenfootImage img){
@@ -125,17 +125,21 @@ public class FinalBoss extends Actor
     public void updateSwordPosition(){
         if(eSword == null) return;
         if(attackTime > 0){
-            int swordXAttackDistance = facingRight ? 40 : -40;
-            int yPosition = -40;
-            eSword.setLocation(getX() + swordXAttackDistance, getY() + yPosition);
+            int swordX = facingRight ? 40 : -40;
+            eSword.setLocation(getX() + swordX, getY() - 40);
         }else {
-            int swordXDistance = facingRight ? 10 : -10;
-            eSword.setLocation(getX() + swordXDistance, getY());
+            int swordX = facingRight ? 10 : -10;
+            eSword.setLocation(getX() + swordX, getY());
         }
 
+        //Flip sword 
         if(facingRight != swordFacingRight) {
-            eSword.getImage().mirrorHorizontally();
+            eSword.setFacingRight(facingRight);
             swordFacingRight = facingRight;
+        }
+
+        if(attackTime == 0 && eSword != null){
+            eSword.setAttacking(false);
         }
     }
 
@@ -152,7 +156,13 @@ public class FinalBoss extends Actor
         return dead;
     }
 
-    public void setTarget(Actor a){
-        
+    public void takeDamage(){
+        loseLife();
+        if(isDead()){
+            if(getWorld() != null){
+                getWorld().removeObject(this);
+            }
+
+        }
     }
 }

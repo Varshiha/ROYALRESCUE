@@ -53,7 +53,7 @@ public class Castle extends World
             }
         }
 
-        potionFound();
+        
     }
 
     public void spawnAttackingTroll(){
@@ -66,17 +66,16 @@ public class Castle extends World
 
     }
 
-    public void potionFound(){
-        Knight k = (Knight)getObjects(Knight.class).get(0);
-        PowerUp p = k.touchPowerUp();
+    
+    public void potionFound(Knight k, PowerUp p){
         if(p != null){
             removeObject(p);
             int newX = k.getX();
             int newY = k.getY();
+            
             Greenfoot.setWorld(new KingRoom(newX, newY));
         }
 
     }
-    
     
 }

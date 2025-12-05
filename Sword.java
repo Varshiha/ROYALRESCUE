@@ -9,10 +9,11 @@ import java.util.List;
  */
 public class Sword extends Actor
 {
+    private boolean canDamage = false;
 
     public Sword(){
         getImage().scale(getImage().getWidth()/4, getImage().getHeight()/4);
-        Greenfoot.playSound("sfx.wav");
+        //Greenfoot.playSound("sfx.wav");
     }
 
     /**
@@ -21,54 +22,46 @@ public class Sword extends Actor
      */
     public void act()
     {
-        attackCheck();
-        
+        if(canDamage){
+            attackCheck();
+        }
+    }
+
+    public void collision(boolean enable){
+        canDamage = enable;
     }
 
     public void attackCheck(){
-        if(!Greenfoot.isKeyDown("x")) {
-            return;
-        }
         World w = getWorld();
         if(w == null) return;
+
         List<Knight> knights = w.getObjects(Knight.class);
-        if(knights.isEmpty()) return;
-        Knight k = knights.get(0);
-        
-        if(isTouching(Troll.class)){
-            removeTouching(Troll.class);
-            k.increaseScore();
+        Knight k = null;
+        if(!knights.isEmpty()){
+            k = knights.get(0);
         }
-        
-        List<FinalBoss> bosses = w.getObjects(FinalBoss.class);
-        if(!bosses.isEmpty()){
-            FinalBoss fb = bosses.get(0);
-            if(isTouching(FinalBoss.class)){
-                fb.loseLife();
-                k.increaseScore(7);
-                if(fb.isDead()){
-                    w.removeObject(fb);
-                    
-                    List<EvilSword> swords = w.getObjects(EvilSword.class);
-                    for(EvilSword es : swords){
-                        if(es.getX() >= fb.getX()- 50 && es.getX() <= fb.getX() + 50){
-                            w.removeObject(es);
-                        }
-                    }
+        //Damage trolls
+        Troll t = (Troll) getOneIntersectingObject(Troll.class);
+        if(t != null){
+            getWorld().removeObject(t);
+            if(k != null) k.increaseScore();
+        }
+
+        //Damage final boss
+        if(isTouching(FinalBoss.class)){
+            List<FinalBoss> b = w.getObjects(FinalBoss.class);
+            for(FinalBoss f : b){
+                f.takeDamage();
+                if(k != null) k.increaseScore();
+            }
+
+            List<FinalBoss> fb = w.getObjects(FinalBoss.class);
+            if(fb.isEmpty()){
+                List<EvilSword> es = w.getObjects(EvilSword.class);
+                for(EvilSword e : es){
+                    w.removeObject(e);
                 }
             }
         }
-        
-        
-    }
-
-    public void killFinalBoss(){
-        List<FinalBoss> bosses = getWorld().getObjects(FinalBoss.class);
-        if(bosses.isEmpty()) return;
-        FinalBoss fb = bosses.get(0);
-        if(isTouching(FinalBoss.class)){
-            fb.loseLife();
-        }
-        
     }
 }
