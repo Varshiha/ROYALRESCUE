@@ -78,7 +78,7 @@ public class BookOpen2 extends World
             GreenfootImage line5 = new GreenfootImage(600, 100);
         line5.setFont(font);
         line5.setColor(Color.BLACK);
-        line5.drawString("Click on the king.", 20, 70);
+        line5.drawString("Press 'ENTER'", 20, 70);
         getBackground().drawImage(line5, 50, 250);
         
         
