@@ -8,18 +8,20 @@ import greenfoot.*;
 public class MusicManager  
 {
     // instance variables - replace the example below with your own
-    private static boolean musicStarted = false;
+    private static boolean isPlaying = false;
+    private static GreenfootSound bg = new GreenfootSound("WF.wav");
 
-    /**
-     * Constructor for objects of class MusicManager
-     */
-    public MusicManager()
-    {
+public static void startMusic(){
+    if(!isPlaying){
+        bg.playLoop();
+        isPlaying = true;
     }
-public static void playBackGroundMusic(String soundFile){
-    if(!musicStarted){
-        Greenfoot.playSound(soundFile);
-        musicStarted = true;
+}
+
+public static void stopMusic(){
+    if(isPlaying){
+        bg.stop();
+        isPlaying = false;
     }
 }
 }

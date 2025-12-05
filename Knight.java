@@ -14,27 +14,27 @@ public class Knight extends Actor
     private GreenfootImage attackRight = new GreenfootImage("KnightFace3.png");
     private GreenfootImage attackLeft = new GreenfootImage("KnightFace3l.png");
 
-    //How fast the Knight moves
-    private int speed = 3;
+    
+    private int speed = 4;
 
-    //Attack timing
+    
     private int attackCooldown = 0;
     private int attackDuration = 0;
     private final int ATTACK_COOLDOWN_MAX = 25;
     private final int ATTACK_DURATION_MAX =8;
 
-    //Sword
+    
     private Sword sword;
     private boolean facingRight = true;
     private boolean swordFacingRight = true;
 
     private boolean hitThisAttack = false;
-    //Health & score
     
+
     public static int score = 0;
 
     public int hitsOnFinalBoss = 0;
-    public final int hitsRequired = 10; // 15 hits to defeat boss
+    public final int hitsRequired = 10; 
 
     public static int initialScore = 100;
     public int consecutiveTrollHits = 0;
@@ -42,25 +42,25 @@ public class Knight extends Actor
     public static boolean waitingToRestart = false;
     private boolean waitingForRestart = false;
     private GreenfootImage restartOverlay;
-
-    //Final fight
-    public int hitsByFinalBoss = 0; // counts how many times boss hits
-    public final int maxBossHits = 20; // 20 hits to trigger game over
-
+    public int hitsByFinalBoss = 0;
+    public final int maxBossHits = 20; 
+    
     public boolean getHitThisAttack() {
-    return hitThisAttack;
-}
+        return hitThisAttack;
+    }
 
-public void setHitThisAttack(boolean value) {
-    hitThisAttack = value;
-}
+    public void setHitThisAttack(boolean value) {
+        hitThisAttack = value;
+    }
+
     public int getBossHits(){
         return hitsByFinalBoss;
     }
-    
+
     public int getMaxBossHits(){
         return maxBossHits;
     }
+
     /**
      * Constructor
      */
@@ -88,11 +88,10 @@ public void setHitThisAttack(boolean value) {
         updateSwordPosition();
         showStats();
 
-        // Check for potion touch
         checkPowerUp();
 
         checkRestartInput();
-        
+
     }
 
     public void checkPowerUp(){
@@ -259,14 +258,13 @@ public void setHitThisAttack(boolean value) {
         score += 5;
         if(hitsOnFinalBoss >= hitsRequired){
             getWorld().removeObject(boss);
-            
-                gameWon();
-            
+
+            gameWon();
+
         }else{
             getWorld().showText("Hits: " + hitsOnFinalBoss + " / " + hitsRequired, 200, 20);
         }
     }
-
 
     public void hitByFinalBoss(){
         score-=10;
@@ -281,10 +279,12 @@ public void setHitThisAttack(boolean value) {
     }
 
     public void gameOver(){
+        MusicManager.stopMusic();
         Greenfoot.setWorld(new GameOver());
     }
 
     public void gameWon(){
+        MusicManager.stopMusic();
         Greenfoot.setWorld(new GameWin());
     }
 
@@ -302,7 +302,6 @@ public void setHitThisAttack(boolean value) {
         return score;
     }
 
-    
     public int getHitsRequired() {
         return hitsRequired; 
     }

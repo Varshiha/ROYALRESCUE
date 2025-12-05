@@ -19,7 +19,7 @@ public class BookOpen2 extends World
     {    
         // Create a new world with 600x400 cells with a cell size of 1x1 pixels.
         super(560, 500, 1);
-        MusicManager.playBackGroundMusic("WF.wav");
+        
         riddle();
         addObject(new Potion3(), 165, 375);
         

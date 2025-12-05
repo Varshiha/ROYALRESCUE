@@ -18,7 +18,7 @@ public class Grass1 extends World
     {    
         // Create a new world with 600x400 cells with a cell size of 1x1 pixels.
         super(547, 554, 1); 
-        MusicManager.playBackGroundMusic("WF.wav");
+        
         showText("Help me! I am scared!\n" +"Save me!", 340, 100);
         knightStartX = knightX;
         knightStartY = knightY;
