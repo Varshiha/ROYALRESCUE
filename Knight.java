@@ -233,7 +233,7 @@ public class Knight extends Actor
         waitingForRestart = true;
     }
 
-    private void checkRestartInput(){
+    public void checkRestartInput(){
         if(waitingForRestart && Greenfoot.isKeyDown("r")){
             restartCurrentWorld();
         }
