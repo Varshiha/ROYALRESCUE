@@ -8,6 +8,7 @@ public class StartScreen extends World
     public StartScreen()
     {    
         super(547, 554, 1); 
+        MusicManager.startMusic();
         GreenfootImage bg = new GreenfootImage("GameLogo.png");
         bg.scale(getWidth(), getHeight());
         setBackground(bg);

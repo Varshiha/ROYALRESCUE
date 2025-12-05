@@ -10,7 +10,6 @@ public class Cave extends World
 {
     private GreenfootImage lockedKing = new GreenfootImage("KingLocked.png");
     private FinalBoss boss;
-    private PowerUp powerUp = null;
     /**
      * Constructor for objects of class Cave.
      * 
@@ -19,6 +18,7 @@ public class Cave extends World
     {    
         // Create a new world with 600x400 cells with a cell size of 1x1 pixels.
         super(547, 554, 1);
+        
         addObject(new Knight(), knightX, knightY);
         addObject(new KingLocked(), 501, 59);
         addObject(new FinalBoss(), getWidth()/2, getHeight()/3);
@@ -42,12 +42,5 @@ public class Cave extends World
         
         showMessage(k);
         
-        if(k.getScore() >= 50 && k.getScore() <= 60 && powerUp == null){
-            powerUp = new PowerUp();
-            addObject(powerUp, Greenfoot.getRandomNumber(getWidth()),Greenfoot.getRandomNumber(getHeight()));
-        }else if((k.getScore() < 50 || k.getScore() > 60) && powerUp != null){
-        removeObject(powerUp);
-        powerUp = null;
-        }
     }
 }

@@ -18,12 +18,13 @@ public class TrainingGrounds extends World
     public TrainingGrounds(int knightX, int knightY) {  
         // Create a new world with 600x400 cells with a cell size of 1x1 pixels.
         super(547, 554, 1); 
+
         knightStartX = knightX;
         knightStartY = knightY;
         setBackground(new GreenfootImage("TrainingGround.png"));
 
         prepare();
-        
+
     }
 
     public void act(){
@@ -54,16 +55,18 @@ public class TrainingGrounds extends World
                 if(count <= 0){
                     setBackground(imageBackground);
                     showText("Good Job! You passed the tutorial level \n" + 
-                             "Hint: Be ready \n" + 
-                             "Press ENTER to go to the next level",
-                              getWidth()/2, getHeight()/2);
+                        "You will have to restart the level if the\n" + 
+                        "trolls touch you 20 times.\n" + 
+                        "You will restart the whole game if you lose the final battle.\n" +
+                        "Press ENTER to continue",
+                        getWidth()/2, getHeight()/2);
                     if(Greenfoot.isKeyDown("enter")){
-            int newX = 50;
-            int newY = 50;
-            Greenfoot.setWorld(new Grass1(newX, newY));
-            
-        }
-                    
+                        int newX = 50;
+                        int newY = 50;
+                        Greenfoot.setWorld(new Grass1(newX, newY));
+
+                    }
+
                 }
             }
         }

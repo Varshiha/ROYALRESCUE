@@ -20,6 +20,7 @@ public class Grass2 extends World
     public Grass2(int knightX, int knightY) {
         // Create a new world with 600x400 cells with a cell size of 1x1 pixels.
         super(547, 554, 1);
+        
         knightStartX = knightX;
         knightStartY = knightY;
 
