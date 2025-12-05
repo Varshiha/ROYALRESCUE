@@ -9,6 +9,7 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 public class DarkForest extends World
 {
     private boolean finishedSpawning = false;
+    private Knight knight = new Knight();
     /**
      * Constructor for objects of class DarkForest.
      * 
