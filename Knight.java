@@ -14,25 +14,20 @@ public class Knight extends Actor
     private GreenfootImage attackRight = new GreenfootImage("KnightFace3.png");
     private GreenfootImage attackLeft = new GreenfootImage("KnightFace3l.png");
 
-    
     private int speed = 4;
-
     
     private int attackCooldown = 0;
     private int attackDuration = 0;
     private final int ATTACK_COOLDOWN_MAX = 25;
     private final int ATTACK_DURATION_MAX =8;
 
-    
     private Sword sword;
     private boolean facingRight = true;
     private boolean swordFacingRight = true;
 
     private boolean hitThisAttack = false;
-    
 
     public static int score = 0;
-
     public int hitsOnFinalBoss = 0;
     public final int hitsRequired = 10; 
 
@@ -44,7 +39,7 @@ public class Knight extends Actor
     private GreenfootImage restartOverlay;
     public int hitsByFinalBoss = 0;
     public final int maxBossHits = 20; 
-    
+
     public boolean getHitThisAttack() {
         return hitThisAttack;
     }
@@ -89,9 +84,8 @@ public class Knight extends Actor
         showStats();
 
         checkPowerUp();
-
+saveking();
         checkRestartInput();
-
     }
 
     public void checkPowerUp(){
@@ -258,9 +252,7 @@ public class Knight extends Actor
         score += 5;
         if(hitsOnFinalBoss >= hitsRequired){
             getWorld().removeObject(boss);
-
-            gameWon();
-
+            saveking();
         }else{
             getWorld().showText("Hits: " + hitsOnFinalBoss + " / " + hitsRequired, 200, 20);
         }
@@ -308,6 +300,19 @@ public class Knight extends Actor
 
     public int getHitsOnFinalBoss() {
         return hitsOnFinalBoss; 
+    }
+
+    public void saveking(){
+        Actor kg = getOneIntersectingObject(KingLocked.class);
+        if(kg != null){
+            getWorld().removeObject(kg);
+            getWorld().addObject(new King(), 520, 59);
+            Actor k = getOneIntersectingObject(King.class);
+            if(isTouching(King.class)){
+                
+                Greenfoot.setWorld(new GameWin());
+            }
+        }
     }
 
 }

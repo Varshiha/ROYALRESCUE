@@ -6,4 +6,6 @@ comment1.target=BlackScreen()
 comment1.text=\r\n\ Constructor\ for\ objects\ of\ class\ BlackScreen.\r\n\ \r\n
 comment2.params=
 comment2.target=void\ showCredits()
-numComments=3
+comment3.params=
+comment3.target=void\ restart()
+numComments=4
