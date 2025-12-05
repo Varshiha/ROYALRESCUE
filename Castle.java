@@ -36,7 +36,7 @@ public class Castle extends World
     private void prepare(int knightX, int knightY){
         addObject(new Knight(), knightX, knightY);
         addObject(new Troll(), Greenfoot.getRandomNumber(500), Greenfoot.getRandomNumber(500));
-        addObject(new PowerUp(), Greenfoot.getRandomNumber(500), Greenfoot.getRandomNumber(500));
+        addObject(new PowerUp(), 200, 500);
     }
 
     public void act(){

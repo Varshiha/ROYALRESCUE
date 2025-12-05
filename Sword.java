@@ -35,14 +35,14 @@ private Knight knight;
         if(t != null){
             w.removeObject(t);
             k.increaseScore();
-           Greenfoot.playSound("sfx.wav");
+           
         }
         if (!canDamage || knight == null) return;
 
         FinalBoss fb = (FinalBoss)getOneIntersectingObject(FinalBoss.class);
         if (fb != null && !knight.getHitThisAttack()) {
             knight.hitFinalBoss(fb);
-            Greenfoot.playSound("sfx.wav");
+            
             knight.setHitThisAttack(true); 
         }
     }
