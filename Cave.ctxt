@@ -1,10 +1,11 @@
 #BlueJ class context
 comment0.target=Cave
 comment0.text=\r\n\ Write\ a\ description\ of\ class\ Cave\ here.\r\n\ \r\n\ @author\ (your\ name)\ \r\n\ @version\ (a\ version\ number\ or\ a\ date)\r\n
-comment1.params=
-comment1.target=Cave()
+comment1.params=knightX\ knightY
+comment1.target=Cave(int,\ int)
 comment1.text=\r\n\ Constructor\ for\ objects\ of\ class\ Cave.\r\n\ \r\n
-comment2.params=
-comment2.target=void\ prepare()
-comment2.text=\r\n\ Prepare\ the\ world\ for\ the\ start\ of\ the\ program.\r\n\ That\ is\:\ create\ the\ initial\ objects\ and\ add\ them\ to\ the\ world.\r\n
-numComments=3
+comment2.params=k
+comment2.target=void\ showMessage(Knight)
+comment3.params=
+comment3.target=void\ act()
+numComments=4

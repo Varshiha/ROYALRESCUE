@@ -13,6 +13,13 @@ public class EvilSword extends Actor
     private GreenfootImage swordLeft = new GreenfootImage("EvilSwordl.png");
     private boolean facingRight = true;
     private boolean attacking = false;
+
+    private FinalBoss owner;
+
+    public FinalBoss getOwner() {
+        return owner;
+    }
+
     public EvilSword(){
         scaleImage(swordRight);
         scaleImage(swordLeft);
@@ -30,17 +37,21 @@ public class EvilSword extends Actor
      */
     public void act()
     {
-    
+        // Damage knight if touched
+        Knight k = (Knight)getOneIntersectingObject(Knight.class);
+        if (k != null) {
+            damageKnight(k);
+        }
+
         updateDirection();
-        damageKnight();
 
     }
-    
+
     public void setFacingRight(boolean value){
         facingRight = value;
         updateDirection();
     }
-    
+
     public void setAttacking(boolean value){
         attacking = value;
     }
@@ -53,20 +64,16 @@ public class EvilSword extends Actor
         }
     }
 
-    public void damageKnight(){
-        if(!attacking){
-            return;
-        }
+    private void damageKnight(Knight k) {
+        k.score -= 10; // or whatever penalty you want
 
-        Knight k = (Knight) getOneIntersectingObject(Knight.class);
-        if(k != null){
-            k.onHitByTroll();
+        if (k.score < 0) k.score = 0;
 
-            int push = facingRight ? 20 : -20;
-            k.setLocation(k.getX() + push, k.getY());
+        if (k.hitsByFinalBoss >= k.maxBossHits) {
+            k.gameOver();
         }
     }
-    
+
     public void flip(){
         getImage().mirrorHorizontally();
         facingRight = !facingRight;

@@ -28,15 +28,39 @@ public class Knight extends Actor
     private boolean facingRight = true;
     private boolean swordFacingRight = true;
 
+    private boolean hitThisAttack = false;
     //Health & score
-    public static int lives = 3;
+    
     public static int score = 0;
+
+    public int hitsOnFinalBoss = 0;
+    public final int hitsRequired = 15; // 15 hits to defeat boss
+
     public static int initialScore = 100;
     public int consecutiveTrollHits = 0;
 
     public static boolean waitingToRestart = false;
     private boolean waitingForRestart = false;
     private GreenfootImage restartOverlay;
+
+    //Final fight
+    public int hitsByFinalBoss = 0; // counts how many times boss hits
+    public final int maxBossHits = 20; // 20 hits to trigger game over
+
+    public boolean getHitThisAttack() {
+    return hitThisAttack;
+}
+
+public void setHitThisAttack(boolean value) {
+    hitThisAttack = value;
+}
+    public int getBossHits(){
+        return hitsByFinalBoss;
+    }
+    
+    public int getMaxBossHits(){
+        return maxBossHits;
+    }
     /**
      * Constructor
      */
@@ -68,7 +92,7 @@ public class Knight extends Actor
         checkPowerUp();
 
         checkRestartInput();
-
+        
     }
 
     public void checkPowerUp(){
@@ -112,15 +136,16 @@ public class Knight extends Actor
 
         if(Greenfoot.isKeyDown("x") && attackCooldown == 0){
             startAttack();
+            hitThisAttack= false;
         } 
 
         if(attackDuration > 0){
             setImage(facingRight ? attackRight : attackLeft);
             //Sword collision happens when attack
-            sword.collision(true);
+            sword.collision(true, this);
         } else{
             setImage(facingRight ? rightHandDown : leftHandDown);
-            sword.collision(false);
+            sword.collision(false, null);
         }
     }
 
@@ -163,7 +188,6 @@ public class Knight extends Actor
     }
 
     private void showStats(){
-        //getWorld().showText("Lives: " + lives, 80, 510);
         getWorld().showText("Score: " + score, 200, 510);
         getWorld().showText("Consecutive Hits: " + consecutiveTrollHits, 150, 530);
     }
@@ -182,24 +206,6 @@ public class Knight extends Actor
         consecutiveTrollHits = 0;
         waitingForRestart = false;
         Knight.waitingToRestart = false;
-    }
-
-    public void increaseScore(){
-        score ++;
-
-    }
-
-    public void decreaseScore(){
-        score --;
-        if(score < 0) score = 0;
-    }
-
-    public int getScore(){
-        return score;
-    }
-
-    public int getLostPoints(){
-        return initialScore - score;
     }
 
     public void onHitByTroll(){
@@ -239,8 +245,6 @@ public class Knight extends Actor
         }
     }
 
-    
-
     public Potion touchPotion(){
         return (Potion)getOneIntersectingObject(Potion.class);
 
@@ -249,4 +253,60 @@ public class Knight extends Actor
     public MiniLibrary ifTouchBookCase(){
         return (MiniLibrary)getOneIntersectingObject(MiniLibrary.class);
     }
+
+    public void hitFinalBoss(FinalBoss boss){
+        hitsOnFinalBoss++;
+        score += 5;
+        if(hitsOnFinalBoss >= hitsRequired){
+            getWorld().removeObject(boss);
+            gameWon();
+        }else{
+            getWorld().showText("Hits: " + hitsOnFinalBoss + " / " + hitsRequired, 200, 20);
+        }
+    }
+
+
+    public void hitByFinalBoss(){
+        score-=10;
+        if(score<0){
+            score = 0;
+        }
+
+        hitsByFinalBoss++;
+        if(hitsByFinalBoss >= maxBossHits){
+            gameOver();
+        }
+    }
+
+    public void gameOver(){
+        Greenfoot.setWorld(new GameOver());
+    }
+
+    public void gameWon(){
+        Greenfoot.setWorld(new GameWin());
+    }
+
+    public void increaseScore(){
+        score ++;
+
+    }
+
+    public void decreaseScore(){
+        score --;
+        if(score < 0) score = 0;
+    }
+
+    public int getScore(){
+        return score;
+    }
+
+    
+    public int getHitsRequired() {
+        return hitsRequired; 
+    }
+
+    public int getHitsOnFinalBoss() {
+        return hitsOnFinalBoss; 
+    }
+
 }

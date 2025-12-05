@@ -20,14 +20,13 @@ public class FinalBoss extends Actor
     private boolean swordFacingRight = true;
 
     //Speed of the final boss
-    private int speed = 2;
+    private int speed = 1;
     private int attackCooldown = 0;
     private int attackTime = 0;
     private final int ATTACK_COOLDOWN_MAX = 80;
     private final int ATTACK_TIME_MAX =20;
 
     //Amount of lives
-    private int lives = 5;
     private boolean dead = false;
 
     public FinalBoss(){
@@ -57,11 +56,22 @@ public class FinalBoss extends Actor
 
         Knight k = knights.get(0);
         if(dead) return;
-
+        moveToward(k);
         update(k);
         updateSwordPosition();
 
         if(eSword != null) eSword.setAttacking(false);
+
+        if(isTouching(Knight.class) && attackTime > 0){
+            
+            k.hitByFinalBoss();
+            int pushDistance = 150;
+            if(getX() > k.getX()){
+                setLocation(getX() + pushDistance, getY()); 
+            }else{
+                setLocation(getX() - pushDistance, getY());
+            }
+        }
     }
 
     private void update(Knight k){
@@ -89,21 +99,28 @@ public class FinalBoss extends Actor
     }
 
     private void moveToward(Knight k){
-        //Horizontal
-        if(k.getX() < getX()){
-            facingRight = false;
-            setImage(standingLeft);
-            setLocation(getX() - speed, getY());
-        }else{
-            facingRight = true;
-            setImage(standingRight);
-            setLocation(getX() + speed, getY());
-        }
-        //Vertical
-        if(k.getY() < getY()){
-            setLocation(getX(), getY() - speed);
-        }else{
-            setLocation(getX(), getY() + speed);
+        int minDistance = 120;
+        int dx = k.getX() - getX();
+        int dy = k.getY() - getY();
+        int distanceSquare = dx* dx + dy*dy;
+        int minDisSquare = minDistance * minDistance;
+        if(distanceSquare > minDisSquare){
+            //Horizontal
+            if(dx < 0){
+                facingRight = false;
+                setImage(standingLeft);
+                setLocation(getX() - speed, getY());
+            }else{
+                facingRight = true;
+                setImage(standingRight);
+                setLocation(getX() + speed, getY());
+            }
+            //Vertical
+            if(dy < 0){
+                setLocation(getX(), getY() - speed);
+            }else{
+                setLocation(getX(), getY() + speed);
+            }
         }
     }
 
@@ -119,7 +136,7 @@ public class FinalBoss extends Actor
     }
 
     private void scaleImage(GreenfootImage img){
-        img.scale(img.getWidth()/3, img.getHeight()/3);
+        img.scale(img.getWidth()/4, img.getHeight()/4);
     }
 
     public void updateSwordPosition(){
@@ -143,26 +160,14 @@ public class FinalBoss extends Actor
         }
     }
 
-    public void loseLife(){
-        lives--;
-        if(lives<0){
-            dead = true;
-        }else{
-            if(speed<6) speed++;
-        }
-    }
-
     public boolean isDead(){
         return dead;
     }
 
     public void takeDamage(){
-        loseLife();
-        if(isDead()){
-            if(getWorld() != null){
-                getWorld().removeObject(this);
-            }
-
-        }
+    if (getWorld()!= null){
+        getWorld().removeObject(this);
     }
 }
+
+    }

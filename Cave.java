@@ -9,29 +9,45 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 public class Cave extends World
 {
     private GreenfootImage lockedKing = new GreenfootImage("KingLocked.png");
+    private FinalBoss boss;
+    private PowerUp powerUp = null;
     /**
      * Constructor for objects of class Cave.
      * 
      */
-    public Cave()
+    public Cave(int knightX, int knightY)
     {    
         // Create a new world with 600x400 cells with a cell size of 1x1 pixels.
-        super(547, 554, 1); 
-
+        super(547, 554, 1);
+        addObject(new Knight(), knightX, knightY);
         addObject(new KingLocked(), 501, 59);
-        addObject(new Heart(), 385, 24);
-        addObject(new Heart(), 440, 24);
-        addObject(new Heart(), 495, 24);
+        addObject(new FinalBoss(), getWidth()/2, getHeight()/3);
+        Knight knight = (Knight) getObjects(Knight.class).get(0);
+        
 
-        prepare();
+    }
+    
+
+    
+    
+    public void showMessage(Knight k){
+        showText("Hits: " + k.getHitsOnFinalBoss(), 200, 20);
+        showText("Required: " + k.getHitsRequired(), 60, 40);
+        showText("Boss Hits: " + k.getBossHits() + "/" + k.getMaxBossHits(), 200, 40);
     }
 
-    /**
-     * Prepare the world for the start of the program.
-     * That is: create the initial objects and add them to the world.
-     */
-    private void prepare()
-    {
+    
+    public void act(){
+        Knight k = (Knight)getObjects(Knight.class).get(0);
         
+        showMessage(k);
+        
+        if(k.getScore() >= 50 && k.getScore() <= 60 && powerUp == null){
+            powerUp = new PowerUp();
+            addObject(powerUp, Greenfoot.getRandomNumber(getWidth()),Greenfoot.getRandomNumber(getHeight()));
+        }else if((k.getScore() < 50 || k.getScore() > 60) && powerUp != null){
+        removeObject(powerUp);
+        powerUp = null;
+        }
     }
 }

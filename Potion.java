@@ -25,8 +25,10 @@ public class Potion extends Actor
         if(Greenfoot.mouseClicked(this)){
            String playerAnswer = Greenfoot.ask("What is your answer?");
             if (playerAnswer.equalsIgnoreCase("correct")) {
-                // Do something if the answer is correct
-                Greenfoot.setWorld(new Cave());
+                int startX = 50;  // choose a default starting X
+                int startY = 50;  // choose a default starting Y
+                Greenfoot.setWorld(new Cave(startX, startY));
+                
             } else {
                 // Do something if the answer is incorrect
                 Greenfoot.setWorld(new BookOpen2());
