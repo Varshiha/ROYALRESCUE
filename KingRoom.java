@@ -14,6 +14,7 @@ private int knightStartX;
     public KingRoom(int knightX, int knightY) {   
         // Create a new world with 600x400 cells with a cell size of 1x1 pixels.
         super(547, 554, 1); 
+        MusicManager.playBackGroundMusic("WF.wav");
         addObject( new MiniLibrary(), 60, 130); 
         
         

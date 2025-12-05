@@ -34,7 +34,7 @@ public class Knight extends Actor
     public static int score = 0;
 
     public int hitsOnFinalBoss = 0;
-    public final int hitsRequired = 15; // 15 hits to defeat boss
+    public final int hitsRequired = 10; // 15 hits to defeat boss
 
     public static int initialScore = 100;
     public int consecutiveTrollHits = 0;
@@ -259,7 +259,9 @@ public void setHitThisAttack(boolean value) {
         score += 5;
         if(hitsOnFinalBoss >= hitsRequired){
             getWorld().removeObject(boss);
-            gameWon();
+            
+                gameWon();
+            
         }else{
             getWorld().showText("Hits: " + hitsOnFinalBoss + " / " + hitsRequired, 200, 20);
         }

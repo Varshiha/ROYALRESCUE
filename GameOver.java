@@ -67,13 +67,16 @@ public class GameOver extends World
             GreenfootImage line5 = new GreenfootImage(600, 100);
             line5.setFont(font);
             line5.setColor(Color.WHITE);
-            line5.drawString("Press 'r' to restart.", 20, 70);
+            line5.drawString("Press 'space' to restart.", 20, 70);
             getBackground().drawImage(line5, 140, 250);
+            restart();
         }
     }
     
     public void restart(){
-        knight.checkRestartInput();
+        if(Greenfoot.isKeyDown("space")){
+            Greenfoot.setWorld(new SplashWorld());
+        }
     }
 }
 

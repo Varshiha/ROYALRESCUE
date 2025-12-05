@@ -19,6 +19,7 @@ public class Cave extends World
     {    
         // Create a new world with 600x400 cells with a cell size of 1x1 pixels.
         super(547, 554, 1);
+        MusicManager.playBackGroundMusic("WF.wav");
         addObject(new Knight(), knightX, knightY);
         addObject(new KingLocked(), 501, 59);
         addObject(new FinalBoss(), getWidth()/2, getHeight()/3);

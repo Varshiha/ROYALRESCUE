@@ -22,6 +22,7 @@ public class Castle extends World
     {    
         // Create a new world with 600x400 cells with a cell size of 1x1 pixels.
         super(547, 554, 1); 
+        MusicManager.playBackGroundMusic("WF.wav");
         GreenfootImage bg = new GreenfootImage("Castle.png");
         bg.scale(getWidth(), getHeight());
         setBackground(bg);
