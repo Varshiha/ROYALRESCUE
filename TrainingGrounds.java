@@ -55,7 +55,8 @@ public class TrainingGrounds extends World
                 if(count <= 0){
                     setBackground(imageBackground);
                     showText("Good Job! You passed the tutorial level \n" + 
-                        "You will have to restart the level if the trolls touch you 20 times.\n" + 
+                        "You will have to restart the level if the\n" + 
+                        "trolls touch you 20 times.\n" + 
                         "You will restart the whole game if you lose the final battle.\n" +
                         "Press ENTER to continue",
                         getWidth()/2, getHeight()/2);
