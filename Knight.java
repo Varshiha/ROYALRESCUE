@@ -15,7 +15,7 @@ public class Knight extends Actor
     private GreenfootImage attackLeft = new GreenfootImage("KnightFace3l.png");
 
     private int speed = 4;
-    
+
     private int attackCooldown = 0;
     private int attackDuration = 0;
     private final int ATTACK_COOLDOWN_MAX = 25;
@@ -84,7 +84,7 @@ public class Knight extends Actor
         showStats();
 
         checkPowerUp();
-saveking();
+        saveking();
         checkRestartInput();
     }
 
@@ -308,10 +308,6 @@ saveking();
             getWorld().removeObject(kg);
             getWorld().addObject(new King(), 520, 59);
             Actor k = getOneIntersectingObject(King.class);
-            if(isTouching(King.class)){
-                
-                Greenfoot.setWorld(new GameWin());
-            }
         }
     }
 
