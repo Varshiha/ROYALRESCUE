@@ -1,4 +1,5 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
+import java.util.List;
 
 /**
  * Write a description of class Knight here.
@@ -39,6 +40,8 @@ public class Knight extends Actor
     private GreenfootImage restartOverlay;
     public int hitsByFinalBoss = 0;
     public final int maxBossHits = 20; 
+    
+    private GreenfootSound slash = new GreenfootSound("slash.wav");
 
     public boolean getHitThisAttack() {
         return hitThisAttack;
@@ -84,7 +87,6 @@ public class Knight extends Actor
         showStats();
 
         checkPowerUp();
-        saveking();
         checkRestartInput();
     }
 
@@ -129,6 +131,7 @@ public class Knight extends Actor
 
         if(Greenfoot.isKeyDown("x") && attackCooldown == 0){
             startAttack();
+            slash.play();
             hitThisAttack= false;
         } 
 
@@ -303,11 +306,12 @@ public class Knight extends Actor
     }
 
     public void saveking(){
-        Actor kg = getOneIntersectingObject(KingLocked.class);
-        if(kg != null){
-            getWorld().removeObject(kg);
-            getWorld().addObject(new King(), 520, 59);
-            Actor k = getOneIntersectingObject(King.class);
+        List<KingLocked> kg = getWorld().getObjects(KingLocked.class);
+        if(!kg.isEmpty()){
+            KingLocked locked = kg.get(0);
+            getWorld().removeObject(locked);
+            King newKing = new King();
+            getWorld().addObject(newKing, 520, 59);
         }
     }
 

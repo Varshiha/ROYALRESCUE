@@ -25,9 +25,10 @@ public class King extends Actor
      */
     public void act()
     {
-        if(isTouching(Knight.class)){
+       if(isTouching(Knight.class)){
 
                 Greenfoot.setWorld(new GameWin());
-            }// Add your action code here.
-    }
+            } 
+        }
+    
 }

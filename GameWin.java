@@ -8,7 +8,7 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  */
 public class GameWin extends World
 {
-    private int timer =80;
+    private int timer =120;
     private Knight knight = new Knight();
     /**
      * Constructor for objects of class GameWin.

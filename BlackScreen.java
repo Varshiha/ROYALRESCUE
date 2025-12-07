@@ -8,7 +8,7 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  */
 public class BlackScreen extends World
 {
-private int timer =300;
+    private int timer =300;
     private Knight knight = new Knight();
     /**
      * Constructor for objects of class BlackScreen.
@@ -18,11 +18,14 @@ private int timer =300;
     {    
         // Create a new world with 600x400 cells with a cell size of 1x1 pixels.
         super(547, 554, 1); 
-        
+        Greenfoot.playSound("win.wav");
     }
-    
+    public void act(){
+        showCredits();
+    }
+
     public void showCredits(){
-         timer--;
+        timer--;
         Font font = new Font("Times New Roman", 30);
         Font font2 = new Font("Times New Roman",50);
         Font font3 = new Font("Times New Roman", 90);
@@ -71,7 +74,7 @@ private int timer =300;
             restart();
         }
     }
-    
+
     public void restart(){
         if(Greenfoot.isKeyDown("space")){
             Greenfoot.setWorld(new SplashWorld());
