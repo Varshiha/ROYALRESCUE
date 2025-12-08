@@ -9,17 +9,22 @@ import java.util.List;
  */
 public class EvilSword extends Actor
 {
+    //Images
     private GreenfootImage swordRight = new GreenfootImage("EvilSword.png");
     private GreenfootImage swordLeft = new GreenfootImage("EvilSwordl.png");
+    
+    //Which way the sword is pointing
     private boolean facingRight = true;
+    //if sword is in attack mode
     private boolean attacking = false;
-
+    
+    //link to final boss
     private FinalBoss owner;
 
-    public FinalBoss getOwner() {
-        return owner;
-    }
-
+    
+    /**
+     * Constructor
+     */
     public EvilSword(){
         scaleImage(swordRight);
         scaleImage(swordLeft);
@@ -27,6 +32,9 @@ public class EvilSword extends Actor
         setImage(swordRight);
     }
 
+    /**
+     * Scale image
+     */
     private void scaleImage(GreenfootImage img){
         img.scale(img.getWidth()/3, img.getHeight()/3);
     }
@@ -47,15 +55,24 @@ public class EvilSword extends Actor
 
     }
 
+    /**
+     * Final boss uses it to tell the sword which direction to face
+     */
     public void setFacingRight(boolean value){
         facingRight = value;
         updateDirection();
     }
 
+    /**
+     * Attack animation
+     */
     public void setAttacking(boolean value){
         attacking = value;
     }
 
+    /**
+     * Sword direction image
+     */
     public void updateDirection(){
         if(facingRight){
             setImage(swordRight);
@@ -64,16 +81,22 @@ public class EvilSword extends Actor
         }
     }
 
+    /**
+     * Calls gameOver world
+     */
     private void damageKnight(Knight k) {
-        k.score -= 10; // or whatever penalty you want
-
-        if (k.score < 0) k.score = 0;
-
         if (k.hitsByFinalBoss >= k.maxBossHits) {
             k.gameOver();
         }
     }
+    
+    public FinalBoss getOwner() {
+        return owner;
+    }
 
+    /**
+     * Mirrors the Sword image
+     */
     public void flip(){
         getImage().mirrorHorizontally();
         facingRight = !facingRight;

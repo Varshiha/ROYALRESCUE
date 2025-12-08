@@ -14,29 +14,28 @@ public class Potion extends Actor
         scaleImage(potion);
     }
 
-    
     public void act(){
         if(Greenfoot.mouseClicked(this)){
             Greenfoot.setWorld(new BookOpen2());
         }
     }
-    
+
     public void question(){
         if(Greenfoot.mouseClicked(this)){
-           String playerAnswer = Greenfoot.ask("What is your answer?");
+            String playerAnswer = Greenfoot.ask("What is your answer?");
             if (playerAnswer.equalsIgnoreCase("correct")) {
                 int startX = 50;  // choose a default starting X
                 int startY = 50;  // choose a default starting Y
                 Greenfoot.setWorld(new Cave(startX, startY));
-                
+
             } else {
                 // Do something if the answer is incorrect
                 Greenfoot.setWorld(new BookOpen2());
             }
         }
-        
+
     }
-    
+
     public void scaleImage(GreenfootImage img){
         img.scale(img.getWidth()/3, img.getHeight()/3);
     }

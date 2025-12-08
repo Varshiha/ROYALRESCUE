@@ -18,29 +18,23 @@ public class Cave extends World
     {    
         // Create a new world with 600x400 cells with a cell size of 1x1 pixels.
         super(547, 554, 1);
-        
+
         addObject(new Knight(), knightX, knightY);
         addObject(new KingLocked(), 501, 59);
         addObject(new FinalBoss(), getWidth()/2, getHeight()/3);
         Knight knight = (Knight) getObjects(Knight.class).get(0);
-        
 
     }
-    
-
-    
-    
     public void showMessage(Knight k){
-        showText("Hits: " + k.getHitsOnFinalBoss(), 200, 20);
-        showText("Required: " + k.getHitsRequired(), 60, 40);
-        showText("Boss Hits: " + k.getBossHits() + "/" + k.getMaxBossHits(), 200, 40);
+        showText("Knight Hits: " + k.getHitsOnFinalBoss(), 60, 20);
+        showText("Required: " + k.getHitsRequired(), 200, 40);
+        showText("Boss Hits: " + k.getBossHits() + "/" + k.getMaxBossHits(), 60, 40);
     }
 
-    
     public void act(){
         Knight k = (Knight)getObjects(Knight.class).get(0);
-        
+
         showMessage(k);
-        
+
     }
 }

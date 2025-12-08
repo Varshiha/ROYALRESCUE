@@ -22,13 +22,13 @@ public class Castle extends World
     {    
         // Create a new world with 600x400 cells with a cell size of 1x1 pixels.
         super(547, 554, 1); 
-        
+
         GreenfootImage bg = new GreenfootImage("Castle.png");
         bg.scale(getWidth(), getHeight());
         setBackground(bg);
         prepare(knightX, knightY);
     }
-    
+
     public Castle(){
         this(350, 350);
     }
@@ -54,11 +54,8 @@ public class Castle extends World
             }
         }
 
-        
     }
-
     public void spawnAttackingTroll(){
-
         for(int i=0; i<trollsStart; i++){
             addObject(new Troll(), 
                 Greenfoot.getRandomNumber(getWidth()), 
@@ -67,16 +64,15 @@ public class Castle extends World
 
     }
 
-    
     public void potionFound(Knight k, PowerUp p){
         if(p != null){
             removeObject(p);
             int newX = k.getX();
             int newY = k.getY();
-            
+
             Greenfoot.setWorld(new KingRoom(newX, newY));
         }
 
     }
-    
+
 }

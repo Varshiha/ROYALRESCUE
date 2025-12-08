@@ -14,50 +14,40 @@ public class Knight extends Actor
     private GreenfootImage leftHandDown= new GreenfootImage("KnightFace1l.png");
     private GreenfootImage attackRight = new GreenfootImage("KnightFace3.png");
     private GreenfootImage attackLeft = new GreenfootImage("KnightFace3l.png");
-
+    //Movement/Attack Speed
     private int speed = 4;
 
-    private int attackCooldown = 0;
-    private int attackDuration = 0;
+    //Sword Attack
+    private int attackCooldown = 0;//prevent spamming attack
+    private int attackDuration = 0;//how long the sword stays after pressing attack
     private final int ATTACK_COOLDOWN_MAX = 25;
     private final int ATTACK_DURATION_MAX =8;
-
     private Sword sword;
-    private boolean facingRight = true;
-    private boolean swordFacingRight = true;
+    private boolean facingRight = true;//Knight direction
+    private boolean swordFacingRight = true;//Sword direction
 
+    //Prevents the Knight from hitting the final boss multiple times in one animation
     private boolean hitThisAttack = false;
 
+    //Scoring System
     public static int score = 0;
-    public int hitsOnFinalBoss = 0;
-    public final int hitsRequired = 10; 
+    
+    //Final Boss hit tracker
+    public int hitsOnFinalBoss = 0;//how many time Knight hit the boss
+    public final int hitsRequired = 15; // hits needed to kill boss(game won)
+    public int hitsByFinalBoss = 0;//how many times the boss hits you
+    public final int maxBossHits = 20;//Knight loses after 20 hits(game over)
+    
+    //Troll Tracking
+    public int trollHits = 0;//Amount of times the trols hit Knight
 
-    public static int initialScore = 100;
-    public int consecutiveTrollHits = 0;
-
+    //Restart Control
     public static boolean waitingToRestart = false;
     private boolean waitingForRestart = false;
     private GreenfootImage restartOverlay;
-    public int hitsByFinalBoss = 0;
-    public final int maxBossHits = 20; 
     
+    //Sword Sound
     private GreenfootSound slash = new GreenfootSound("slash.wav");
-
-    public boolean getHitThisAttack() {
-        return hitThisAttack;
-    }
-
-    public void setHitThisAttack(boolean value) {
-        hitThisAttack = value;
-    }
-
-    public int getBossHits(){
-        return hitsByFinalBoss;
-    }
-
-    public int getMaxBossHits(){
-        return maxBossHits;
-    }
 
     /**
      * Constructor
@@ -88,16 +78,6 @@ public class Knight extends Actor
 
         checkPowerUp();
         checkRestartInput();
-    }
-
-    public void checkPowerUp(){
-        PowerUp p = (PowerUp)getOneIntersectingObject(PowerUp.class);
-        if(p != null){
-            World currentWorld = getWorld();
-            if(currentWorld instanceof Castle){
-                ((Castle)currentWorld).potionFound(this, p);
-            }
-        }
     }
 
     /**
@@ -145,21 +125,33 @@ public class Knight extends Actor
         }
     }
 
+    /**
+     * Attack
+     */
     private void startAttack(){
         attackDuration = ATTACK_DURATION_MAX;
         attackCooldown = ATTACK_COOLDOWN_MAX;
     }
 
+    /**
+     * Scale image
+     */
     private void scaleImage(GreenfootImage img){
         img.scale(img.getWidth()/5, img.getHeight()/5);
     }
 
+    /**
+     * Sword goes where Knight goes
+     */
     public void addedToWorld(World world){
         if(sword.getWorld() == null){
             world.addObject(sword, getX(), getY());
         }
     }
 
+    /**
+     * Sword position
+     */
     public void updateSwordPosition(){
         if(sword == null) return;
 
@@ -183,43 +175,55 @@ public class Knight extends Actor
         }
     }
 
+    /**
+     * Text on screen
+     */
     private void showStats(){
-        getWorld().showText("Score: " + score, 200, 510);
-        getWorld().showText("Consecutive Hits: " + consecutiveTrollHits, 150, 530);
+        getWorld().showText("Score: " + score, 150, 510);
+        getWorld().showText("Troll Hits: " + trollHits, 150, 530);
     }
 
+    /**
+     * Restar level
+     */
     private void restartCurrentWorld(){
         World currentWorld = getWorld();
         try {
-            World newWorld = currentWorld.getClass()
-                .getDeclaredConstructor(int.class, int.class)
-                .newInstance(getX(), getY());
+            World newWorld = currentWorld.getClass().getDeclaredConstructor(int.class, int.class).newInstance(getX(), getY());
             Greenfoot.setWorld(newWorld);
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        consecutiveTrollHits = 0;
+        trollHits = 0;
         waitingForRestart = false;
         Knight.waitingToRestart = false;
     }
 
+    /**
+     * Why restart happens
+     */
     public void onHitByTroll(){
-        if(waitingForRestart) return;
-
-        consecutiveTrollHits++;
-        if(consecutiveTrollHits >= 20){
-            consecutiveTrollHits = 0;
+        if(waitingForRestart) {
+            return;
+        }
+        trollHits++;
+        if(trollHits >= 20){
+            trollHits = 0;
             waitingForRestart = true;
             Knight.waitingToRestart = true;
             showRestartMessage();
         }
     }
 
+    /**
+     * Restart message
+     */
     private void showRestartMessage() {
         World world = getWorld();
-        if(world == null) return;
-
+        if(world == null) {
+            return;
+        }
         GreenfootImage overlay = new GreenfootImage(world.getWidth(), world.getHeight());
         overlay.setColor(new Color(0, 0, 0, 180)); // semi-transparent black
         overlay.fill();
@@ -235,32 +239,80 @@ public class Knight extends Actor
         waitingForRestart = true;
     }
 
+    /**
+     * Press R to to call restartCurrentWorld method
+     */
     public void checkRestartInput(){
         if(waitingForRestart && Greenfoot.isKeyDown("r")){
             restartCurrentWorld();
         }
     }
 
+    /**
+     * Power Up
+     */
+    public void checkPowerUp(){
+        PowerUp p = (PowerUp)getOneIntersectingObject(PowerUp.class);
+        if(p != null){
+            World currentWorld = getWorld();
+            if(currentWorld instanceof Castle){
+                ((Castle)currentWorld).potionFound(this, p);
+            }
+        }
+    }
+    
+    /**
+     * Potion
+     */
     public Potion touchPotion(){
         return (Potion)getOneIntersectingObject(Potion.class);
-
     }
 
+    /**
+     * Library interaction
+     */
     public MiniLibrary ifTouchBookCase(){
         return (MiniLibrary)getOneIntersectingObject(MiniLibrary.class);
     }
+    
+    /**
+     * Score
+     */
+    public void increaseScore(){
+        score ++;
 
+    }
+
+    /**
+     * Score
+     */
+    public void decreaseScore(){
+        score --;
+        if(score < 0) score = 0;
+    }
+
+    /**
+     * Score
+     */
+    public int getScore(){
+        return score;
+    }
+
+    /**
+     * Final Battle
+     */
     public void hitFinalBoss(FinalBoss boss){
         hitsOnFinalBoss++;
         score += 5;
         if(hitsOnFinalBoss >= hitsRequired){
             getWorld().removeObject(boss);
             saveking();
-        }else{
-            getWorld().showText("Hits: " + hitsOnFinalBoss + " / " + hitsRequired, 200, 20);
         }
     }
 
+    /**
+     * Final Battle
+     */
     public void hitByFinalBoss(){
         score-=10;
         if(score<0){
@@ -273,38 +325,39 @@ public class Knight extends Actor
         }
     }
 
+    /**
+     * Final Battle
+     */
     public void gameOver(){
         MusicManager.stopMusic();
         Greenfoot.setWorld(new GameOver());
     }
 
+    /**
+     * Final Battle
+     */
     public void gameWon(){
         MusicManager.stopMusic();
         Greenfoot.setWorld(new GameWin());
     }
 
-    public void increaseScore(){
-        score ++;
-
-    }
-
-    public void decreaseScore(){
-        score --;
-        if(score < 0) score = 0;
-    }
-
-    public int getScore(){
-        return score;
-    }
-
+    /**
+     * Final Battle
+     */
     public int getHitsRequired() {
         return hitsRequired; 
     }
 
+    /**
+     * Final Battle
+     */
     public int getHitsOnFinalBoss() {
         return hitsOnFinalBoss; 
     }
 
+    /**
+     * Final Battle
+     */
     public void saveking(){
         List<KingLocked> kg = getWorld().getObjects(KingLocked.class);
         if(!kg.isEmpty()){
@@ -313,6 +366,34 @@ public class Knight extends Actor
             King newKing = new King();
             getWorld().addObject(newKing, 520, 59);
         }
+    }
+    
+    /**
+     * Final Battle
+     */
+    public boolean getHitThisAttack() {
+        return hitThisAttack;
+    }
+
+    /**
+     * Final Battle
+     */
+    public void setHitThisAttack(boolean value) {
+        hitThisAttack = value;
+    }
+
+    /**
+     * Final Battle
+     */
+    public int getBossHits(){
+        return hitsByFinalBoss;
+    }
+
+    /**
+     * Final Battle
+     */
+    public int getMaxBossHits(){
+        return maxBossHits;
     }
 
 }

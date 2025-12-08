@@ -2,7 +2,7 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 
 public class StartScreen extends World
 {
-    private int timer = 120;
+    private int timer = 180;
     private GreenfootImage imageBackground; 
 
     public StartScreen()

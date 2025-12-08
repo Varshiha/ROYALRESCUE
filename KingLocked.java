@@ -13,10 +13,6 @@ public class KingLocked extends Actor
         getImage().scale(getImage().getWidth()/2, getImage().getHeight()/2);
     }
     
-    /**
-     * Act - do whatever the KingLocked wants to do. This method is called whenever
-     * the 'Act' or 'Run' button gets pressed in the environment.
-     */
     public void act()
     {   
        

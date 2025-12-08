@@ -10,7 +10,7 @@ public class Grass2 extends World
 {
     private int trollSpawnTimer = 150;
     private int trollsToSpawn = Greenfoot.getRandomNumber(5) + 3;
-    //spawn between 6 and 10 trolls
+    //spawn between 3 and 7 trolls
     private boolean finishedSpawning = false;
     private int maxDifficulty = 4; //amount of trolls that spawn
     private int trollsStart = 2; //easier

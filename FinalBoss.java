@@ -9,24 +9,25 @@ import java.util.List;
  */
 public class FinalBoss extends Actor
 {
+    //Final Boss images
     private GreenfootImage standingRight = new GreenfootImage("FinalBoss1r.png");
     private GreenfootImage standingLeft = new GreenfootImage("FinalBoss1l.png");
     private GreenfootImage attackRight = new GreenfootImage("FinalBossAttackr.png");
     private GreenfootImage attackLeft = new GreenfootImage("FinalBossAttackl.png");
 
-    //Sword
+    //Sword & Direction
     private EvilSword eSword;
     private boolean facingRight = true;
     private boolean swordFacingRight = true;
 
-    //Speed of the final boss
+    //Movement & Attack Timing
     private int speed = 1;
-    private int attackCooldown = 0;
-    private int attackTime = 0;
-    private final int ATTACK_COOLDOWN_MAX = 80;
-    private final int ATTACK_TIME_MAX =20;
+    private int attackCooldown = 0;//how long until next attack
+    private int attackTime = 0;//how long stays in attack mode
+    private final int ATTACK_COOLDOWN_MAX = 80;//delay between attacks
+    private final int ATTACK_TIME_MAX =20;//duration of attack naimation
 
-    //Amount of lives
+    //Dead or Alive
     private boolean dead = false;
 
     public FinalBoss(){
@@ -40,6 +41,9 @@ public class FinalBoss extends Actor
         eSword = new EvilSword();
     }
 
+    /**
+     * Evil Sword gets added wherever the Final Boss is
+    */
     public void addedToWorld(World w){
         if(eSword.getWorld() == null)
             w.addObject(eSword, getX(), getY());
@@ -63,7 +67,6 @@ public class FinalBoss extends Actor
         if(eSword != null) eSword.setAttacking(false);
 
         if(isTouching(Knight.class) && attackTime > 0){
-            
             k.hitByFinalBoss();
             int pushDistance = 150;
             if(getX() > k.getX()){
@@ -74,6 +77,9 @@ public class FinalBoss extends Actor
         }
     }
 
+    /**
+     * Manages time for attacks & moving
+    */
     private void update(Knight k){
         if(attackCooldown > 0){
             attackCooldown--;
@@ -94,10 +100,16 @@ public class FinalBoss extends Actor
         moveToward(k);
     }
 
+    /**
+     * Checks if Knight can be attacked
+    */
     private boolean isNear(Actor a, int distance){
         return Math.abs(getX()- a.getX()) < distance && Math.abs(getY()- a.getY()) < distance;
     }
 
+    /**
+     * Makes boss walk towards the knight until minimum
+    */
     private void moveToward(Knight k){
         int minDistance = 120;
         int dx = k.getX() - getX();
@@ -124,6 +136,9 @@ public class FinalBoss extends Actor
         }
     }
 
+    /**
+     * Attack animation
+    */
     private void startAttack(){
         attackTime = ATTACK_TIME_MAX;
         attackCooldown = ATTACK_COOLDOWN_MAX;
@@ -135,10 +150,16 @@ public class FinalBoss extends Actor
         if(eSword != null) eSword.setAttacking(false);
     }
 
+    /**
+     * Scale image
+    */
     private void scaleImage(GreenfootImage img){
         img.scale(img.getWidth()/4, img.getHeight()/4);
     }
 
+    /**
+     * Moves the sword & makes sure the sword moves with the boss
+    */
     public void updateSwordPosition(){
         if(eSword == null) return;
         if(attackTime > 0){
@@ -160,14 +181,20 @@ public class FinalBoss extends Actor
         }
     }
 
+    /**
+     * Life Status
+    */
     public boolean isDead(){
         return dead;
     }
 
+    /**
+     * Kill boss my removing it from world
+    */
     public void takeDamage(){
-    if (getWorld()!= null){
-        getWorld().removeObject(this);
+        if (getWorld()!= null){
+            getWorld().removeObject(this);
+        }
     }
-}
 
-    }
+}

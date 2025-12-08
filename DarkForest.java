@@ -11,10 +11,10 @@ public class DarkForest extends World
     private boolean finishedSpawning = false;
     private int trollSpawnTimer = 150;
     private int trollsToSpawn = Greenfoot.getRandomNumber(5) + 3;
-    //spawn between 6 and 10 trolls
-    private int maxDifficulty = 4; //amount of trolls that spawn
+    //spawn between 3 and 7 trolls
+    private int maxDifficulty = 5; //amount of trolls that spawn
     private int trollsStart = 2; //easier
-    
+
     /**
      * Constructor for objects of class DarkForest.
      * 
@@ -23,12 +23,12 @@ public class DarkForest extends World
     {    
         // Create a new world with 600x400 cells with a cell size of 1x1 pixels.        
         super(547, 554, 1);
-        
+
         addObject(new Knight(), knightX, knightY);
         addObject(new Troll(), Greenfoot.getRandomNumber(500), Greenfoot.getRandomNumber(500));
         addObject(new Troll(), Greenfoot.getRandomNumber(500), Greenfoot.getRandomNumber(500));
     }
-    
+
     public void act(){
         if (Knight.waitingToRestart) return;
         trollSpawnTimer--;
@@ -36,7 +36,7 @@ public class DarkForest extends World
             spawnAttackingTroll();
             trollsToSpawn--;
             trollSpawnTimer = 150;
-            
+
             if(trollsStart < maxDifficulty){
                 trollsStart++;
             }
@@ -50,17 +50,17 @@ public class DarkForest extends World
         }
 
     }
-    
+
     public void spawnAttackingTroll(){
-        
+
         for(int i=0; i<trollsStart; i++){
             addObject(new Troll(), 
-            Greenfoot.getRandomNumber(500), 
-            Greenfoot.getRandomNumber(500));
+                Greenfoot.getRandomNumber(500), 
+                Greenfoot.getRandomNumber(500));
         }
-        
+
     }
-    
+
     private void checkKnightExit(){
         Knight k = (Knight)getObjects(Knight.class).get(0);
         if(k.getX() >=getWidth() - 5){

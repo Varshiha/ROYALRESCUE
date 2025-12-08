@@ -5,7 +5,6 @@ comment1.params=
 comment1.target=MiniLibrary()
 comment2.params=
 comment2.target=void\ act()
-comment2.text=\r\n\ Act\ -\ do\ whatever\ the\ MiniLibrary\ wants\ to\ do.\ This\ method\ is\ called\ whenever\r\n\ the\ 'Act'\ or\ 'Run'\ button\ gets\ pressed\ in\ the\ environment.\r\n
 comment3.params=img
 comment3.target=void\ scaleImage(greenfoot.GreenfootImage)
 numComments=4
