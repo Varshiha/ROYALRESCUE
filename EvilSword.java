@@ -36,7 +36,7 @@ public class EvilSword extends Actor
      * Scale image
      */
     private void scaleImage(GreenfootImage img){
-        img.scale(img.getWidth()/3, img.getHeight()/3);
+        img.scale(img.getWidth()/4, img.getHeight()/4);
     }
 
     /**
@@ -47,7 +47,7 @@ public class EvilSword extends Actor
     {
         // Damage knight if touched
         Knight k = (Knight)getOneIntersectingObject(Knight.class);
-        if (k != null) {
+        if (k != null && attacking) {
             damageKnight(k);
         }
 
@@ -94,11 +94,4 @@ public class EvilSword extends Actor
         return owner;
     }
 
-    /**
-     * Mirrors the Sword image
-     */
-    public void flip(){
-        getImage().mirrorHorizontally();
-        facingRight = !facingRight;
-    }
 }

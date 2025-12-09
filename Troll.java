@@ -1,5 +1,4 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
-import greenfoot.GreenfootImage;
 import java.util.List;
 
 public class Troll extends Actor
@@ -7,7 +6,7 @@ public class Troll extends Actor
     private int speed = 1;
     private GreenfootImage rightSide = new GreenfootImage("Trollside2.png");
     private GreenfootImage leftSide = new GreenfootImage("Trollside1.png");
-    
+
     public Troll(){
         rightSide.scale(rightSide.getWidth()/3, rightSide.getHeight()/3);
         leftSide.scale(leftSide.getWidth()/3, leftSide.getHeight()/3);
@@ -17,7 +16,7 @@ public class Troll extends Actor
     public void act()
     {
         if(Knight.waitingToRestart){
-           return;//stop the trols when restart sceen shows up 
+            return;//stop the trols when restart sceen shows up 
         }
 
         List<Knight> knights = getWorld().getObjects(Knight.class);
@@ -26,10 +25,12 @@ public class Troll extends Actor
         }
         Knight k = knights.get(0);
 
-        if(Knight.waitingToRestart){
-            return;
-        }
         moveTowardsPlayer(k);
+
+        if(isTouching(Knight.class)){
+            k.onHitByTroll();
+            pushBack(k);
+        }
     }
 
     // always looking for the knight
@@ -48,21 +49,21 @@ public class Troll extends Actor
             setLocation(getX(), getY() + speed);
         }
 
-        if(isTouching(Knight.class)){
-            k.onHitByTroll();
-            int pushDistance = 100;
-            if(getX() > k.getX()){
-                setLocation(getX() + pushDistance, getY()); 
-            }else{
-                setLocation(getX() - pushDistance, getY());
-            }
+    }
+
+    public void pushBack(Knight k){
+        int pushDistance = 100;
+        if(getX() > k.getX()){
+            setLocation(getX() + pushDistance, getY()); 
+        }else{
+            setLocation(getX() - pushDistance, getY());
         }
     }
-    
+
     public void die(){
         if(getWorld() != null){
             getWorld().removeObject(this);
-            Knight.score += 5;
+            Knight.score += 1;
         }
     }
 

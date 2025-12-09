@@ -76,6 +76,7 @@ public class GameOver extends World
     public void restart(){
         if(Greenfoot.isKeyDown("space")){
             Greenfoot.setWorld(new SplashWorld());
+            
         }
     }
 }

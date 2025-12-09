@@ -9,7 +9,7 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 public class BlackScreen extends World
 {
     private int timer =300;
-    //private Knight knight = new Knight();
+    private Knight knight = new Knight();
     /**
      * Constructor for objects of class BlackScreen.
      * 
@@ -18,7 +18,7 @@ public class BlackScreen extends World
     {    
         // Create a new world with 600x400 cells with a cell size of 1x1 pixels.
         super(547, 554, 1); 
-        Greenfoot.playSound("win.wav");
+        
     }
 
     public void act(){

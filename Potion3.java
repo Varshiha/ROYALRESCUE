@@ -24,7 +24,7 @@ public class Potion3 extends Actor
         if (Greenfoot.isKeyDown("enter"))
         {
             String answer = Greenfoot.ask("What dip is made using avocados?");
-            if (answer.equals("Guacamole")) 
+            if (answer.equals("Guacamole") || answer.equals("guacamole")) 
             {
                 int startX = 50;  
                 int startY = 50;  

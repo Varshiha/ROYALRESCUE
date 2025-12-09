@@ -9,6 +9,7 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 public class SplashWorld extends World
 {
     private int timer = 180;
+    private Knight k = new Knight();
     /**
      * Constructor for objects of class SplashWorld.
      * 
@@ -22,7 +23,7 @@ public class SplashWorld extends World
         bg.fill();
         setBackground(bg);
         addObject(new VanierLogo(), getWidth()/2, getHeight()/2);
-
+        k.score = 0;
         prepare();
     }
 

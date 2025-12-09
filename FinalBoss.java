@@ -22,8 +22,8 @@ public class FinalBoss extends Actor
 
     //Movement & Attack Timing
     private int speed = 1;
-    private int attackCooldown = 0;//how long until next attack
-    private int attackTime = 0;//how long stays in attack mode
+    private int attackCooldownTimer = 0;//how long until next attack
+    private int attackTimer = 0;//how long stays in attack mode
     private final int ATTACK_COOLDOWN_MAX = 80;//delay between attacks
     private final int ATTACK_TIME_MAX =20;//duration of attack naimation
 
@@ -60,13 +60,11 @@ public class FinalBoss extends Actor
 
         Knight k = knights.get(0);
         if(dead) return;
-        moveToward(k);
+        
         update(k);
         updateSwordPosition();
 
-        if(eSword != null) eSword.setAttacking(false);
-
-        if(isTouching(Knight.class) && attackTime > 0){
+        if(isTouching(Knight.class) && attackTimer > 0){
             k.hitByFinalBoss();
             int pushDistance = 150;
             if(getX() > k.getX()){
@@ -81,19 +79,19 @@ public class FinalBoss extends Actor
      * Manages time for attacks & moving
     */
     private void update(Knight k){
-        if(attackCooldown > 0){
-            attackCooldown--;
+        if(attackCooldownTimer > 0){
+            attackCooldownTimer--;
         }
-        if(attackTime > 0){
-            attackTime--;
+        if(attackTimer > 0){
+            attackTimer--;
         }
         //Start attack
-        if(isNear(k, 120) && attackCooldown == 0){
+        if(isNear(k, 120) && attackCooldownTimer == 0){
             startAttack();
             return;
         }
 
-        if(attackTime > 0){
+        if(attackTimer > 0){
             return;
         }
 
@@ -104,7 +102,9 @@ public class FinalBoss extends Actor
      * Checks if Knight can be attacked
     */
     private boolean isNear(Actor a, int distance){
-        return Math.abs(getX()- a.getX()) < distance && Math.abs(getY()- a.getY()) < distance;
+        int dx = a.getX() - getX();
+        int dy = a.getY() - getY();
+        return dx*dx + dy*dy <= distance*distance;
     }
 
     /**
@@ -140,8 +140,8 @@ public class FinalBoss extends Actor
      * Attack animation
     */
     private void startAttack(){
-        attackTime = ATTACK_TIME_MAX;
-        attackCooldown = ATTACK_COOLDOWN_MAX;
+        attackTimer = ATTACK_TIME_MAX;
+        attackCooldownTimer = ATTACK_COOLDOWN_MAX;
         if(facingRight){
             setImage(attackRight);
         }else{
@@ -162,7 +162,7 @@ public class FinalBoss extends Actor
     */
     public void updateSwordPosition(){
         if(eSword == null) return;
-        if(attackTime > 0){
+        if(attackTimer > 0){
             int swordX = facingRight ? 40 : -40;
             eSword.setLocation(getX() + swordX, getY() - 40);
         }else {
@@ -176,7 +176,7 @@ public class FinalBoss extends Actor
             swordFacingRight = facingRight;
         }
 
-        if(attackTime == 0 && eSword != null){
+        if(attackTimer == 0 && eSword != null){
             eSword.setAttacking(false);
         }
     }
@@ -192,6 +192,7 @@ public class FinalBoss extends Actor
      * Kill boss my removing it from world
     */
     public void takeDamage(){
+        dead = true;
         if (getWorld()!= null){
             getWorld().removeObject(this);
         }

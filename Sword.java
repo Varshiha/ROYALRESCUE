@@ -12,8 +12,9 @@ public class Sword extends Actor
 
     public void act()
     {
-        if(canDamage){
-            attackCheck();
+        if(canDamage && knight != null){
+            damageTrolls();
+            damageFinalBoss();
         }
     }
 
@@ -22,32 +23,19 @@ public class Sword extends Actor
         knight = k;
     }
 
-    private void attackCheck(){
-        World w = getWorld();
-        if(w == null) {
-            return;
-        }
-        List<Knight> knights = w.getObjects(Knight.class);
-        if(knights.isEmpty()){
-            return;
-        }
-        Knight k = knights.get(0);
-        // Damage trolls
+    private void damageTrolls(){
         Troll t = (Troll) getOneIntersectingObject(Troll.class);
         if(t != null){
-            w.removeObject(t);
-            k.increaseScore();
-
+            t.die();
         }
-        if (!canDamage || knight == null) {
-            return;
-        }
-        
-        //Damage Final Boss
+    }
+    
+    private void damageFinalBoss(){
         FinalBoss fb = (FinalBoss)getOneIntersectingObject(FinalBoss.class);
         if (fb != null && !knight.getHitThisAttack()) {
             knight.hitFinalBoss(fb);
             knight.setHitThisAttack(true); 
         }
     }
+    
 }

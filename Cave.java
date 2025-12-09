@@ -24,16 +24,22 @@ public class Cave extends World
         addObject(new FinalBoss(), getWidth()/2, getHeight()/3);
         Knight knight = (Knight) getObjects(Knight.class).get(0);
 
+        
     }
+
     public void showMessage(Knight k){
         showText("Knight Hits: " + k.getHitsOnFinalBoss(), 60, 20);
         showText("Required: " + k.getHitsRequired(), 200, 40);
         showText("Boss Hits: " + k.getBossHits() + "/" + k.getMaxBossHits(), 60, 40);
+        k.showStats();
+        if(k.score >= 150 && k.score <= 160){
+            k.hitsByFinalBoss = 0;
+        }
     }
 
     public void act(){
         Knight k = (Knight)getObjects(Knight.class).get(0);
-
+        
         showMessage(k);
 
     }

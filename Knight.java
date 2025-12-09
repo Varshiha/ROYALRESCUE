@@ -34,7 +34,7 @@ public class Knight extends Actor
     
     //Final Boss hit tracker
     public int hitsOnFinalBoss = 0;//how many time Knight hit the boss
-    public final int hitsRequired = 15; // hits needed to kill boss(game won)
+    public final int hitsRequired = 25; // hits needed to kill boss(game won)
     public int hitsByFinalBoss = 0;//how many times the boss hits you
     public final int maxBossHits = 20;//Knight loses after 20 hits(game over)
     
@@ -178,7 +178,7 @@ public class Knight extends Actor
     /**
      * Text on screen
      */
-    private void showStats(){
+    public void showStats(){
         getWorld().showText("Score: " + score, 150, 510);
         getWorld().showText("Troll Hits: " + trollHits, 150, 530);
     }
@@ -278,23 +278,21 @@ public class Knight extends Actor
     /**
      * Score
      */
-    public void increaseScore(){
+    public static void increaseScore(){
         score ++;
-
     }
 
     /**
      * Score
      */
-    public void decreaseScore(){
+    public static void decreaseScore(){
         score --;
-        if(score < 0) score = 0;
     }
 
     /**
      * Score
      */
-    public int getScore(){
+    public static int getScore(){
         return score;
     }
 
@@ -303,7 +301,8 @@ public class Knight extends Actor
      */
     public void hitFinalBoss(FinalBoss boss){
         hitsOnFinalBoss++;
-        score += 5;
+        score += 10;
+        
         if(hitsOnFinalBoss >= hitsRequired){
             getWorld().removeObject(boss);
             saveking();
@@ -314,11 +313,8 @@ public class Knight extends Actor
      * Final Battle
      */
     public void hitByFinalBoss(){
-        score-=10;
-        if(score<0){
-            score = 0;
-        }
-
+        score-=5;
+        
         hitsByFinalBoss++;
         if(hitsByFinalBoss >= maxBossHits){
             gameOver();
