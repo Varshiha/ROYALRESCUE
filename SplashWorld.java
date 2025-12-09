@@ -18,6 +18,8 @@ public class SplashWorld extends World
     {    
         // Create a new world with 600x400 cells with a cell size of 1x1 pixels.
         super(547, 554, 1); 
+        MusicManager.stopWinMusic();
+        MusicManager.stopOverMusic();
         GreenfootImage bg = new GreenfootImage(getWidth(), getHeight());
         bg.setColor(Color.WHITE);
         bg.fill();
@@ -25,6 +27,7 @@ public class SplashWorld extends World
         addObject(new VanierLogo(), getWidth()/2, getHeight()/2);
         k.score = 0;
         prepare();
+        
     }
 
     private void prepare(){

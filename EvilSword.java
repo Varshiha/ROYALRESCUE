@@ -75,9 +75,9 @@ public class EvilSword extends Actor
      */
     public void updateDirection(){
         if(facingRight){
-            setImage(swordRight);
-        }else{
             setImage(swordLeft);
+        }else{
+            setImage(swordRight);
         }
     }
 

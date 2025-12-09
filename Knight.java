@@ -324,7 +324,6 @@ public class Knight extends Actor
      * Final Battle
      */
     public void gameOver(){
-        MusicManager.stopMusic();
         Greenfoot.setWorld(new GameOver());
     }
 
@@ -332,7 +331,6 @@ public class Knight extends Actor
      * Final Battle
      */
     public void gameWon(){
-        MusicManager.stopMusic();
         Greenfoot.setWorld(new GameWin());
     }
 
