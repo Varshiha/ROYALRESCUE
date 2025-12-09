@@ -21,7 +21,7 @@ public class FinalBoss extends Actor
     private boolean swordFacingRight = true;
 
     //Movement & Attack Timing
-    private int speed = 1;
+    private int speed = 3;
     private int attackCooldownTimer = 0;//how long until next attack
     private int attackTimer = 0;//how long stays in attack mode
     private final int ATTACK_COOLDOWN_MAX = 80;//delay between attacks

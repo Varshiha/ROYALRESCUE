@@ -15,7 +15,7 @@ public class Knight extends Actor
     private GreenfootImage attackRight = new GreenfootImage("KnightFace3.png");
     private GreenfootImage attackLeft = new GreenfootImage("KnightFace3l.png");
     //Movement/Attack Speed
-    private int speed = 4;
+    public int speed = 4;
 
     //Sword Attack
     private int attackCooldown = 0;//prevent spamming attack
@@ -34,7 +34,7 @@ public class Knight extends Actor
     
     //Final Boss hit tracker
     public int hitsOnFinalBoss = 0;//how many time Knight hit the boss
-    public final int hitsRequired = 25; // hits needed to kill boss(game won)
+    public final int hitsRequired = 15; // hits needed to kill boss(game won)
     public int hitsByFinalBoss = 0;//how many times the boss hits you
     public final int maxBossHits = 20;//Knight loses after 20 hits(game over)
     
@@ -314,7 +314,6 @@ public class Knight extends Actor
      */
     public void hitByFinalBoss(){
         score-=5;
-        
         hitsByFinalBoss++;
         if(hitsByFinalBoss >= maxBossHits){
             gameOver();

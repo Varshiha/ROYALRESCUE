@@ -6,7 +6,7 @@ public class Troll extends Actor
     private int speed = 1;
     private GreenfootImage rightSide = new GreenfootImage("Trollside2.png");
     private GreenfootImage leftSide = new GreenfootImage("Trollside1.png");
-
+    
     public Troll(){
         rightSide.scale(rightSide.getWidth()/3, rightSide.getHeight()/3);
         leftSide.scale(leftSide.getWidth()/3, leftSide.getHeight()/3);
@@ -20,17 +20,18 @@ public class Troll extends Actor
         }
 
         List<Knight> knights = getWorld().getObjects(Knight.class);
-        if(knights.isEmpty()){
-            return;
-        }
         Knight k = knights.get(0);
 
-        moveTowardsPlayer(k);
-
+        if(!knights.isEmpty()){
+            moveTowardsPlayer(k);
+        }
+        
         if(isTouching(Knight.class)){
             k.onHitByTroll();
             pushBack(k);
         }
+        
+        
     }
 
     // always looking for the knight
@@ -66,5 +67,5 @@ public class Troll extends Actor
             Knight.score += 1;
         }
     }
-
+    
 }

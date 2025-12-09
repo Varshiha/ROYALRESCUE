@@ -8,10 +8,10 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  */
 public class Grass2 extends World
 {
-    private int trollSpawnTimer = 150;
+    private int trollSpawnTimer = 150;//controls how often a new wave of trolls spawns
     private int trollsToSpawn = Greenfoot.getRandomNumber(5) + 3;
-    //spawn between 3 and 7 trolls
-    private boolean finishedSpawning = false;
+    //how many trolls that neeed to be spawned for this wordl
+    private boolean finishedSpawning = false;//tracks if all spawns are done
     private int maxDifficulty = 4; //amount of trolls that spawn
     private int trollsStart = 2; //easier
     private int knightStartX;

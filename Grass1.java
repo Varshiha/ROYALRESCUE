@@ -10,8 +10,8 @@ public class Grass1 extends World
 {
     private int trollSpawnTimer = 150;
     private int trollsToSpawn = Greenfoot.getRandomNumber(5) + 3;
-    //spawn between 3 and 7 trolls
-    private boolean finishedSpawning = false;private int knightStartX;
+    private boolean finishedSpawning = false;
+    private int knightStartX;
     private int knightStartY;
 
     public Grass1(int knightX, int knightY) 
@@ -38,6 +38,7 @@ public class Grass1 extends World
                 finishedSpawning = true;
             }
         }
+        
         if(finishedSpawning && getObjects(Troll.class).isEmpty()){
             showText("Thank you for saving me!\n" 
                 + "You have to save the King.\n" 

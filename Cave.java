@@ -32,8 +32,8 @@ public class Cave extends World
         showText("Required: " + k.getHitsRequired(), 200, 40);
         showText("Boss Hits: " + k.getBossHits() + "/" + k.getMaxBossHits(), 60, 40);
         k.showStats();
-        if(k.score >= 150 && k.score <= 160){
-            k.hitsByFinalBoss = 0;
+        if(k.score > 80){
+            k.speed = 6;
         }
     }
 

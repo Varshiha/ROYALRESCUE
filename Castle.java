@@ -12,8 +12,10 @@ public class Castle extends World
     private int trollsToSpawn = Greenfoot.getRandomNumber(5) + 3;
     //spawn between 6 and 10 trolls
     private boolean finishedSpawning = false;
-    private int maxDifficulty = 4; //amount of trolls that spawn
-    private int trollsStart = 2; //easier
+    private int maxDifficulty = 5; //amount of trolls that spawn
+    private int trollsStart = 3; 
+    private boolean powerUpAdded = false;
+
     /**
      * Constructor for objects of class Castle.
      * 
@@ -36,7 +38,6 @@ public class Castle extends World
     private void prepare(int knightX, int knightY){
         addObject(new Knight(), knightX, knightY);
         addObject(new Troll(), Greenfoot.getRandomNumber(500), Greenfoot.getRandomNumber(500));
-        addObject(new PowerUp(), 200, 500);
     }
 
     public void act(){
@@ -49,12 +50,18 @@ public class Castle extends World
             if(trollsStart < maxDifficulty){
                 trollsStart++;
             }
+
             if(trollsToSpawn == 0 ){
                 finishedSpawning = true;
             }
-        }
 
+        }
+        if(finishedSpawning){
+            addObject(new PowerUp(), 200, 500);
+            
+        }
     }
+
     public void spawnAttackingTroll(){
         for(int i=0; i<trollsStart; i++){
             addObject(new Troll(), 
