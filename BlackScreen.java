@@ -78,6 +78,7 @@ public class BlackScreen extends World
 
     public void restart(){
         if(Greenfoot.isKeyDown("space")){
+            MusicManager.stopWinMusic();
             Greenfoot.setWorld(new SplashWorld());
         }
     }

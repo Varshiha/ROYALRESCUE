@@ -12,8 +12,8 @@ public class Castle extends World
     private int trollsToSpawn = Greenfoot.getRandomNumber(5) + 3;
     //spawn between 6 and 10 trolls
     private boolean finishedSpawning = false;
-    private int maxDifficulty = 5; //amount of trolls that spawn
-    private int trollsStart = 3; 
+    private int maxDifficulty = 4; //amount of trolls that spawn
+    private int trollsStart = 2; 
     private boolean powerUpAdded = false;
 
     /**

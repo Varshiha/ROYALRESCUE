@@ -11,9 +11,9 @@ public class DarkForest extends World
     private boolean finishedSpawning = false;
     private int trollSpawnTimer = 150;
     private int trollsToSpawn = Greenfoot.getRandomNumber(5) + 3;
-    //spawn between 3 and 7 trolls
+    //spawn between 3 and 7 
     private int maxDifficulty = 5; //amount of trolls that spawn
-    private int trollsStart = 2; //easier
+    private int trollsStart = 3; //easier
 
     /**
      * Constructor for objects of class DarkForest.

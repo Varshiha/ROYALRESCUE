@@ -36,6 +36,7 @@ public class Troll extends Actor
 
     // always looking for the knight
     public void moveTowardsPlayer(Knight k){
+        
         if(k.getX() < getX()){
             setImage(leftSide);
             setLocation(getX() - speed, getY());
@@ -64,7 +65,7 @@ public class Troll extends Actor
     public void die(){
         if(getWorld() != null){
             getWorld().removeObject(this);
-            Knight.score += 1;
+            Knight.increaseScore();
         }
     }
     

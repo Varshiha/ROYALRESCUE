@@ -18,8 +18,6 @@ public class SplashWorld extends World
     {    
         // Create a new world with 600x400 cells with a cell size of 1x1 pixels.
         super(547, 554, 1); 
-        MusicManager.stopWinMusic();
-        MusicManager.stopOverMusic();
         GreenfootImage bg = new GreenfootImage(getWidth(), getHeight());
         bg.setColor(Color.WHITE);
         bg.fill();
@@ -42,20 +40,14 @@ public class SplashWorld extends World
         GreenfootImage line1 = new GreenfootImage(600, 100);
         line1.setFont(font);
         line1.setColor(Color.BLACK);
-        line1.drawString("Team Members:", 20, 70);
-        getBackground().drawImage(line1, 175, 370);
+        line1.drawString("Rend Abi Ouli - Varshiha Puvanarajah", 20, 70);
+        getBackground().drawImage(line1, 100, 370);
 
         GreenfootImage line2 = new GreenfootImage(600, 100);
         line2.setFont(font);
         line2.setColor(Color.BLACK);
-        line2.drawString("Rend Abi Ouli - Varshiha Puvanarajah", 20, 70);
-        getBackground().drawImage(line2, 100, 400);
-
-        GreenfootImage line3 = new GreenfootImage(600, 100);
-        line3.setFont(font);
-        line3.setColor(Color.BLACK);
-        line3.drawString("Alexandra Di Iorio", 20, 70);
-        getBackground().drawImage(line3, 110, 430);
+        line2.drawString("Alexandra Di Iorio",20, 70);
+        getBackground().drawImage(line2, 180, 400);
     }
 
     public void act(){

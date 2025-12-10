@@ -21,7 +21,7 @@ public class FinalBoss extends Actor
     private boolean swordFacingRight = true;
 
     //Movement & Attack Timing
-    private int speed = 3;
+    private int speed = 2;
     private int attackCooldownTimer = 0;//how long until next attack
     private int attackTimer = 0;//how long stays in attack mode
     private final int ATTACK_COOLDOWN_MAX = 80;//delay between attacks
@@ -43,7 +43,7 @@ public class FinalBoss extends Actor
 
     /**
      * Evil Sword gets added wherever the Final Boss is
-    */
+     */
     public void addedToWorld(World w){
         if(eSword.getWorld() == null)
             w.addObject(eSword, getX(), getY());
@@ -60,7 +60,7 @@ public class FinalBoss extends Actor
 
         Knight k = knights.get(0);
         if(dead) return;
-        
+
         update(k);
         updateSwordPosition();
 
@@ -77,48 +77,51 @@ public class FinalBoss extends Actor
 
     /**
      * Manages time for attacks & moving
-    */
+     */
     private void update(Knight k){
+        //time the boss has to wait before it can attack again
         if(attackCooldownTimer > 0){
             attackCooldownTimer--;
         }
+        //time the boss stays in attack mode
         if(attackTimer > 0){
             attackTimer--;
         }
-        //Start attack
+        //Checks if Knight is within attack range : 120 pixels of the boss
         if(isNear(k, 120) && attackCooldownTimer == 0){
             startAttack();
             return;
         }
 
+        //Boss stops moving and stays in attack mode
         if(attackTimer > 0){
             return;
         }
 
-        moveToward(k);
+        moveToward(k); // if boss not attacking, chase Knight
     }
 
     /**
      * Checks if Knight can be attacked
-    */
+     */
     private boolean isNear(Actor a, int distance){
-        int dx = a.getX() - getX();
-        int dy = a.getY() - getY();
-        return dx*dx + dy*dy <= distance*distance;
+        int dx = a.getX() - getX();// distance between Boss and Knight horizontal
+        int dy = a.getY() - getY();// distance between Boss and Knight vertically
+        return dx*dx + dy*dy <= distance*distance;//diagonal distance inlcuded
     }
 
     /**
      * Makes boss walk towards the knight until minimum
-    */
+     */
     private void moveToward(Knight k){
-        int minDistance = 120;
-        int dx = k.getX() - getX();
-        int dy = k.getY() - getY();
+        int minDistance = 120;//Stop the boss from moving closer to Knight
+        int dx = k.getX() - getX();//Differenc in position
+        int dy = k.getY() - getY();//Difference in position
         int distanceSquare = dx* dx + dy*dy;
         int minDisSquare = minDistance * minDistance;
         if(distanceSquare > minDisSquare){
             //Horizontal
-            if(dx < 0){
+            if(dx < 0){//Knight is to the left of the Boss
                 facingRight = false;
                 setImage(standingLeft);
                 setLocation(getX() - speed, getY());
@@ -128,17 +131,17 @@ public class FinalBoss extends Actor
                 setLocation(getX() + speed, getY());
             }
             //Vertical
-            if(dy < 0){
-                setLocation(getX(), getY() - speed);
+            if(dy < 0){//Knight above boss
+                setLocation(getX(), getY() - speed);//Boss moves up
             }else{
-                setLocation(getX(), getY() + speed);
+                setLocation(getX(), getY() + speed);//Boss moves down
             }
         }
     }
 
     /**
      * Attack animation
-    */
+     */
     private void startAttack(){
         attackTimer = ATTACK_TIME_MAX;
         attackCooldownTimer = ATTACK_COOLDOWN_MAX;
@@ -152,14 +155,14 @@ public class FinalBoss extends Actor
 
     /**
      * Scale image
-    */
+     */
     private void scaleImage(GreenfootImage img){
         img.scale(img.getWidth()/4, img.getHeight()/4);
     }
 
     /**
      * Moves the sword & makes sure the sword moves with the boss
-    */
+     */
     public void updateSwordPosition(){
         if(eSword == null) return;
         if(attackTimer > 0){
@@ -183,14 +186,14 @@ public class FinalBoss extends Actor
 
     /**
      * Life Status
-    */
+     */
     public boolean isDead(){
         return dead;
     }
 
     /**
      * Kill boss my removing it from world
-    */
+     */
     public void takeDamage(){
         dead = true;
         if (getWorld()!= null){
