@@ -28,9 +28,8 @@ public class Cave extends World
     }
 
     public void showMessage(Knight k){
-        showText("Knight Hits: " + k.getHitsOnFinalBoss(), 60, 20);
-        showText("Required: " + k.getHitsRequired(), 200, 40);
-        showText("Boss Hits: " + k.getBossHits() + "/" + k.getMaxBossHits(), 60, 40);
+        showText("Knight Hits: " + k.getHitsOnFinalBoss() +"/" + k.getHitsRequired(), 80, 20);
+        showText("Boss Hits: " + k.getBossHits() + "/" + k.getMaxBossHits(), 80, 40);
         k.showStats();
         if(k.score > 80){
             k.speed = 6;

@@ -230,7 +230,7 @@ public class Knight extends Actor
 
         overlay.setColor(Color.WHITE);
         overlay.setFont(new Font("Arial", 24));
-        overlay.drawString("Restart Level!\nConsecutive Hits: 20\nPress R to continue",
+        overlay.drawString("Restart Level!\nTroll Hits: 20\nPress R to continue",
             world.getWidth()/4, world.getHeight()/2);
 
         world.getBackground().drawImage(overlay, 0, 0);
